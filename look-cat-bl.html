@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lookah Cat | Smoke Shop in a Box</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                fontFamily: { sans: ['Outfit','sans-serif'] },
+                colors: { brand: { orange:'#F97316', green:'#22C55E', dark:'#0a0a0a', card:'#171717' } },
+                animation: { blob:'blob 7s infinite' },
+                keyframes: { blob: { '0%':{transform:'translate(0px,0px) scale(1)'}, '33%':{transform:'translate(30px,-50px) scale(1.1)'}, '66%':{transform:'translate(-20px,20px) scale(0.9)'}, '100%':{transform:'translate(0px,0px) scale(1)'} } }
+            } }
+        }
+    </script>
+    <style>::-webkit-scrollbar{display:none}body{-ms-overflow-style:none;scrollbar-width:none;-webkit-tap-highlight-color:transparent}</style>
+</head>
+<body class="bg-brand-dark text-white font-sans antialiased pb-28">
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-brand-orange/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-brand-green/10 rounded-full mix-blend-screen filter blur-[100px] animate-blob"></div>
+    </div>
+    <nav class="fixed top-0 w-full z-50 bg-brand-dark/80 backdrop-blur-xl border-b border-white/5">
+        <div class="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="package" class="w-6 h-6 text-brand-orange"></i>
+                <span class="font-bold tracking-tight text-lg">Smoke Shop in a Box</span>
+            </div>
+            <button class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition">
+                <i data-lucide="share" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </nav>
+    <main class="relative z-10 pt-20 px-4 max-w-md mx-auto flex flex-col gap-6">
+        <div class="relative w-full aspect-square rounded-[2rem] bg-brand-card border border-white/5 overflow-hidden group">
+            <div class="absolute top-4 left-4 z-20 bg-brand-dark/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 flex items-center gap-1.5">
+                <div class="w-2 h-2 rounded-full bg-brand-green animate-pulse"></div>
+                <span class="text-xs font-semibold tracking-wide uppercase">In Stock</span>
+            </div>
+            <img src="https://cdn11.bigcommerce.com/s-ijm7dw7yvr/products/5443/images/19015/LUVBUDS-LOOKAH-LOOK-CAT-BL-A-Battery__28724.1758209786.500.750.jpg?c=2" alt="Lookah Cat" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent"></div>
+        </div>
+        <div class="flex flex-col gap-2">
+            <div>
+                <p class="text-brand-orange text-sm font-semibold tracking-wide uppercase mb-1">Powered by LuvBuds</p>
+                <h1 class="text-3xl font-bold leading-tight">Lookah Cat</h1>
+            </div>
+            <div class="flex items-baseline gap-2 mt-1">
+                <span id="product-price" class="text-4xl font-bold">$$720.00</span>
+            </div>
+        </div>
+        <div class="relative w-full rounded-[2rem] bg-brand-card border border-white/5 overflow-hidden aspect-[16/9] shadow-2xl">
+            <img src="assets/video-placeholder.png" class="absolute inset-0 w-full h-full object-cover opacity-80" alt="Product demo coming soon">
+            <div class="absolute bottom-3 right-3 bg-black/50 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1">
+                <i data-lucide="play" class="w-3 h-3 text-white"></i>
+                <span class="text-[10px] font-medium uppercase tracking-wider">Coming Soon</span>
+            </div>
+        </div>
+        <div class="bg-brand-card/50 border border-white/5 rounded-[2rem] p-6">
+            <h3 class="text-lg font-semibold mb-3">About this item</h3>
+            <p id="product-desc" class="text-white/70 leading-relaxed text-sm">The Lookah Cat crouches in your palm and purrs with every hit — variable voltage, preheat mode, and a 750mAh battery that outlasts your longest sessions. The cat silhouette makes it impossible to leave on a table without getting compliments. Serious power, serious personality.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="bg-brand-card border border-white/5 rounded-[2rem] p-5 flex flex-col gap-3 justify-center items-start">
+                <div class="w-10 h-10 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center">
+                    <i data-lucide="zap" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm">Dial It In</h4>
+                    <p class="text-xs text-white/50 mt-0.5">Your perfect temp, always</p>
+                </div>
+            </div>
+            <div class="bg-brand-card border border-white/5 rounded-[2rem] p-5 flex flex-col gap-3 justify-center items-start">
+                <div class="w-10 h-10 rounded-full bg-brand-green/20 text-brand-green flex items-center justify-center">
+                    <i data-lucide="battery" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm">650mAh Power</h4>
+                    <p class="text-xs text-white/50 mt-0.5">Never run out mid-session</p>
+                </div>
+            </div>
+            <div class="bg-brand-card border border-white/5 rounded-[2rem] p-5 flex flex-col gap-3 justify-center items-start">
+                <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center">
+                    <i data-lucide="plug" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm">Fits Any Cart</h4>
+                    <p class="text-xs text-white/50 mt-0.5">Universal 510 thread</p>
+                </div>
+            </div>
+            <div class="bg-brand-card border border-white/5 rounded-[2rem] p-5 flex flex-col gap-3 justify-center items-start">
+                <div class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center">
+                    <i data-lucide="flame" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm">Preheat Mode</h4>
+                    <p class="text-xs text-white/50 mt-0.5">Thick hits from first pull</p>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center gap-2 px-1 pb-2">
+            <span class="text-xs text-white/30 font-mono">SKU: LOOK-CAT-BL</span>
+        </div>
+    </main>
+
+    <!-- Signup Modal -->
+    <div id="signup-modal" class="fixed inset-0 z-[100] flex items-end justify-center pointer-events-none">
+        <div id="modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-none"></div>
+        <div id="modal-sheet" class="relative w-full max-w-md bg-[#111] border border-white/10 rounded-t-[2rem] p-6 pb-10 translate-y-full transition-transform duration-300 ease-out pointer-events-none">
+            <!-- Handle -->
+            <div class="w-10 h-1 rounded-full bg-white/20 mx-auto mb-6"></div>
+            <h2 class="text-2xl font-bold mb-1">Get Exclusive Deals</h2>
+            <p class="text-white/50 text-sm mb-6">Sign up for email & text alerts and be the first to know about drops, discounts, and new arrivals.</p>
+            <div id="signup-form" class="flex flex-col gap-3">
+                <input id="signup-name" type="text" placeholder="Your name" autocomplete="name"
+                    class="w-full h-12 rounded-xl bg-white/5 border border-white/10 px-4 text-white placeholder-white/30 text-sm focus:outline-none focus:border-brand-orange transition">
+                <input id="signup-email" type="email" placeholder="Email address" autocomplete="email"
+                    class="w-full h-12 rounded-xl bg-white/5 border border-white/10 px-4 text-white placeholder-white/30 text-sm focus:outline-none focus:border-brand-orange transition">
+                <input id="signup-phone" type="tel" placeholder="Phone number (for text alerts)" autocomplete="tel"
+                    class="w-full h-12 rounded-xl bg-white/5 border border-white/10 px-4 text-white placeholder-white/30 text-sm focus:outline-none focus:border-brand-orange transition">
+                <button onclick="submitSignup()" class="w-full h-14 mt-1 rounded-2xl bg-brand-orange hover:bg-orange-500 text-white font-bold text-lg flex items-center justify-center gap-2 transition-all active:scale-95 shadow-[0_0_20px_rgba(249,115,22,0.4)]">
+                    <i data-lucide="bell" class="w-5 h-5"></i>
+                    <span>Send Me Deals</span>
+                </button>
+            </div>
+            <div id="signup-success" class="hidden flex-col items-center gap-3 py-4 text-center">
+                <div class="w-14 h-14 rounded-full bg-brand-green/20 text-brand-green flex items-center justify-center">
+                    <i data-lucide="check" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-xl font-bold">You're in!</h3>
+                <p class="text-white/50 text-sm">Watch for exclusive deals in your inbox and on your phone.</p>
+            </div>
+            <button onclick="closeModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/50 hover:text-white transition">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Sticky Bottom Bar -->
+    <div class="fixed bottom-0 left-0 w-full z-50 bg-brand-dark/90 backdrop-blur-2xl border-t border-white/10 pt-4 px-4 pb-6">
+        <div class="max-w-md mx-auto flex items-center gap-3">
+            <button onclick="shareProduct()" class="w-14 h-14 shrink-0 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition active:scale-95">
+                <i data-lucide="share-2" class="w-5 h-5"></i>
+            </button>
+            <button onclick="openModal()" class="flex-1 h-14 rounded-2xl bg-brand-orange hover:bg-orange-500 text-white font-bold text-lg flex items-center justify-center gap-2 transition-all active:scale-95 shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+                <i data-lucide="tag" class="w-5 h-5"></i>
+                <span>Get the Deal</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function openModal() {
+            const modal = document.getElementById('signup-modal');
+            const backdrop = document.getElementById('modal-backdrop');
+            const sheet = document.getElementById('modal-sheet');
+            modal.classList.remove('pointer-events-none');
+            backdrop.classList.remove('pointer-events-none');
+            backdrop.classList.add('opacity-100');
+            sheet.classList.remove('translate-y-full');
+            sheet.classList.add('translate-y-0');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('signup-modal');
+            const backdrop = document.getElementById('modal-backdrop');
+            const sheet = document.getElementById('modal-sheet');
+            backdrop.classList.remove('opacity-100');
+            sheet.classList.remove('translate-y-0');
+            sheet.classList.add('translate-y-full');
+            setTimeout(() => {
+                modal.classList.add('pointer-events-none');
+                backdrop.classList.add('pointer-events-none');
+            }, 300);
+        }
+
+        document.getElementById('modal-backdrop').addEventListener('click', closeModal);
+
+        function submitSignup() {
+            const name  = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const phone = document.getElementById('signup-phone').value.trim();
+            if (!email && !phone) {
+                document.getElementById('signup-email').focus();
+                return;
+            }
+            document.getElementById('signup-form').classList.add('hidden');
+            const success = document.getElementById('signup-success');
+            success.classList.remove('hidden');
+            success.classList.add('flex');
+            lucide.createIcons();
+            setTimeout(closeModal, 2500);
+        }
+
+        function shareProduct() {
+            if (navigator.share) {
+                navigator.share({ title: document.title, url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    const btn = document.querySelector('[onclick="shareProduct()"]');
+                    btn.innerHTML = '<i data-lucide="check" class="w-5 h-5 text-brand-green"></i>';
+                    lucide.createIcons();
+                    setTimeout(() => { btn.innerHTML = '<i data-lucide="share-2" class="w-5 h-5"></i>'; lucide.createIcons(); }, 2000);
+                });
+            }
+        }
+    </script>
+
+  <!-- Google Sheet live pricing — replace SHEET_ID per store -->
+  <script>
+    (function() {
+      var SHEET_ID = 'REPLACE_WITH_STORE_SHEET_ID';
+      var SKU = 'LOOK-CAT-BL';
+      fetch('https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:json&sheet=products')
+        .then(function(r) { return r.text(); })
+        .then(function(raw) {
+          var data = JSON.parse(raw.slice(47, -2));
+          var row = data.table.rows.find(function(r) { return r.c[0] && r.c[0].v === SKU; });
+          if (!row) return;
+          var price = row.c[1] && row.c[1].v;
+          var desc  = row.c[2] && row.c[2].v;
+          if (price) {
+            var el = document.getElementById('product-price');
+            if (el) el.textContent = '$' + Number(price).toFixed(2);
+          }
+          if (desc) {
+            var el = document.getElementById('product-desc');
+            if (el) el.textContent = desc;
+          }
+        })
+        .catch(function() {});  // keep hardcoded fallback on any error
+    })();
+  </script>
+</body>
+</html>
