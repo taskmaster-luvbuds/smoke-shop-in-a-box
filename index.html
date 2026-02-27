@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Smoke Shop in a Box — Product Catalog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        fontFamily: { sans: ['Outfit','sans-serif'] },
+        colors: { brand: { orange:'#F97316', green:'#22C55E', dark:'#0a0a0a', card:'#171717' } },
+        animation: { blob:'blob 7s infinite' },
+        keyframes: { blob: { '0%':{transform:'translate(0px,0px) scale(1)'}, '33%':{transform:'translate(30px,-50px) scale(1.1)'}, '66%':{transform:'translate(-20px,20px) scale(0.9)'}, '100%':{transform:'translate(0px,0px) scale(1)'} } }
+      } }
+    }
+  </script>
+  <style>
+    ::-webkit-scrollbar { display: none }
+    body { -ms-overflow-style: none; scrollbar-width: none; -webkit-tap-highlight-color: transparent }
+  </style>
+</head>
+<body class="bg-brand-dark text-white font-sans antialiased pb-20">
+
+  <!-- Ambient glow -->
+  <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-brand-orange/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob"></div>
+    <div class="absolute top-0 right-1/4 w-96 h-96 bg-brand-green/10 rounded-full mix-blend-screen filter blur-[100px] animate-blob"></div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="fixed top-0 w-full z-50 bg-brand-dark/80 backdrop-blur-xl border-b border-white/5">
+    <div class="max-w-2xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <i data-lucide="package" class="w-6 h-6 text-brand-orange"></i>
+        <span class="font-bold tracking-tight text-lg">Smoke Shop in a Box</span>
+      </div>
+      <span class="text-xs text-white/30 font-mono">Product Catalog</span>
+    </div>
+  </nav>
+
+  <main class="relative z-10 pt-24 px-4 max-w-2xl mx-auto flex flex-col gap-10">
+
+    <!-- Hero -->
+    <div class="flex flex-col gap-2">
+      <p class="text-brand-orange text-sm font-semibold tracking-wide uppercase">Powered by LuvBuds</p>
+      <h1 class="text-3xl font-bold leading-tight">Box Configurations</h1>
+      <p class="text-white/50 text-sm">5 curated setups. Tap any product to see the full page your customers will see.</p>
+    </div>
+
+    <!-- Jump links -->
+    <div class="flex flex-wrap gap-2">
+      <a href="#standard"       class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium hover:bg-white/10 transition">Standard</a>
+      <a href="#deluxe"         class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium hover:bg-white/10 transition">Deluxe + PCL</a>
+      <a href="#electronic"     class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium hover:bg-white/10 transition">Electronic Station</a>
+      <a href="#glass-station"  class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium hover:bg-white/10 transition">SirEEL Glass Station</a>
+      <a href="#simple-pipes"   class="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium hover:bg-white/10 transition">SirEEL Simple Pipes</a>
+    </div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- STANDARD V.08 -->
+    <!-- ══════════════════════════════════════════ -->
+    <section id="standard" class="flex flex-col gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-brand-orange/20 text-brand-orange flex items-center justify-center shrink-0">
+          <i data-lucide="store" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h2 class="text-xl font-bold">Standard</h2>
+          <p class="text-xs text-white/40">V.08 · Batteries, glass, papers, lighters — the balanced everyday setup</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <p class="text-xs font-semibold tracking-widest uppercase text-brand-orange/70 px-1 mb-1">Top Shelf</p>
+        <div class="flex flex-col gap-1">
+          <a href="look-sh-pro-plus-bk.html"   class="product-row">Lookah Seahorse Pro Plus, Black <span class="sku">LOOK-SH-PRO-PLUS-BK</span></a>
+          <a href="bt-380vv.html"               class="product-row">LuvBuds 380mAh Battery, Asst <span class="sku">BT-380VV</span></a>
+          <a href="look-snail2-0-bk.html"       class="product-row">Lookah Snail 2.0, Black <span class="sku">LOOK-SNAIL2.0-BK</span></a>
+          <a href="se-bt-ev-thermo-10pk.html"   class="product-row">SirEEL Hover EV 10pk, Thermo <span class="sku">SE-BT-EV-THERMO-10PK</span></a>
+          <a href="se-bt-ironlung5p-solid.html" class="product-row">SirEEL Iron Lung 5pc, Solid <span class="sku">SE-BT-IRONLUNG5P-SOLID</span></a>
+          <a href="ooz-1187.html"               class="product-row">Ooze Slim Twist Pen 2.0, Asst <span class="sku">OOZ-1187</span></a>
+          <a href="bt-penjamincarkey-asst.html" class="product-row">Penjamin Car Key Battery, Asst <span class="sku">BT-PENJAMINCARKEY-ASST</span></a>
+          <a href="gnd-znc50.html"              class="product-row">LuvBuds 50mm Zinc Grinder, Asst <span class="sku">GND-ZNC50</span></a>
+          <a href="bt-v846d2.html"              class="product-row">Pulsar SYNDR Dry Herb Battery 5pk <span class="sku">BT-V846D2</span></a>
+        </div>
+
+        <p class="text-xs font-semibold tracking-widest uppercase text-brand-orange/70 px-1 mt-4 mb-1">Middle Shelf</p>
+        <div class="flex flex-col gap-1">
+          <a href="se-hp-chill3-bx.html"   class="product-row">SirEEL 3" Chillums 36pc, Asst <span class="sku">SE-HP-CHILL3-BX</span></a>
+          <a href="wp-donutmacstar7.html"  class="product-row">LuvBuds 7" Slime Donut Bong, Asst <span class="sku">WP-DONUTMACSTAR7</span></a>
+          <a href="wp-wigwagdonut6.html"   class="product-row">LuvBuds 6" Wig Wag D'OH-nut Bong <span class="sku">WP-WIGWAGDONUT6</span></a>
+          <a href="se-wp-tube10.html"      class="product-row">SirEEL 10" Iridized Illusion Bong <span class="sku">SE-WP-TUBE10</span></a>
+          <a href="se-wp-twistbkr8.html"   class="product-row">SirEEL 8" Twisted Neck Beaker <span class="sku">SE-WP-TWISTBKR8</span></a>
+          <a href="se-wp-leafneckbase.html" class="product-row">SirEEL 9.75" Technicolor Beaker <span class="sku">SE-WP-LEAFNECKBASE</span></a>
+          <a href="wp-sporeorbrig.html"    class="product-row">LuvBuds 7" Spore Perc Dab Rig <span class="sku">WP-SPOREORBRIG</span></a>
+          <a href="se-hp-4p85g-bx.html"   class="product-row">SirEEL 4.5" Bulk Pipes 25pc <span class="sku">SE-HP-4P85G-BX</span></a>
+        </div>
+
+        <p class="text-xs font-semibold tracking-widest uppercase text-brand-orange/70 px-1 mt-4 mb-1">Bottom Shelf</p>
+        <div class="flex flex-col gap-1">
+          <a href="zz114c24.html"       class="product-row">Zig-Zag Ultra Thin Cones 24ct 6pk <span class="sku">ZZ114C24</span></a>
+          <a href="zzub11424.html"      class="product-row">Zig-Zag Unbleached Cones 24ct 6pk <span class="sku">ZZUB11424</span></a>
+          <a href="bic-maxi-hazmat.html" class="product-row">BIC Maxi Lighter 50pk Display <span class="sku">BIC-MAXI-HAZMAT</span></a>
+          <a href="zz114-48.html"       class="product-row">Zig-Zag Orange Papers 48pk Display <span class="sku">ZZ114-48</span></a>
+          <a href="zzhmp48.html"        class="product-row">Zig-Zag Organic Hemp Papers 48pk <span class="sku">ZZHMP48</span></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="border-t border-white/5"></div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- DELUXE + PCL V.01 -->
+    <!-- ══════════════════════════════════════════ -->
+    <section id="deluxe" class="flex flex-col gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0">
+          <i data-lucide="gem" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h2 class="text-xl font-bold">Deluxe + PCL</h2>
+          <p class="text-xs text-white/40">V.01 · Premium products + full POS pipe &amp; chillum display</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <p class="text-xs font-semibold tracking-widest uppercase text-purple-400/70 px-1 mb-1">Top Shelf</p>
+        <div class="flex flex-col gap-1">
+          <a href="se-bt-380vv-blk.html"          class="product-row">SirEEL 380 Variable Voltage, Black <span class="sku">SE-BT-380VV-BLK</span></a>
+          <a href="se-bt-ironlung5p-thermo.html"   class="product-row">SirEEL Iron Lung 5pc, Thermo <span class="sku">SE-BT-IRONLUNG5P-THERMO</span></a>
+          <a href="bt-groove-bolt-24pk.html"       class="product-row">Groove Bolt 510, 24pk <span class="sku">BT-GROOVE-BOLT-24PK</span></a>
+          <a href="look-snail2-0-asst-6pk.html"    class="product-row">Lookah Snail 2.0, Asst 6pk <span class="sku">LOOK-SNAIL2.0-ASST-6PK</span></a>
+          <a href="se-bt-doppleganger.html"        class="product-row">SirEEL Doppelganger <span class="sku">SE-BT-DOPPLEGANGER</span></a>
+          <a href="look-bear-asst-5pk.html"        class="product-row">Lookah Bear, Asst 5pk <span class="sku">LOOK-BEAR-ASST-5PK</span></a>
+        </div>
+
+        <p class="text-xs font-semibold tracking-widest uppercase text-purple-400/70 px-1 mt-4 mb-1">Middle Shelf</p>
+        <div class="flex flex-col gap-1">
+          <a href="se-hp-mosaic-bx-12pk.html"       class="product-row">SirEEL Mosaic Pipes 12pk <span class="sku">SE-HP-MOSAIC-BX-12PK</span></a>
+          <a href="hp-ogchill.html"                  class="product-row">OG Chillum 100pc Display <span class="sku">HP-OGCHILL</span></a>
+          <a href="bt-groove-caraplus.html"          class="product-row">Groove Cara Plus <span class="sku">BT-GROOVE-CARAPLUS</span></a>
+          <a href="look-shproplus-asst-6pk.html"     class="product-row">Lookah Seahorse Pro Plus, Asst 6pk <span class="sku">LOOK-SHPROPLUS-ASST-6PK</span></a>
+          <a href="zaza-gnd-63-4pc-wndw-asst.html"  class="product-row">ZaZa 63mm Window Grinder, Asst <span class="sku">ZAZA-GND-63-4PC-WNDW-ASST</span></a>
+        </div>
+
+        <p class="text-xs font-semibold tracking-widest uppercase text-purple-400/70 px-1 mt-4 mb-1">Bottom Shelf</p>
+        <div class="flex flex-col gap-1">
+          <a href="se-hp-4p85g-bx.html"   class="product-row">SirEEL 4.5" Spoon Pipes 25pc <span class="sku">SE-HP-4P85G-BX</span></a>
+          <a href="fl-sb5-hazmat.html"     class="product-row">Special Blue 5X Butane <span class="sku">FL SB5-HAZMAT</span></a>
+          <a href="groove-spark.html"      class="product-row">Groove Spark Torch <span class="sku">GROOVE-SPARK</span></a>
+          <a href="se-wp-donutiri5-bx.html" class="product-row">SirEEL Hypno Hoop Rig <span class="sku">SE-WP-DONUTIRI5-BX</span></a>
+          <a href="cle-randyblk12.html"    class="product-row">Randy's Black Label Cleaner <span class="sku">CLE-RANDYBLK12</span></a>
+          <a href="cb-glob-travel.html"    class="product-row">Glob Mops Travel Pack <span class="sku">CB-GLOB-TRAVEL</span></a>
+        </div>
+
+        <p class="text-xs font-semibold tracking-widest uppercase text-purple-400/70 px-1 mt-4 mb-1">Counter</p>
+        <div class="flex flex-col gap-1">
+          <a href="bundle-pcldispfull.html" class="product-row">POS Display — 100 Pipes + 100 Chillums <span class="sku">BUNDLE-PCLDISPFULL</span></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="border-t border-white/5"></div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- ELECTRONIC STATION V.01 -->
+    <!-- ══════════════════════════════════════════ -->
+    <section id="electronic" class="flex flex-col gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+          <i data-lucide="zap" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h2 class="text-xl font-bold">Electronic Station</h2>
+          <p class="text-xs text-white/40">V.01 · Full vape station — Lookah, Yocan, SirEEL &amp; Groove</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <p class="text-xs font-semibold tracking-widest uppercase text-blue-400/70 px-1 mb-1">Top Shelf</p>
+        <div class="flex flex-col gap-1">
+          <a href="se-bt-380vv-blk.html"        class="product-row">SirEEL 380 Variable Voltage, Black <span class="sku">SE-BT-380VV-BLK</span></a>
+          <a href="se-bt-gastankdisp.html"       class="product-row">SirEEL Gas Tank Thermals <span class="sku">SE-BT-GASTANKDISP</span></a>
+          <a href="se-bt-doppleganger.html"      class="product-row">SirEEL Doppelganger <span class="sku">SE-BT-DOPPLEGANGER</span></a>
+          <a href="se-bt-ironlung5p-thermo.html" class="product-row">SirEEL Iron Lung, Thermo <span class="sku">SE-BT-IRONLUNG5P-THERMO</span></a>
+          <a href="se-bt-ev-thermo-10pk.html"    class="product-row">SirEEL Hover EV 10pk, Thermo <span class="sku">SE-BT-EV-THERMO-10PK</span></a>
+          <a href="bt-groove-bolt-24pk.html"     class="product-row">Groove Bolt 510 24pk <span class="sku">BT-GROOVE-BOLT-24PK</span></a>
+        </div>
+
+        <p class="text-xs font-semibold tracking-widest uppercase text-blue-400/70 px-1 mt-4 mb-1">Middle Shelf</p>
+        <div class="flex flex-col gap-1">
+          <a href="look-unicornmini-bk.html"       class="product-row">Lookah Unicorn Mini, Black <span class="sku">LOOK-UNICORNMINI-BK</span></a>
+          <a href="look-snail2-0-asst-6pk.html"    class="product-row">Lookah Snail 2.0, Asst 6pk <span class="sku">LOOK-SNAIL2.0-ASST-6PK</span></a>
+          <a href="look-gta-asst-5pk.html"         class="product-row">Lookah Guitar, Asst 5pk <span class="sku">LOOK-GTA-ASST-5PK</span></a>
+          <a href="look-beartdye-asst-5pk.html"    class="product-row">Lookah Bear Tie-Dye, Asst 5pk <span class="sku">LOOK-BEARTDYE-ASST-5PK</span></a>
+          <a href="look-bear-asst-5pk.html"        class="product-row">Lookah Bear, Asst 5pk <span class="sku">LOOK-BEAR-ASST-5PK</span></a>
+          <a href="look-cat-bl.html"               class="product-row">Lookah Cat, Black <span class="sku">LOOK-CAT-BL</span></a>
+          <a href="look-shproplus-asst-6pk.html"   class="product-row">Lookah Seahorse Pro Plus, Asst 6pk <span class="sku">LOOK-SHPROPLUS-ASST-6PK</span></a>
+        </div>
+
+        <p class="text-xs font-semibold tracking-widest uppercase text-blue-400/70 px-1 mt-4 mb-1">Bottom Shelf</p>
+        <div class="flex flex-col gap-1">
+          <a href="yocan-kodopro.html"       class="product-row">Yocan Kodo Pro <span class="sku">YOCAN-KODOPRO</span></a>
+          <a href="yocan-pocket.html"        class="product-row">Yocan Pocket <span class="sku">YOCAN-POCKET</span></a>
+          <a href="yocan-flatplus.html"      class="product-row">Yocan Flat Plus <span class="sku">YOCAN-FLATPLUS</span></a>
+          <a href="yocan-evolve-plus-xl.html" class="product-row">Yocan Evolve Plus XL <span class="sku">YOCAN-EVOLVE-PLUS-XL</span></a>
+          <a href="vp-trppen2.html"          class="product-row">Boundless Terp Pen 2 <span class="sku">VP-TRPPEN2</span></a>
+          <a href="bt-groove-caraplus.html"  class="product-row">Yocan Groove Cara Plus <span class="sku">BT-GROOVE-CARAPLUS</span></a>
+          <a href="groove-gnd-ripster.html"  class="product-row">Yocan Ripster Grinder <span class="sku">GROOVE-GND-RIPSTER</span></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="border-t border-white/5"></div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- SIREEL GLASS STATION V.01 -->
+    <!-- ══════════════════════════════════════════ -->
+    <section id="glass-station" class="flex flex-col gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-brand-green/20 text-brand-green flex items-center justify-center shrink-0">
+          <i data-lucide="droplets" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h2 class="text-xl font-bold">SirEEL Glass Station</h2>
+          <p class="text-xs text-white/40">V.01 · Pipes, rigs, bangers &amp; accessories — full glass setup</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <p class="text-xs font-semibold tracking-widest uppercase text-brand-green/70 px-1 mb-1">Top Shelf</p>
+        <div class="flex flex-col gap-1">
+          <a href="se-hp-4p85g-bx.html"     class="product-row">SirEEL 4.5" Spoon Pipes 25pc <span class="sku">SE-HP-4P85G-BX</span></a>
+          <a href="se-hp-spoon45-bx.html"   class="product-row">SirEEL Ring Neck Pipe 12pk <span class="sku">SE-HP-SPOON45-BX</span></a>
+          <a href="se-hp-mosaic-bx-12pk.html" class="product-row">SirEEL Mosaic Pipe 12pk <span class="sku">SE-HP-MOSAIC-BX-12PK</span></a>
+        </div>
+
+        <p class="text-xs font-semibold tracking-widest uppercase text-brand-green/70 px-1 mt-4 mb-1">Middle Shelf</p>
+        <div class="flex flex-col gap-1">
+          <a href="se-wp-donutiri5-bx.html"  class="product-row">SirEEL Hypno Hoop Mini Rig <span class="sku">SE-WP-DONUTIRI5-BX</span></a>
+          <a href="se-wp-incycfab5-bx.html"  class="product-row">SirEEL Dyson Sphere Rig <span class="sku">SE-WP-INCYCFAB5-BX</span></a>
+          <a href="se-wp-fumrecyc5-bx.html"  class="product-row">SirEEL Klein Stein Rig <span class="sku">SE-WP-FUMRECYC5-BX</span></a>
+          <a href="se-wp-marbledrig6-bx.html" class="product-row">SirEEL Miragestone Rig <span class="sku">SE-WP-MARBLEDRIG6-BX</span></a>
+          <a href="se-wp-oracleorb-bx.html"  class="product-row">SirEEL Oracle Orb <span class="sku">SE-WP-ORACLEORB-BX</span></a>
+          <a href="se-hp-colrglyc45-bx.html" class="product-row">SirEEL Freezable Glycerin Spoon <span class="sku">SE-HP-COLRGLYC45-BX</span></a>
+        </div>
+
+        <p class="text-xs font-semibold tracking-widest uppercase text-brand-green/70 px-1 mt-4 mb-1">Bottom Shelf</p>
+        <div class="flex flex-col gap-1">
+          <a href="se-qbng-etchbckt-14m-bx.html"  class="product-row">SirEEL 14mm Etched Quartz Banger 12pk <span class="sku">SE-QBNG-ETCHBCKT-14M-BX</span></a>
+          <a href="se-cc-spinshroom-bx-12pk.html"  class="product-row">SirEEL Mushroom Spinner Carb Cap 12pk <span class="sku">SE-CC-SPINSHROOM-BX-12PK</span></a>
+          <a href="se-gog-fullywig-14mm-bx.html"   class="product-row">SirEEL Heady Flower Bowl w/ Handle 12pk <span class="sku">SE-GOG-FULLYWIG-14MM-BX</span></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="border-t border-white/5"></div>
+
+    <!-- ══════════════════════════════════════════ -->
+    <!-- SIREEL SIMPLE PIPES V.01 -->
+    <!-- ══════════════════════════════════════════ -->
+    <section id="simple-pipes" class="flex flex-col gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+          <i data-lucide="flame" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h2 class="text-xl font-bold">SirEEL Simple Pipes</h2>
+          <p class="text-xs text-white/40">V.01 · Entry-level glass setup — pipes, chillums &amp; accessories</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <p class="text-xs font-semibold tracking-widest uppercase text-amber-400/70 px-1 mb-1">Top Shelf</p>
+        <div class="flex flex-col gap-1">
+          <a href="se-hp-4p85g-bx.html"     class="product-row">SirEEL 4.5" Spoon Pipe 25pc <span class="sku">SE-HP-4P85G-BX</span></a>
+          <a href="se-hp-spoon45-bx.html"   class="product-row">SirEEL Ring Neck Pipe 12pk <span class="sku">SE-HP-SPOON45-BX</span></a>
+          <a href="se-hp-mosaic-bx-12pk.html" class="product-row">SirEEL Mosaic Pipe 12pk <span class="sku">SE-HP-MOSAIC-BX-12PK</span></a>
+        </div>
+
+        <p class="text-xs font-semibold tracking-widest uppercase text-amber-400/70 px-1 mt-4 mb-1">Middle Shelf</p>
+        <div class="flex flex-col gap-1">
+          <a href="se-hp-2-5p40g-bx.html"  class="product-row">SirEEL 2.5" Bulk Pipes <span class="sku">SE-HP-2.5P40G-BX</span></a>
+          <a href="se-hp-chill3-bx.html"   class="product-row">SirEEL 3" Bulk Chillums <span class="sku">SE-HP-CHILL3-BX</span></a>
+          <a href="se-hp-3p55g-bx.html"    class="product-row">SirEEL 3.5" Bulk Pipes <span class="sku">SE-HP-3P55G-BX</span></a>
+        </div>
+
+        <p class="text-xs font-semibold tracking-widest uppercase text-amber-400/70 px-1 mt-4 mb-1">Bottom Shelf</p>
+        <div class="flex flex-col gap-1">
+          <a href="se-dstm-pop-36pc-bx.html"      class="product-row">SirEEL Downstems 36pc <span class="sku">SE-DSTM-POP-36PC-BX</span></a>
+          <a href="se-gog-fullywig-14mm-bx.html"  class="product-row">SirEEL Heady Flower Bowl w/ Handle <span class="sku">SE-GOG-FULLYWIG-14MM-BX</span></a>
+          <a href="se-wp-donutiri5-bx.html"        class="product-row">SirEEL Hypno Hoop Mini Rig <span class="sku">SE-WP-DONUTIRI5-BX</span></a>
+          <a href="se-wp-incycfab5-bx.html"        class="product-row">SirEEL Dyson Sphere Rig <span class="sku">SE-WP-INCYCFAB5-BX</span></a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <style>
+    .product-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.625rem 0.875rem;
+      border-radius: 0.875rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .product-row:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+    .product-row:active { transform: scale(0.98); }
+    .sku {
+      font-size: 0.65rem;
+      font-family: monospace;
+      color: rgba(255,255,255,0.25);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+  </style>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>
