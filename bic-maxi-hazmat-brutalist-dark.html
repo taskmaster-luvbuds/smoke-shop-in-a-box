@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BIC MAXI LIGHTER — SMOKE SHOP IN A BOX (DARK)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    ::-webkit-scrollbar { display: none }
+
+    :root {
+      --cream: #0A0A0A;
+      --black: #F2EDE4;
+      --orange: #F97316;
+      --border: 3px solid #F2EDE4;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--black);
+      font-family: 'Space Mono', monospace;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      -webkit-tap-highlight-color: transparent;
+      padding-bottom: 90px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 50;
+      background: var(--cream);
+      border-bottom: var(--border);
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+    .nav-brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.06em;
+    }
+    .nav-share {
+      width: 38px; height: 38px;
+      border: var(--border);
+      background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--black);
+    }
+    .nav-share:active { background: var(--black); color: var(--cream); }
+    .nav-share:active svg { color: var(--cream); }
+
+    /* ── MAIN ── */
+    main { padding-top: 52px; }
+
+    /* ── PRODUCT IMAGE ── */
+    .img-wrap {
+      position: relative;
+      width: 100%;
+      border-bottom: var(--border);
+      background: #111;
+    }
+    .img-wrap img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+    }
+    .in-stock {
+      position: absolute;
+      top: 12px; left: 0;
+      background: var(--orange);
+      color: #fff;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.12em;
+      padding: 5px 14px 5px 16px;
+      border-top: var(--border);
+      border-bottom: var(--border);
+      border-right: var(--border);
+    }
+
+    /* ── TITLE BLOCK ── */
+    .title-block {
+      padding: 0 16px;
+      border-bottom: var(--border);
+    }
+    .powered-by {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--orange);
+      text-transform: uppercase;
+      padding-top: 18px;
+      padding-bottom: 6px;
+    }
+    .product-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.8rem, 11vw, 4.5rem);
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      padding-bottom: 16px;
+    }
+
+    /* ── PRICE ROW ── */
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      border-top: var(--border);
+      padding: 14px 16px;
+      border-bottom: var(--border);
+      background: var(--orange);
+      color: #0A0A0A;
+    }
+    .price-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      opacity: 0.6;
+      color: #0A0A0A;
+    }
+    #product-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.5rem, 18vw, 6rem);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: #0A0A0A;
+    }
+    .per-unit {
+      font-size: 0.65rem;
+      opacity: 0.6;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      align-self: flex-end;
+      padding-bottom: 8px;
+      color: #0A0A0A;
+    }
+
+    /* ── MARQUEE STRIP ── */
+    .marquee-strip {
+      background: var(--black);
+      border-bottom: var(--border);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 8px 0;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: marquee 14s linear infinite;
+    }
+    .marquee-inner span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.12em;
+      color: var(--orange);
+      margin-right: 32px;
+    }
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── ABOUT ── */
+    .about-block {
+      padding: 20px 16px;
+      border-bottom: var(--border);
+    }
+    .section-header {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .section-header::after {
+      content: '';
+      flex: 1;
+      height: 3px;
+      background: var(--black);
+    }
+    #product-desc {
+      font-size: 0.72rem;
+      line-height: 1.8;
+      color: var(--black);
+      opacity: 0.75;
+    }
+
+    /* ── FEATURES GRID ── */
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: var(--border);
+    }
+    .feat {
+      padding: 18px 14px;
+      border-right: var(--border);
+      border-bottom: var(--border);
+    }
+    .feat:nth-child(2n) { border-right: none; }
+    .feat:nth-last-child(-n+2) { border-bottom: none; }
+    .feat-icon {
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+    .feat-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .feat-sub {
+      font-size: 0.58rem;
+      opacity: 0.45;
+      line-height: 1.5;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ── SKU BAR ── */
+    .sku-bar {
+      padding: 10px 16px;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      opacity: 0.35;
+      border-bottom: var(--border);
+      text-transform: uppercase;
+    }
+
+    /* ── MODAL ── */
+    #signup-modal {
+      position: fixed; inset: 0;
+      z-index: 100;
+      display: flex; align-items: flex-end; justify-content: center;
+      pointer-events: none;
+    }
+    #modal-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.75);
+      opacity: 0;
+      transition: opacity 0.25s;
+      pointer-events: none;
+    }
+    #modal-sheet {
+      position: relative;
+      width: 100%;
+      background: var(--cream);
+      border-top: var(--border);
+      padding: 24px 16px 36px;
+      transform: translateY(100%);
+      transition: transform 0.25s ease-out;
+      pointer-events: none;
+    }
+    .modal-handle {
+      width: 40px; height: 3px;
+      background: var(--black);
+      margin: 0 auto 20px;
+    }
+    .modal-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .modal-sub {
+      font-size: 0.65rem;
+      opacity: 0.5;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .modal-input {
+      width: 100%;
+      height: 48px;
+      border: var(--border);
+      background: #1a1a1a;
+      padding: 0 14px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--black);
+      margin-bottom: 10px;
+      outline: none;
+    }
+    .modal-input:focus { border-color: var(--orange); }
+    .modal-submit {
+      width: 100%;
+      height: 54px;
+      background: var(--orange);
+      color: #0A0A0A;
+      border: 3px solid var(--orange);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+    .modal-submit:active { background: var(--black); color: var(--orange); border-color: var(--black); }
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 34px; height: 34px;
+      border: var(--border);
+      background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--black);
+    }
+    #signup-success { display: none; flex-direction: column; align-items: center; gap: 10px; padding: 20px 0; text-align: center; }
+    #signup-success.show { display: flex; }
+    .success-icon {
+      width: 56px; height: 56px;
+      border: var(--border);
+      background: var(--orange);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+    }
+    .success-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── STICKY CTA ── */
+    .sticky-cta {
+      position: fixed;
+      bottom: 0; left: 0;
+      width: 100%;
+      z-index: 50;
+      background: var(--cream);
+      border-top: var(--border);
+      padding: 12px 16px;
+      display: flex;
+      gap: 10px;
+    }
+    .share-btn {
+      width: 52px; height: 52px;
+      border: var(--border);
+      background: transparent;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--black);
+      flex-shrink: 0;
+    }
+    .share-btn:active { background: var(--black); color: var(--cream); }
+    .deal-btn {
+      flex: 1;
+      height: 52px;
+      background: var(--orange);
+      color: #0A0A0A;
+      border: 3px solid var(--orange);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px;
+    }
+    .deal-btn:active { background: var(--black); color: var(--orange); border-color: var(--black); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">SMOKE SHOP IN A BOX</div>
+    <button class="nav-share" onclick="shareProduct()" aria-label="Share">
+      <i data-lucide="share" style="width:18px;height:18px;"></i>
+    </button>
+  </nav>
+
+  <main>
+
+    <!-- PRODUCT IMAGE -->
+    <div class="img-wrap">
+      <span class="in-stock">● IN STOCK</span>
+      <img src="https://cdn11.bigcommerce.com/s-ijm7dw7yvr/products/565/images/14212/BIC-MAXI-HAZMAT__87164.1733964110.500.750.png?c=2"
+           alt="BIC Maxi Lighter 50pk Retail Display">
+    </div>
+
+    <!-- TITLE -->
+    <div class="title-block">
+      <p class="powered-by">// POWERED BY LUVBUDS</p>
+      <h1 class="product-title">BIC Maxi<br>Lighter<br>50 Pack</h1>
+    </div>
+
+    <!-- PRICE -->
+    <div class="price-row">
+      <span class="price-label">RETAIL</span>
+      <span id="product-price">$2.50</span>
+      <span class="per-unit">/ UNIT</span>
+    </div>
+
+    <!-- MARQUEE -->
+    <div class="marquee-strip">
+      <div class="marquee-inner">
+        <span>LIGHTS FIRST TRY</span><span>WIND RESISTANT</span><span>ALWAYS READY</span><span>BUILT TO LAST</span><span>50 PACK</span><span>RETAIL DISPLAY</span>
+        <span>LIGHTS FIRST TRY</span><span>WIND RESISTANT</span><span>ALWAYS READY</span><span>BUILT TO LAST</span><span>50 PACK</span><span>RETAIL DISPLAY</span>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div class="about-block">
+      <div class="section-header">ABOUT</div>
+      <p id="product-desc">The BIC Maxi is the lighter that's always there when you need it — consistent flame, ergonomic grip, and the kind of reliability that makes you keep one in every room, every bag, and every jacket pocket. Once you have one you'll wonder how you ever borrowed someone else's.</p>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="features">
+      <div class="feat">
+        <div class="feat-icon"><i data-lucide="flame" style="width:24px;height:24px;"></i></div>
+        <div class="feat-title">LIGHTS<br>FIRST TRY</div>
+        <div class="feat-sub">Every. Single. Time.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon"><i data-lucide="wind" style="width:24px;height:24px;"></i></div>
+        <div class="feat-title">WIND<br>RESISTANT</div>
+        <div class="feat-sub">Works anywhere outdoors</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon"><i data-lucide="pocket" style="width:24px;height:24px;"></i></div>
+        <div class="feat-title">ALWAYS<br>READY</div>
+        <div class="feat-sub">Your pocket's best friend</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon"><i data-lucide="zap" style="width:24px;height:24px;"></i></div>
+        <div class="feat-title">BUILT<br>TO LAST</div>
+        <div class="feat-sub">Reliable when it counts</div>
+      </div>
+    </div>
+
+    <!-- SKU -->
+    <div class="sku-bar">SKU: BIC-MAXI-HAZMAT</div>
+
+  </main>
+
+  <!-- SIGNUP MODAL -->
+  <div id="signup-modal">
+    <div id="modal-backdrop"></div>
+    <div id="modal-sheet">
+      <div class="modal-handle"></div>
+      <h2 class="modal-title">GET THE DEAL</h2>
+      <p class="modal-sub">Drop your email or phone. We'll send you exclusive deals, drops, and new arrivals first.</p>
+      <div id="signup-form">
+        <input id="signup-name"  class="modal-input" type="text"  placeholder="YOUR NAME"   autocomplete="name">
+        <input id="signup-email" class="modal-input" type="email" placeholder="EMAIL ADDRESS" autocomplete="email">
+        <input id="signup-phone" class="modal-input" type="tel"   placeholder="PHONE (TEXT ALERTS)" autocomplete="tel">
+        <button class="modal-submit" onclick="submitSignup()">SEND ME DEALS →</button>
+      </div>
+      <div id="signup-success">
+        <div class="success-icon"><i data-lucide="check" style="width:28px;height:28px;"></i></div>
+        <div class="success-title">YOU'RE IN.</div>
+        <p style="font-size:0.65rem;opacity:0.5;letter-spacing:0.1em;text-transform:uppercase;">Watch for deals in your inbox.</p>
+      </div>
+      <button class="modal-close" onclick="closeModal()">
+        <i data-lucide="x" style="width:16px;height:16px;"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- STICKY CTA -->
+  <div class="sticky-cta">
+    <button class="share-btn" onclick="shareProduct()">
+      <i data-lucide="share-2" style="width:20px;height:20px;"></i>
+    </button>
+    <button class="deal-btn" onclick="openModal()">
+      GET THE DEAL →
+    </button>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    function openModal() {
+      const modal    = document.getElementById('signup-modal');
+      const backdrop = document.getElementById('modal-backdrop');
+      const sheet    = document.getElementById('modal-sheet');
+      modal.style.pointerEvents    = 'auto';
+      backdrop.style.pointerEvents = 'auto';
+      backdrop.style.opacity       = '1';
+      sheet.style.transform        = 'translateY(0)';
+      sheet.style.pointerEvents    = 'auto';
+    }
+
+    function closeModal() {
+      const modal    = document.getElementById('signup-modal');
+      const backdrop = document.getElementById('modal-backdrop');
+      const sheet    = document.getElementById('modal-sheet');
+      backdrop.style.opacity = '0';
+      sheet.style.transform  = 'translateY(100%)';
+      setTimeout(() => {
+        modal.style.pointerEvents    = 'none';
+        backdrop.style.pointerEvents = 'none';
+        sheet.style.pointerEvents    = 'none';
+      }, 280);
+    }
+
+    document.getElementById('modal-backdrop').addEventListener('click', closeModal);
+
+    function submitSignup() {
+      const email = document.getElementById('signup-email').value.trim();
+      const phone = document.getElementById('signup-phone').value.trim();
+      if (!email && !phone) { document.getElementById('signup-email').focus(); return; }
+      document.getElementById('signup-form').style.display = 'none';
+      const s = document.getElementById('signup-success');
+      s.classList.add('show');
+      lucide.createIcons();
+      setTimeout(closeModal, 2500);
+    }
+
+    function shareProduct() {
+      if (navigator.share) {
+        navigator.share({ title: document.title, url: window.location.href });
+      } else {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          const btn = document.querySelector('.nav-share');
+          const orig = btn.innerHTML;
+          btn.innerHTML = '<i data-lucide="check" style="width:18px;height:18px;"></i>';
+          lucide.createIcons();
+          setTimeout(() => { btn.innerHTML = orig; lucide.createIcons(); }, 2000);
+        });
+      }
+    }
+  </script>
+
+  <!-- Google Sheet live pricing -->
+  <script>
+    (function() {
+      var SHEET_ID = 'REPLACE_WITH_STORE_SHEET_ID';
+      var SKU = 'BIC-MAXI-HAZMAT';
+      fetch('https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:json&sheet=products')
+        .then(function(r) { return r.text(); })
+        .then(function(raw) {
+          var data = JSON.parse(raw.slice(47, -2));
+          var row = data.table.rows.find(function(r) { return r.c[0] && r.c[0].v === SKU; });
+          if (!row) return;
+          var price = row.c[1] && row.c[1].v;
+          var desc  = row.c[2] && row.c[2].v;
+          if (price) { var el = document.getElementById('product-price'); if (el) el.textContent = '$' + Number(price).toFixed(2); }
+          if (desc)  { var el = document.getElementById('product-desc');  if (el) el.textContent = desc; }
+        })
+        .catch(function() {});
+    })();
+  </script>
+
+</body>
+</html>
