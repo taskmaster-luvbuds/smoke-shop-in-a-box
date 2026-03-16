@@ -239,22 +239,35 @@
             success.classList.add('flex');
             lucide.createIcons();
             setTimeout(closeModal, 2500);
-            // Send data to Google Sheet + email notification
+            // Send data to Google Sheet + email notification via hidden form
             var h1 = document.querySelector('h1');
             var skuEl = document.querySelector('.font-mono');
-            fetch('https://script.google.com/macros/s/AKfycbzTZwbq4TIm93c0jtwa9VP0-Req7bE6A5q2q_WuvbeE2rm68QRFHaHZx5dYkO5Ja5ay/exec', {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: name,
-                    email: email,
-                    phone: phone,
-                    product: h1 ? h1.textContent : '',
-                    sku: skuEl ? skuEl.textContent.replace('SKU: ', '') : '',
-                    pageUrl: window.location.href
-                })
-            }).catch(function() {});
+            var iframe = document.createElement('iframe');
+            iframe.name = 'lead_submit';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'https://script.google.com/macros/s/AKfycbzTZwbq4TIm93c0jtwa9VP0-Req7bE6A5q2q_WuvbeE2rm68QRFHaHZx5dYkO5Ja5ay/exec';
+            form.target = 'lead_submit';
+            var fields = {
+                name: name,
+                email: email,
+                phone: phone,
+                product: h1 ? h1.textContent : '',
+                sku: skuEl ? skuEl.textContent.replace('SKU: ', '') : '',
+                pageUrl: window.location.href
+            };
+            for (var key in fields) {
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = fields[key];
+                form.appendChild(input);
+            }
+            document.body.appendChild(form);
+            form.submit();
+            setTimeout(function() { document.body.removeChild(form); document.body.removeChild(iframe); }, 5000);
         }
 
         function toggleMute() {
