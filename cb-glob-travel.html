@@ -163,7 +163,7 @@
             modal.classList.remove('pointer-events-none');
             backdrop.classList.remove('pointer-events-none');
             backdrop.classList.add('opacity-100');
-            sheet.classList.remove('scale-95', 'opacity-0');
+            sheet.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
             sheet.classList.add('scale-100', 'opacity-100');
         }
 
@@ -173,7 +173,7 @@
             const sheet = document.getElementById('modal-sheet');
             backdrop.classList.remove('opacity-100');
             sheet.classList.remove('scale-100', 'opacity-100');
-            sheet.classList.add('scale-95', 'opacity-0');
+            sheet.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
             setTimeout(() => {
                 modal.classList.add('pointer-events-none');
                 backdrop.classList.add('pointer-events-none');
