@@ -190,12 +190,29 @@
                 document.getElementById('signup-email').focus();
                 return;
             }
+            // Show success immediately for fast UX
             document.getElementById('signup-form').classList.add('hidden');
             const success = document.getElementById('signup-success');
             success.classList.remove('hidden');
             success.classList.add('flex');
             lucide.createIcons();
             setTimeout(closeModal, 2500);
+            // Send data to Google Sheet + email notification
+            var h1 = document.querySelector('h1');
+            var skuEl = document.querySelector('.font-mono');
+            fetch('https://script.google.com/macros/s/AKfycbzTZwbq4TIm93c0jtwa9VP0-Req7bE6A5q2q_WuvbeE2rm68QRFHaHZx5dYkO5Ja5ay/exec', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    product: h1 ? h1.textContent : '',
+                    sku: skuEl ? skuEl.textContent.replace('SKU: ', '') : '',
+                    pageUrl: window.location.href
+                })
+            }).catch(function() {});
         }
 
         function shareProduct() {
