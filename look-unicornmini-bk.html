@@ -108,9 +108,9 @@
     </main>
 
     <!-- Signup Modal -->
-    <div id="signup-modal" class="fixed inset-0 z-[100] flex items-end justify-center pointer-events-none">
+    <div id="signup-modal" class="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto pointer-events-none">
         <div id="modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-none"></div>
-        <div id="modal-sheet" class="relative w-full max-w-md bg-[#111] border border-white/10 rounded-t-[2rem] p-6 pb-10 translate-y-full transition-transform duration-300 ease-out pointer-events-none">
+        <div id="modal-sheet" class="relative w-full max-w-md mx-4 my-auto bg-[#111] border border-white/10 rounded-[2rem] p-6 pb-8 scale-95 opacity-0 transition-all duration-300 ease-out pointer-events-none">
             <!-- Handle -->
             <div class="w-10 h-1 rounded-full bg-white/20 mx-auto mb-6"></div>
             <h2 class="text-2xl font-bold mb-1">Get Exclusive Deals</h2>
@@ -163,8 +163,8 @@
             modal.classList.remove('pointer-events-none');
             backdrop.classList.remove('pointer-events-none');
             backdrop.classList.add('opacity-100');
-            sheet.classList.remove('translate-y-full');
-            sheet.classList.add('translate-y-0');
+            sheet.classList.remove('scale-95', 'opacity-0');
+            sheet.classList.add('scale-100', 'opacity-100');
         }
 
         function closeModal() {
@@ -172,8 +172,8 @@
             const backdrop = document.getElementById('modal-backdrop');
             const sheet = document.getElementById('modal-sheet');
             backdrop.classList.remove('opacity-100');
-            sheet.classList.remove('translate-y-0');
-            sheet.classList.add('translate-y-full');
+            sheet.classList.remove('scale-100', 'opacity-100');
+            sheet.classList.add('scale-95', 'opacity-0');
             setTimeout(() => {
                 modal.classList.add('pointer-events-none');
                 backdrop.classList.add('pointer-events-none');
