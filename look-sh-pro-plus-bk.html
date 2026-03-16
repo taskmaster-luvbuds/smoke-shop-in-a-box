@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="relative w-full rounded-[2rem] bg-brand-card border border-white/5 overflow-hidden aspect-[16/9] shadow-2xl">
-            <video id="product-video" src="https://d1yei2z3i6k35z.cloudfront.net/10816672/69b807f9030201.52813516_LookahSeahorseProLOOK-SH-PRO-PLUS-BK.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
+            <video id="product-video" preload="auto" src="https://d1yei2z3i6k35z.cloudfront.net/10816672/69b807f9030201.52813516_LookahSeahorseProLOOK-SH-PRO-PLUS-BK.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
             <button onclick="toggleMute()" class="absolute bottom-3 right-3 z-20 bg-black/50 backdrop-blur-md w-10 h-10 rounded-full flex items-center justify-center transition active:scale-90">
                 <i id="mute-icon" data-lucide="volume-x" class="w-5 h-5 text-white"></i>
             </button>
@@ -154,6 +154,27 @@
 
     <script>
         lucide.createIcons();
+
+        // Force autoplay on Safari/iOS
+        (function() {
+            var video = document.getElementById('product-video');
+            if (!video) return;
+            video.muted = true;
+            var playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(function() {
+                    // If autoplay still blocked, play on first user interaction
+                    var events = ['touchstart', 'scroll', 'click'];
+                    function tryPlay() {
+                        video.muted = true;
+                        video.play();
+                        events.forEach(function(e) { document.removeEventListener(e, tryPlay); });
+                    }
+                    events.forEach(function(e) { document.addEventListener(e, tryPlay, { once: true }); });
+                });
+            }
+        })();
+
 
         function openModal() {
             const modal = document.getElementById('signup-modal');
