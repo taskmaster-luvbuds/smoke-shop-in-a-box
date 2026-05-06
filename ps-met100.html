@@ -242,6 +242,14 @@
                 });
             }
         }
+    
+        function toggleMute() {
+            const video = document.getElementById('product-video');
+            const icon = document.getElementById('mute-icon');
+            video.muted = !video.muted;
+            icon.setAttribute('data-lucide', video.muted ? 'volume-x' : 'volume-2');
+            lucide.createIcons();
+        }
     </script>
 
   <!-- Google Sheet live pricing — replace SHEET_ID per store -->
