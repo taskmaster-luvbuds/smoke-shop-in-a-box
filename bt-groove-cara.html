@@ -59,7 +59,10 @@
             </div>
         </div>
         <div class="relative w-full rounded-[2rem] bg-brand-card border border-white/5 overflow-hidden aspect-[16/9] shadow-2xl">
-            <video src="https://d1yei2z3i6k35z.cloudfront.net/10816672/69fa3d29dea975.88760915_groove.mp4" class="absolute inset-0 w-full h-full object-cover" autoplay muted loop playsinline preload="metadata" aria-label="Groove CARA Concentrate Pen product video"></video>
+            <video id="product-video" preload="auto" src="https://d1yei2z3i6k35z.cloudfront.net/10816672/69fa3d29dea975.88760915_groove.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
+            <button onclick="toggleMute()" class="absolute bottom-4 right-4 z-20 bg-black/60 backdrop-blur-md w-14 h-14 rounded-full flex items-center justify-center transition active:scale-90">
+                <i id="mute-icon" data-lucide="volume-x" class="w-7 h-7 text-white"></i>
+            </button>
         </div>
         <div class="bg-brand-card/50 border border-white/5 rounded-[2rem] p-6">
             <h3 class="text-lg font-semibold mb-3">About this item</h3>
