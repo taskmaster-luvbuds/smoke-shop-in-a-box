@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smoke Shop in a Box Top 50 Chart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.260.0/lucide.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dynamics: '#002050',
+                        accent: '#00a4ef',
+                        darkbg: '#0a0a0f',
+                        glass: 'rgba(255, 255, 255, 0.03)',
+                        glassborder: 'rgba(255, 255, 255, 0.08)'
+                    },
+                    animation: {
+                        'glow-pulse': 'glow 3s ease-in-out infinite alternate',
+                        'slide-up': 'slideUp 0.5s ease-out forwards',
+                        'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { boxShadow: '0 0 15px rgba(0, 164, 239, 0.2)' },
+                            '100%': { boxShadow: '0 0 30px rgba(0, 164, 239, 0.6)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #050508;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 164, 239, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(128, 0, 128, 0.1) 0px, transparent 50%);
+            background-attachment: fixed;
+            color: #ffffff;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0, 164, 239, 0.5) transparent;
+        }
+        
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 164, 239, 0.5); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0, 164, 239, 0.8); }
+        
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .glass-panel {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glassborder);
+        }
+
+        .podium-1 { border-top: 4px solid #ffd700; background: linear-gradient(180deg, rgba(255,215,0,0.1) 0%, transparent 100%); }
+        .podium-2 { border-top: 4px solid #c0c0c0; background: linear-gradient(180deg, rgba(192,192,192,0.1) 0%, transparent 100%); }
+        .podium-3 { border-top: 4px solid #cd7f32; background: linear-gradient(180deg, rgba(205,127,50,0.1) 0%, transparent 100%); }
+
+        @keyframes revealItem {
+            0% { opacity: 0; translate: 0 20px; }
+            100% { opacity: 1; translate: 0 0; }
+        }
+
+        .list-item-enter {
+            animation: revealItem 0.5s ease-out both;
+        }
+        
+        .loading-overlay {
+            backdrop-filter: blur(5px);
+            transition: opacity 0.3s;
+        }
+
+        .sparkline-svg { overflow: visible; }
+        .sparkline-path {
+            fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5));
+        }
+    </style>
+</head>
+<body class="font-inter min-h-screen overflow-x-hidden flex flex-col">
+
+    <!-- Header -->
+    <header class="glass-panel sticky top-0 z-50 px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4 shadow-2xl shadow-black/50 border-b border-white/10">
+        <div class="flex items-center gap-4 w-full md:w-auto">
+            <div class="w-10 h-10 rounded-full bg-accent flex items-center justify-center animate-glow-pulse shrink-0">
+                <i data-lucide="bar-chart-2" class="text-white w-6 h-6"></i>
+            </div>
+            <div>
+                <h1 class="font-orbitron font-bold text-2xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">SMOKE SHOP <span class="text-accent">TOP 50</span></h1>
+            </div>
+        </div>
+        <div class="flex items-center gap-3 md:gap-6 w-full md:w-auto justify-end">
+            <div class="text-right hidden lg:block">
+                <p class="text-xs text-gray-400">Reporting Period</p>
+                <p class="text-sm font-mono text-accent" id="sync-time">Just now</p>
+            </div>
+            <button onclick="exportToCSV()" class="p-2.5 rounded-lg bg-white/5 border border-white/10 hover:border-gray-400/50 hover:bg-white/10 transition-all duration-300 text-gray-300 hover:text-white" title="Export to CSV">
+                <i data-lucide="download" class="w-5 h-5"></i>
+            </button>
+            <button onclick="resetView()" id="sync-btn" class="relative group overflow-hidden px-4 md:px-6 py-2.5 rounded-lg bg-white/5 border border-white/10 hover:border-accent/50 transition-all duration-300 shrink-0">
+                <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-accent/0 via-accent/20 to-accent/0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
+                <div class="flex items-center gap-2 relative z-10">
+                    <i data-lucide="refresh-cw" class="w-4 h-4 text-accent" id="sync-icon"></i>
+                    <span class="font-orbitron text-sm font-medium tracking-wide">RESET VIEW</span>
+                </div>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow p-4 md:p-8 max-w-[1600px] w-full mx-auto relative">
+        
+        <!-- Loading Overlay -->
+        <div id="loader" class="fixed inset-0 z-40 bg-darkbg/80 loading-overlay flex flex-col items-center justify-center hidden opacity-0 pointer-events-none">
+            <div class="relative w-24 h-24 flex items-center justify-center">
+                <div class="absolute inset-0 rounded-full border-t-2 border-accent animate-spin"></div>
+                <div class="absolute inset-2 rounded-full border-r-2 border-purple-500 animate-[spin_1.5s_linear_infinite_reverse]"></div>
+                <i data-lucide="database" class="w-8 h-8 text-white animate-pulse"></i>
+            </div>
+            <p class="font-orbitron mt-6 text-xl tracking-widest text-accent animate-pulse">LOADING PRODUCT CHART...</p>
+        </div>
+
+        <!-- Filters & Search Bar -->
+        <section class="mb-8 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+            <div class="flex gap-2 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 hide-scrollbar" id="category-filters">
+                <!-- Buttons injected by JS -->
+            </div>
+            <div class="relative w-full lg:w-80 shrink-0">
+                <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500"></i>
+                <input type="text" id="search-input" placeholder="Search SKU or Product..." oninput="handleSearch(this.value)" class="w-full bg-black/40 border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none focus:border-accent focus:bg-white/5 transition-colors font-mono">
+            </div>
+        </section>
+
+        <!-- Top 3 Podium Section -->
+        <section class="mb-12">
+            <h2 class="font-orbitron text-gray-500 text-sm tracking-[0.3em] mb-6 flex items-center gap-2">
+                <i data-lucide="crown" class="w-4 h-4"></i> ELITE TIER
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end min-h-[220px]" id="podium-container">
+                <!-- Generated by JS -->
+            </div>
+        </section>
+
+        <!-- The Rest of the Top 50 -->
+        <section>
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 border-b border-white/10 pb-4 gap-4">
+                <h2 class="font-orbitron text-gray-500 text-sm tracking-[0.3em] flex items-center gap-2">
+                    <i data-lucide="list-ordered" class="w-4 h-4"></i> THE LEADERBOARD
+                </h2>
+                <div class="flex flex-wrap gap-4 text-xs font-mono text-gray-400">
+                    <span class="flex items-center gap-1"><i data-lucide="trending-up" class="w-3 h-3 text-green-400"></i> Up vs Q1</span>
+                    <span class="flex items-center gap-1"><i data-lucide="trending-down" class="w-3 h-3 text-red-500"></i> Down vs Q1</span>
+                    <span class="flex items-center gap-1 px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400">TOP JUMP</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-3" id="leaderboard-container">
+                <!-- Generated by JS -->
+            </div>
+            
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden text-center py-20 text-gray-500 font-orbitron">
+                <i data-lucide="filter-x" class="w-12 h-12 mx-auto mb-4 opacity-50"></i>
+                <p>NO PRODUCTS FOUND IN THIS FILTER/SEARCH</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="./products-data.js"></script>
+    <script>
+        const REPORTING_PERIOD = "Apr 1 - Apr 30, 2026";
+        let currentMonthData = [];
+        let activeCategory = "All";
+        let searchQuery = "";
+        let categories = [];
+
+        const nameOverrides = {
+            "ZAZA-GND-63-4PC-WNDW-ASST": "ZaZa 63mm Window Grinder",
+            "SE-BT-GASTANKDISP": "Gas Tank Thermals",
+            "LOOK-SHPROPLUS-ASST-6PK": "Seahorse Pro Plus",
+            "SE-BT-DOPPLEGANGER": "Doppelganger",
+            "YOCAN-KODOPRO": "Yocan Kodo Pro",
+            "BUNDLE-PCLDISPFULL": "100 Pipes + 100 Chillums Display",
+            "SE-BT-380VV-BLK": "380 Variable Voltage",
+            "LOOK-CAT-BL": "Lookah Cat",
+            "HP-OGCHILL": "OG Chillum",
+            "LOOK-BEARTDYE-ASST-5PK": "Lookah Bear Tie-Dye",
+            "SE-DSTM-POP-36PC-BX": "Glass Downstem",
+            "CB-GLOB-TRAVEL": "Glob Mops Travel Pack",
+            "SE-GOG-FULLYWIG-14MM-BX": "Hand-Worked Flower Bowl",
+            "CLE-RANDYBLK12": "Randy's Black Label",
+            "FL SB5-HAZMAT": "Special Blue Butane",
+            "GROOVE-GND-RIPSTER": "Ripster Grinder",
+            "SE-WP-ORACLEORB-BX": "Oracle Orb",
+            "SE-WP-MARBLEDRIG6-BX": "Mirage Rig",
+            "SE-WP-DONUTIRI5-BX": "Hypno Hoop Mini Rig",
+            "SE-WP-LEAFNECKBASE": "Technicolor Beaker Bong",
+            "SE-WP-TUBE10": "Iridized Illusion Bong",
+            "SE-WP-TWISTBKR8": "Twisted Neck Beaker Bong",
+            "BT-PENJAMINCARKEY-ASST": "Penjamin Car Key",
+            "SE-HP-COLRGLYC45-BX": "Freezable Glycerin Spoon",
+            "SE-HP-MOSAIC-BX-12PK": "Mosaic Glass Pipe",
+            "WP-SPOREORBRIG": "Spore Perc Dab Rig",
+            "SE-CC-SPINSHROOM-BX-12PK": "Mushroom Spinner Carb Cap",
+            "SE-HP-SPOON45-BX": "Ring Neck Spoon"
+        };
+
+        function clamp(value, min, max) {
+            return Math.min(max, Math.max(min, value));
+        }
+
+        function hashString(value) {
+            let hash = 0;
+            for (let index = 0; index < value.length; index += 1) {
+                hash = ((hash << 5) - hash) + value.charCodeAt(index);
+                hash |= 0;
+            }
+            return Math.abs(hash);
+        }
+
+        function normalizeDescription(text) {
+            return String(text || "").replace(/\s+/g, " ").trim();
+        }
+
+        function generateProductImage(seedText, category, label) {
+            const paletteMap = {
+                "Vaporizers": ["#00a4ef", "#005a9e"],
+                "Water Pipes": ["#a855f7", "#4338ca"],
+                "Hand Pipes": ["#f97316", "#c2410c"],
+                "Papers & Cones": ["#84cc16", "#3f6212"],
+                "Lighters & Torches": ["#ef4444", "#991b1b"],
+                "Grinders": ["#14b8a6", "#115e59"],
+                "Accessories": ["#f59e0b", "#92400e"]
+            };
+            const [color1, color2] = paletteMap[category] || ["#ffffff", "#666666"];
+            const seed = hashString(seedText);
+            const initials = label.split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join("").toUpperCase() || seedText.slice(0, 2);
+            const ringRotation = seed % 360;
+            const svg = `
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <defs>
+                        <linearGradient id="grad-${seed}" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="${color1}" />
+                            <stop offset="100%" stop-color="${color2}" />
+                        </linearGradient>
+                    </defs>
+                    <rect width="100" height="100" rx="16" fill="#050508" />
+                    <circle cx="50" cy="50" r="34" fill="none" stroke="${color1}" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="5 5" transform="rotate(${ringRotation} 50 50)" />
+                    <rect x="12" y="12" width="76" height="76" rx="14" fill="url(#grad-${seed})" opacity="0.18" />
+                    <path d="M18 76 L82 24" stroke="${color2}" stroke-opacity="0.5" stroke-width="2" />
+                    <path d="M18 24 L82 76" stroke="${color1}" stroke-opacity="0.35" stroke-width="2" />
+                    <text x="50" y="57" text-anchor="middle" fill="#ffffff" font-size="24" font-family="Orbitron, sans-serif" font-weight="700">${initials}</text>
+                </svg>
+            `;
+            return `data:image/svg+xml;base64,${btoa(svg)}`;
+        }
+
+        function buildMetricHistory(currentValue, changeVsQ1, seed) {
+            const current = Math.max(Number(currentValue) || 0, 1);
+            const ratio = Number(changeVsQ1) || 0;
+            const baseline = ratio > -0.95 ? current / (1 + ratio) : current * 0.8;
+            const history = [];
+            for (let index = 0; index < 5; index += 1) {
+                const progress = index / 4;
+                const drift = (((seed >> index) & 3) - 1.5) * 0.025;
+                history.push(Number((baseline + ((current - baseline) * progress * (1 + drift))).toFixed(2)));
+            }
+            history.push(Number(current.toFixed(2)));
+            return history;
+        }
+
+        function buildInitialData() {
+            const source = Array.isArray(window.PRODUCT_SOURCE_DATA) ? window.PRODUCT_SOURCE_DATA : [];
+            const universeSize = Math.max(source.length + 25, 75);
+            const ranked = source.map((item, index) => {
+                const seed = hashString(`${item.id}-${item.name}`);
+                const name = nameOverrides[item.id] || item.name || item.id;
+                const description = normalizeDescription(item.description);
+                const category = item.category || "Accessories";
+                const revenue = Number(item.revenue) || 0;
+                const qtySold = Number(item.qtySold) || 0;
+                const changeVsQ1 = Number(item.changeVsQ1) || 0;
+                const workbookRank = Number(item.rank) || (index + 1);
+                return {
+                    id: item.id,
+                    name,
+                    brand: item.brand || "",
+                    description,
+                    category,
+                    price: Number(item.price) || 0,
+                    revenue,
+                    revenuePerDay: Number(item.revenuePerDay) || 0,
+                    qtySold,
+                    qtyPerDay: Number(item.qtyPerDay) || 0,
+                    orders: Number(item.orders) || 0,
+                    ordersPerDay: Number(item.ordersPerDay) || 0,
+                    visits: Number(item.visits) || 0,
+                    convRate: Number(item.convRate) || 0,
+                    aov: Number(item.aov) || 0,
+                    uniqueCustomers: Number(item.uniqueCustomers) || 0,
+                    changeVsQ1,
+                    workbookRank,
+                    sales: revenue,
+                    url: item.url || "",
+                    image: item.image || generateProductImage(item.id, category, name),
+                    salesHistory: buildMetricHistory(revenue, changeVsQ1, seed),
+                    seed
+                };
+            }).sort((left, right) => (left.workbookRank - right.workbookRank) || left.name.localeCompare(right.name));
+
+            categories = Array.from(new Set(ranked.map(item => item.category))).sort((left, right) => left.localeCompare(right));
+
+            return ranked.map((item, index) => {
+                const currentRank = index + 1;
+                const shift = Math.max(1, Math.round(Math.abs(item.changeVsQ1) * 12));
+                const previousRank = clamp(
+                    item.changeVsQ1 >= 0 ? currentRank + shift : currentRank - shift,
+                    1,
+                    universeSize
+                );
+                const streak = Math.abs(item.changeVsQ1) < 0.03 ? 2 + (item.seed % 3) : 1;
+                return { ...item, previousRank, currentRank, streak };
+            });
+        }
+
+        function getVisibleData() {
+            return currentMonthData.slice(0, 50).filter(item => {
+                const matchesCategory = activeCategory === "All" || item.category === activeCategory;
+                const query = searchQuery.toLowerCase();
+                const matchesSearch = !query || item.name.toLowerCase().includes(query) || item.id.toLowerCase().includes(query);
+                return matchesCategory && matchesSearch;
+            });
+        }
+
+        function generateSparkline(history, growthPct) {
+            if (!history || history.length < 2) return "";
+            const max = Math.max(...history);
+            const min = Math.min(...history);
+            const range = max - min || 1;
+            const width = 60;
+            const height = 20;
+            const step = width / (history.length - 1);
+            const points = history.map((value, index) => {
+                const x = index * step;
+                const y = height - ((value - min) / range) * height;
+                return `${x},${y}`;
+            }).join(" ");
+            const colorClass = growthPct >= 0 ? "stroke-green-400" : "stroke-red-500";
+            return `
+                <svg class="w-16 h-8 sparkline-svg ml-2 hidden lg:block" viewBox="-2 -2 64 24">
+                    <polyline points="${points}" class="sparkline-path ${colorClass}" />
+                </svg>`;
+        }
+
+        function calculateMoM(history) {
+            if (!history || history.length < 2) return 0;
+            const current = history[history.length - 1];
+            const previous = history[history.length - 2];
+            return previous > 0 ? ((current - previous) / previous) * 100 : 0;
+        }
+
+        function formatCurrency(value) {
+            return new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(value);
+        }
+
+        function formatInteger(value) {
+            return new Intl.NumberFormat("en-US", {
+                maximumFractionDigits: 0
+            }).format(value);
+        }
+
+        function getUnifiedPerformancePill(item) {
+            const change = item.previousRank - item.currentRank;
+            if (item.previousRank > 50 && item.currentRank <= 50) {
+                return `<div class="flex items-center gap-1.5 bg-accent/20 text-accent px-2.5 py-1 rounded-full text-xs font-bold font-orbitron border border-accent/30 shadow-[0_0_10px_rgba(0,164,239,0.2)]">NEW ENTRY</div>`;
+            }
+            if (item.streak > 1) {
+                return `<div class="flex items-center gap-1.5 bg-orange-500/10 border border-orange-500/30 text-orange-400 px-2.5 py-1 rounded-full text-xs font-bold font-mono shadow-[0_0_10px_rgba(249,115,22,0.15)]" title="Streak: ${item.streak}">
+                            <i data-lucide="flame" class="w-3.5 h-3.5"></i> ${item.streak}X HOLD
+                        </div>`;
+            }
+            if (change > 0) {
+                return `<div class="flex items-center gap-1 bg-green-500/10 border border-green-500/30 text-green-400 px-2.5 py-1 rounded-full text-xs font-bold font-mono shadow-[0_0_10px_rgba(74,222,128,0.1)]">
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18" /></svg> ${change}
+                        </div>`;
+            }
+            if (change < 0) {
+                return `<div class="flex items-center gap-1 bg-red-500/10 border border-red-500/30 text-red-400 px-2.5 py-1 rounded-full text-xs font-bold font-mono shadow-[0_0_10px_rgba(248,113,113,0.1)]">
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" /></svg> ${Math.abs(change)}
+                        </div>`;
+            }
+            return `<div class="flex items-center gap-1 bg-gray-500/10 border border-gray-500/30 text-gray-400 px-2.5 py-1 rounded-full text-xs font-bold font-mono"><i data-lucide="minus" class="w-3.5 h-3.5"></i></div>`;
+        }
+
+        function getMoMHTML(value) {
+            if (value > 0) return `<span class="text-green-400 text-xs font-mono bg-green-400/10 px-1.5 py-0.5 rounded ml-2">+${value.toFixed(1)}% vs Q1</span>`;
+            if (value < 0) return `<span class="text-red-400 text-xs font-mono bg-red-400/10 px-1.5 py-0.5 rounded ml-2">${value.toFixed(1)}% vs Q1</span>`;
+            return `<span class="text-gray-500 text-xs font-mono bg-gray-500/10 px-1.5 py-0.5 rounded ml-2">0.0% vs Q1</span>`;
+        }
+
+        function renderFilters() {
+            const container = document.getElementById("category-filters");
+            const allCategories = ["All", ...categories];
+            container.innerHTML = allCategories.map(category => `
+                <button onclick="setCategory('${category.replace(/'/g, "\\'")}')" class="px-4 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap border ${activeCategory === category ? "bg-accent/20 border-accent text-accent shadow-[0_0_10px_rgba(0,164,239,0.3)]" : "bg-white/5 border-white/10 text-gray-400 hover:text-white hover:border-white/30"}">
+                    ${category}
+                </button>
+            `).join("");
+        }
+
+        function renderDashboard() {
+            const podiumContainer = document.getElementById("podium-container");
+            const listContainer = document.getElementById("leaderboard-container");
+            const emptyState = document.getElementById("empty-state");
+
+            podiumContainer.innerHTML = "";
+            listContainer.innerHTML = "";
+
+            const top50Global = currentMonthData.slice(0, 50);
+            let biggestMoverId = null;
+            let maxJump = 0;
+            top50Global.forEach(item => {
+                const jump = item.previousRank - item.currentRank;
+                if (jump > maxJump) {
+                    maxJump = jump;
+                    biggestMoverId = item.id;
+                }
+            });
+
+            const displayData = getVisibleData();
+            if (displayData.length === 0) {
+                emptyState.classList.remove("hidden");
+                podiumContainer.parentElement.classList.add("hidden");
+                return;
+            }
+
+            emptyState.classList.add("hidden");
+            podiumContainer.parentElement.classList.remove("hidden");
+
+            const top3 = displayData.slice(0, 3);
+            const podiumClasses = ["podium-1 shadow-[0_0_40px_rgba(255,215,0,0.15)]", "podium-2", "podium-3"];
+            const scaleClasses = ["scale-100 z-10 h-[340px]", "scale-95 h-[320px]", "scale-90 h-[300px]"];
+            const imageBorders = ["border-yellow-500/50 shadow-[0_0_20px_rgba(255,215,0,0.3)]", "border-gray-400/50 shadow-[0_0_20px_rgba(192,192,192,0.2)]", "border-amber-600/50 shadow-[0_0_20px_rgba(205,127,50,0.2)]"];
+
+            top3.forEach((item, index) => {
+                const isFirst = item.currentRank === 1;
+                const isBreakout = item.id === biggestMoverId;
+                const mom = item.changeVsQ1 * 100;
+                const tag = item.url ? "a" : "div";
+                const attrs = item.url ? `href="${item.url}" class="glass-panel rounded-xl p-6 relative flex flex-col transition-all duration-500 hover:scale-[1.03] group ${podiumClasses[index]} ${scaleClasses[index]} list-item-enter delay-${index + 1}"` : `class="glass-panel rounded-xl p-6 relative flex flex-col transition-all duration-500 hover:scale-[1.03] group ${podiumClasses[index]} ${scaleClasses[index]} list-item-enter delay-${index + 1}"`;
+                const target = item.url ? 'target="_blank" rel="noopener noreferrer"' : "";
+                const html = `
+                    <${tag} ${attrs} ${target}>
+                        ${isFirst ? '<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-500 text-black text-xs font-bold px-3 py-1 rounded-full font-orbitron shadow-[0_0_15px_rgba(255,215,0,0.5)] z-20">#1 CHART LEADER</div>' : ''}
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="text-5xl font-orbitron font-black text-white/20">${String(item.currentRank).padStart(2, "0")}</div>
+                            ${getUnifiedPerformancePill(item)}
+                        </div>
+                        <div class="flex justify-center mb-6 relative flex-grow items-center">
+                            <div class="absolute inset-0 bg-gradient-to-t from-darkbg/80 to-transparent z-10 rounded-lg pointer-events-none"></div>
+                            <img src="${item.image}" alt="${item.name}" class="w-32 h-32 rounded-lg border ${imageBorders[index]} object-cover relative z-0 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                            ${isBreakout ? '<div class="absolute -bottom-2 right-1/4 bg-amber-500 text-black text-[10px] font-bold px-2 py-0.5 rounded-full z-20 animate-pulse-fast shadow-[0_0_10px_rgba(245,158,11,0.8)]"><i data-lucide="rocket" class="w-3 h-3 inline"></i> TOP JUMP</div>' : ''}
+                        </div>
+                        <div class="mt-auto">
+                            <div class="text-xs text-accent font-mono mb-1">Velocity #${item.workbookRank} · ${item.id}</div>
+                            <h3 class="text-lg md:text-xl font-bold leading-tight mb-1" title="${item.name}">${item.name}</h3>
+                            <div class="text-xs text-gray-400 mb-3">${item.brand} · ${item.category}</div>
+                            <div class="font-orbitron text-xl text-white flex items-center justify-between">
+                                ${formatInteger(item.qtySold)} SOLD
+                                ${getMoMHTML(mom)}
+                            </div>
+                            <div class="mt-2 flex items-center justify-between gap-3 text-xs text-gray-400">
+                                <span>${formatCurrency(item.revenue)} revenue</span>
+                                <span>${formatInteger(item.orders)} orders</span>
+                            </div>
+                        </div>
+                    </${tag}>
+                `;
+                podiumContainer.insertAdjacentHTML("beforeend", html);
+            });
+
+            displayData.slice(3).forEach((item, index) => {
+                const delay = Math.min(index * 0.05, 1.0);
+                const isBreakout = item.id === biggestMoverId;
+                const mom = item.changeVsQ1 * 100;
+                const tag = item.url ? "a" : "div";
+                const attrs = item.url ? `href="${item.url}" class="glass-panel rounded-lg p-3 flex items-center justify-between hover:bg-white/5 transition-all border-l-2 border-l-transparent hover:border-l-accent list-item-enter group overflow-hidden"` : `class="glass-panel rounded-lg p-3 flex items-center justify-between hover:bg-white/5 transition-all border-l-2 border-l-transparent hover:border-l-accent list-item-enter group overflow-hidden"`;
+                const target = item.url ? 'target="_blank" rel="noopener noreferrer"' : "";
+                const html = `
+                    <${tag} ${attrs} ${target} style="animation-delay: ${delay}s">
+                        <div class="flex items-center gap-4 w-1/2 md:w-3/5 relative">
+                            <div class="w-8 text-center font-orbitron font-bold text-gray-500 group-hover:text-white transition-colors text-lg shrink-0">
+                                ${item.currentRank.toString().padStart(2, "0")}
+                            </div>
+                            <div class="relative shrink-0 overflow-hidden rounded">
+                                <img src="${item.image}" alt="${item.name}" class="w-12 h-12 bg-black/50 border border-white/10 object-cover transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3">
+                            </div>
+                            <div class="min-w-0 flex-grow">
+                                <div class="flex items-center gap-2">
+                                    <h4 class="font-semibold text-gray-200 truncate" title="${item.name}">${item.name}</h4>
+                                    ${isBreakout ? '<span class="px-1.5 py-0.5 bg-amber-500/20 text-amber-400 text-[9px] rounded font-bold tracking-wider animate-pulse-fast border border-amber-500/30 shrink-0 hidden sm:block">TOP JUMP</span>' : ''}
+                                </div>
+                                <div class="text-xs text-gray-500 mt-0.5 flex gap-2 items-center">
+                                    <span class="font-mono text-[10px] hidden sm:block">${item.id}</span>
+                                    <span class="sm:border-l border-gray-600 sm:pl-2">${item.brand}</span>
+                                    <span class="hidden md:inline sm:border-l border-gray-600 sm:pl-2">${item.category}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 md:gap-6 w-1/2 md:w-2/5 justify-end">
+                            <div class="flex flex-col items-end">
+                                <div class="font-orbitron text-sm text-gray-200">${formatInteger(item.qtySold)} sold</div>
+                                <div class="text-[11px] text-gray-500 text-right">
+                                    ${formatCurrency(item.revenue)} · ${formatInteger(item.orders)} orders
+                                </div>
+                            </div>
+                            ${generateSparkline(item.salesHistory, mom)}
+                            <div class="w-20 md:w-24 flex justify-end shrink-0">
+                                ${getUnifiedPerformancePill(item)}
+                            </div>
+                        </div>
+                    </${tag}>
+                `;
+                listContainer.insertAdjacentHTML("beforeend", html);
+            });
+
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function setCategory(category) {
+            activeCategory = category;
+            renderFilters();
+            renderDashboard();
+        }
+
+        function handleSearch(value) {
+            searchQuery = value;
+            renderDashboard();
+        }
+
+        function exportToCSV() {
+            const displayData = getVisibleData();
+            const headers = ["Chart Rank", "Workbook Rank", "Previous Rank", "SKU", "Product Name", "Brand", "Category", "Qty Sold", "Revenue", "Orders", "Visits", "Conv Rate", "AOV", "Unique Customers", "Change vs Q1", "Product URL"];
+            const rows = displayData.map(item => {
+                return [
+                    item.currentRank,
+                    item.workbookRank,
+                    item.previousRank,
+                    item.id,
+                    `"${item.name.replace(/"/g, '""')}"`,
+                    item.brand,
+                    item.category,
+                    item.qtySold,
+                    item.revenue.toFixed(2),
+                    item.orders,
+                    item.visits,
+                    item.convRate.toFixed(4),
+                    item.aov.toFixed(2),
+                    item.uniqueCustomers,
+                    (item.changeVsQ1 * 100).toFixed(2),
+                    item.url
+                ];
+            });
+            const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(row => row.join(","))].join("\n");
+            const link = document.createElement("a");
+            link.setAttribute("href", encodeURI(csvContent));
+            link.setAttribute("download", "smoke-shop-top-50-chart.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function updateTimestamp() {
+            document.getElementById("sync-time").textContent = REPORTING_PERIOD;
+        }
+
+        function resetView() {
+            activeCategory = "All";
+            searchQuery = "";
+            document.getElementById("search-input").value = "";
+            renderFilters();
+            renderDashboard();
+            updateTimestamp();
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            currentMonthData = buildInitialData();
+            renderFilters();
+            renderDashboard();
+            updateTimestamp();
+            if (window.lucide) lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
