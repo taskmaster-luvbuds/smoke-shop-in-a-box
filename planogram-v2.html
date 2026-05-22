@@ -180,7 +180,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
       <button data-mode="mixed">Mixed</button>
     </div>
     <button class="btn" onclick="resetAll()">Reset</button>
-    <button class="btn" onclick="dlJSON()">Export JSON</button>
+    <button class="btn" onclick="dlJSON()">📋 Report</button>
+    <button class="btn" onclick="exportLayoutFile()" title="Download layout file for backup or transfer">📤 Export</button>
+    <input type="file" id="import-file" accept=".json" style="display:none" onchange="importLayoutFile(event)">
+    <button class="btn" onclick="document.getElementById('import-file').click()" title="Restore layout from a previously exported file">📥 Import</button>
     <div class="config-wrap">
       <button class="btn" onclick="saveCurrentConfig()" title="Save current layout to browser storage">💾 Save</button>
       <button class="btn" onclick="toggleConfigDropdown(event)" title="Load a saved layout">📂 Load</button>
@@ -1687,6 +1690,45 @@ function dlJSON() {
   a.download = 'planogram-v2-' + new Date().toISOString().slice(0, 10) + '.json';
   a.click();
   toast('Exported planogram JSON');
+}
+
+function exportLayoutFile() {
+  var data = {
+    version: 1,
+    exported: new Date().toISOString(),
+    displays: serializeDisplays()
+  };
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'}));
+  a.download = 'planogram-layout-' + new Date().toISOString().slice(0, 10) + '.json';
+  a.click();
+  toast('Exported layout file');
+}
+
+function importLayoutFile(event) {
+  var file = event.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var raw = JSON.parse(e.target.result);
+      // Accept both wrapped {version, displays} and raw display array
+      var arr = Array.isArray(raw) ? raw : raw.displays;
+      if (!arr || !Array.isArray(arr) || arr.length === 0 || !arr[0].layout) {
+        toast('Invalid layout file — missing display data');
+        return;
+      }
+      if (!confirm('Import "' + escHtml(file.name) + '"? This replaces current displays.')) return;
+      restoreDisplays(arr);
+      renderAll();
+      autoSave();
+      toast('Imported ' + arr.length + ' display(s) from ' + escHtml(file.name));
+    } catch (err) {
+      toast('Invalid file — not valid JSON');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
 }
 
 function generateOrderJSON() {
