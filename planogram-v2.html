@@ -1,0 +1,2032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smoke Shop in a Box — Full Catalog Planogram</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#e8e4dc;color:#333;min-height:100vh}
+.topbar{background:#1a1a2e;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.topbar h1{font-size:16px;color:#fff}.topbar .sub{font-size:10px;color:#888}
+.controls{display:flex;gap:6px;flex-wrap:wrap}
+.btn{padding:5px 12px;border-radius:4px;border:1px solid #555;background:#2a2a4a;color:#ccc;cursor:pointer;font-size:11px;white-space:nowrap}
+.btn:hover{background:#0f3460;border-color:#e94560;color:#fff}
+.btn.pri{background:#e94560;border-color:#e94560;color:#fff}
+.btn.on{background:#1B5E20;border-color:#43A047;color:#fff}
+.main{display:flex;gap:12px;padding:12px;align-items:flex-start;max-width:1800px;margin:0 auto}
+.plano-wrap{flex:1;min-width:0;overflow-x:auto}
+#plano-container{display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
+
+.display-wrapper{margin-bottom:8px;flex:0 0 auto}
+.display-controls{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;background:#1a1a2e;border-radius:8px 8px 0 0;max-width:464px;margin:0 auto}
+.display-name{color:#fff;font-weight:700;font-size:13px}
+.display-actions{display:flex;gap:4px}
+.add-display-btn{flex:0 0 100%;padding:8px 20px;background:#2a2a4a;color:#ccc;border:2px dashed #555;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600;transition:all .15s;text-align:center}
+.add-display-btn:hover{background:#0f3460;border-color:#e94560;color:#fff}
+
+.display-unit{margin:0 auto;filter:drop-shadow(0 4px 20px rgba(0,0,0,.18))}
+.display-header{background:#f5f2ed;border-radius:0;padding:10px 14px 6px;text-align:center;border:2px solid #c8b99a;border-bottom:none}
+.display-header .brand{font-size:8px;color:#999;letter-spacing:1px}
+.display-header .title{font-size:18px;font-weight:800;margin:2px 0}.display-header .title span{color:#e53935}
+.red-banner{background:linear-gradient(135deg,#c62828,#e53935);color:#fff;padding:3px 12px;display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:11px;letter-spacing:.5px;border-left:2px solid #c8b99a;border-right:2px solid #c8b99a}
+.red-banner .st{font-weight:400;font-size:8px;opacity:.85}
+.shelf-label{background:rgba(0,0,0,.03);border-left:2px solid #c8b99a;border-right:2px solid #c8b99a;padding:2px 8px;font-size:9px;color:#999;display:flex;justify-content:space-between}
+.shelf-label strong{color:#d32f2f}
+
+.shelf-front{position:relative;background:linear-gradient(180deg,#faf8f4,#f5f0e8);border-left:2px solid #c8b99a;border-right:2px solid #c8b99a;overflow:hidden;transition:outline .15s}
+.shelf-front.drop-target{outline:3px dashed #e94560;outline-offset:-3px;background:rgba(233,69,96,.04)}
+.shelf-surface{height:5px;background:linear-gradient(to bottom,#c8b99a,#b5a789);border-left:2px solid #c8b99a;border-right:2px solid #c8b99a;position:relative;z-index:100}
+
+.product{position:absolute;bottom:0;border:2px solid;border-radius:2px;overflow:hidden;cursor:grab;user-select:none;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:box-shadow .15s,opacity .15s}
+.product:hover{box-shadow:0 0 0 2px #e94560,0 4px 16px rgba(233,69,96,.35);z-index:500!important}
+.product.dragging{opacity:.25;cursor:grabbing;z-index:600!important;pointer-events:none}
+.product.hidden-product{display:none!important}
+.product.is-back{z-index:5;filter:brightness(.92)}.product.is-front{z-index:15;box-shadow:2px 0 8px rgba(0,0,0,.15)}.product.is-single{z-index:10}
+.product.highlighted{outline:3px solid #e94560;outline-offset:1px;z-index:400!important}
+.product.estimated{border-style:dashed}
+.product img.pimg{width:100%;height:100%;object-fit:cover;pointer-events:none;position:absolute;top:0;left:0;z-index:1}
+.product .shape-fill{position:absolute;inset:0;z-index:0}
+.product .p-id{position:absolute;bottom:0;left:0;right:0;font-size:6px;font-weight:700;line-height:1;padding:1px 2px;color:#fff;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:2}
+.product .p-name{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:5px;color:rgba(255,255,255,.9);text-align:center;line-height:1.1;pointer-events:none;z-index:1;width:90%;overflow:hidden;display:none}
+.product.no-image .p-name{display:block}
+.product.no-image .shape-fill{z-index:1}
+.depth-badge{position:absolute;top:2px;right:2px;background:rgba(0,0,0,.7);color:#fff;font-size:8px;font-weight:700;padding:1px 4px;border-radius:8px;line-height:1.2;z-index:20}
+.depth-badge.single{display:none}
+.prod-remove{position:absolute;top:1px;left:1px;width:14px;height:14px;border-radius:50%;background:rgba(229,57,69,.9);color:#fff;border:none;font-size:10px;line-height:1;cursor:pointer;z-index:25;display:none;align-items:center;justify-content:center;padding:0}
+.product:hover .prod-remove{display:flex}
+.prod-rotate{position:absolute;top:1px;right:22px;width:14px;height:14px;border-radius:50%;background:rgba(0,0,0,.7);color:#fff;border:none;font-size:9px;line-height:1;cursor:pointer;z-index:25;display:none;align-items:center;justify-content:center;padding:0}
+.product:hover .prod-rotate{display:flex}
+.prod-rotate.on{background:rgba(233,69,96,.9)}
+
+.drag-ghost{position:fixed;pointer-events:none;z-index:9000;opacity:.85;border:2px solid #e94560;border-radius:3px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+
+.display-footer{background:#f5f2ed;border:2px solid #c8b99a;border-top:none;border-radius:0 0 8px 8px;padding:6px;text-align:center}
+.display-footer .brand{font-size:8px;color:#999;letter-spacing:1px}
+
+/* Sidebar */
+.inv-panel{width:310px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;max-height:calc(100vh - 160px);overflow-y:auto;position:sticky;top:12px;order:1}
+.plano-wrap{order:2}
+.key-panel{width:310px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;max-height:calc(100vh - 160px);overflow-y:auto;position:sticky;top:12px;order:3}
+.key-panel .panel h3{font-size:11px}
+.key-panel .idx-list{max-height:300px}
+.panel{background:#fff;border-radius:8px;padding:10px 12px;border:1px solid #ddd;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.panel h3{font-size:12px;margin-bottom:6px;color:#d32f2f;font-weight:700;display:flex;justify-content:space-between;align-items:center}
+.panel h3 .toggle-all{font-size:9px;font-weight:400;color:#888;cursor:pointer;text-decoration:underline}
+.panel h3 .toggle-all:hover{color:#e94560}
+.stat-row{display:flex;justify-content:space-between;padding:2px 0;font-size:10px;border-bottom:1px solid #f0f0f0;color:#555}
+.util-bar{height:5px;background:#eee;border-radius:3px;margin-top:2px;overflow:hidden}
+.util-fill{height:100%;border-radius:3px}
+.u-ok{background:#43A047}.u-warn{background:#FF8F00}.u-over{background:#e53935}
+
+/* Product Index */
+.idx-list{max-height:420px;overflow-y:auto}
+.idx-item{display:flex;align-items:center;gap:6px;padding:3px 4px;border-bottom:1px solid #f5f5f5;font-size:10px;cursor:grab;border-radius:3px;transition:background .1s;touch-action:none}
+.idx-item:hover{background:#f5f0e8}
+.idx-item.idx-hidden{opacity:.4}
+.idx-item .idx-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+.idx-item .idx-thumb{width:28px;height:28px;border-radius:2px;border:1px solid #ddd;object-fit:contain;flex-shrink:0;background:#fafafa}
+.idx-item .idx-info{flex:1;min-width:0}
+.idx-item .idx-sku{font-weight:700;color:#333;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.idx-item .idx-meta{font-size:8px;color:#999}
+.idx-item .idx-shelf{font-size:8px;color:#d32f2f;font-weight:600}
+.idx-item .idx-est{font-size:7px;color:#FF8F00;font-style:italic}
+.idx-eye{width:22px;height:22px;border:none;background:none;cursor:pointer;font-size:14px;flex-shrink:0;border-radius:3px;display:flex;align-items:center;justify-content:center}
+.idx-eye:hover{background:#f0e8e0}
+.idx-stepper{display:flex;align-items:center;gap:0;flex-shrink:0;border:1px solid #ddd;border-radius:4px;overflow:hidden}
+.idx-stepper button{width:20px;height:20px;border:none;background:#f5f5f5;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;padding:0;color:#555;font-weight:700;line-height:1}
+.idx-stepper button:hover{background:#e0e0e0}
+.idx-stepper .idx-minus:hover{background:#ffebee;color:#c62828}
+.idx-stepper .idx-plus:hover{background:#e8f5e9;color:#2E7D32}
+.idx-stepper .idx-qty{font-size:9px;font-weight:700;color:#333;padding:0 4px;min-width:18px;text-align:center;background:#fff;border-left:1px solid #ddd;border-right:1px solid #ddd;line-height:20px}
+.idx-filter{width:100%;padding:4px 8px;border:1px solid #ddd;border-radius:4px;font-size:10px;margin-bottom:6px;outline:none}
+.idx-filter:focus{border-color:#e94560}
+.idx-line-filter{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px}
+.idx-line-chip{padding:1px 6px;border-radius:10px;font-size:8px;cursor:pointer;border:1px solid #ddd;background:#fafafa;color:#555;white-space:nowrap}
+.idx-line-chip.on{color:#fff;border-color:transparent}
+.idx-dim-filter{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:4px}
+.idx-dim-chip{padding:1px 6px;border-radius:10px;font-size:8px;cursor:pointer;border:1px solid #ddd;background:#fafafa;color:#555;white-space:nowrap}
+.idx-dim-chip.on{border-color:#FF8F00;background:#fff8e1;color:#E65100;font-weight:700}
+.idx-sort-row{display:flex;gap:4px;margin-bottom:6px;align-items:center}
+.idx-sort-row label{font-size:9px;color:#888;white-space:nowrap}
+.idx-sort-row select{padding:2px 4px;border:1px solid #ddd;border-radius:4px;font-size:9px;color:#555;outline:none;background:#fff}
+.idx-sort-row select:focus{border-color:#e94560}
+
+.legend-item{display:flex;align-items:center;gap:5px;padding:1px 0;font-size:10px;color:#555}
+.legend-sw{width:10px;height:10px;border-radius:2px;border:2px solid;flex-shrink:0;background:#fff}
+
+#tooltip{display:none;position:fixed;background:#1a1a2e;color:#e0e0e0;border:1px solid #e94560;padding:8px 12px;border-radius:6px;font-size:11px;max-width:300px;z-index:5000;pointer-events:none;line-height:1.4}
+#tooltip.vis{display:block}
+#tooltip .tt-n{font-weight:700;color:#e94560;margin-bottom:2px;font-size:11px}
+#tooltip .tt-d{color:#bbb;font-size:10px;white-space:pre-wrap}
+.cfg-btn{padding:6px 10px;border:2px solid #ddd;border-radius:5px;background:#fff;cursor:pointer;font-size:10px;text-align:left;transition:all .15s;color:#555;font-weight:600}
+.cfg-btn:hover{border-color:#e94560;color:#333}
+.cfg-btn.active{border-color:#d32f2f;background:#fff5f5;color:#d32f2f}
+.config-wrap{position:relative;display:inline-block}
+.config-dropdown{position:absolute;top:100%;right:0;background:#1a1a2e;border:1px solid #e94560;border-radius:6px;padding:6px;z-index:2000;min-width:260px;max-height:340px;overflow-y:auto;display:none;margin-top:4px}
+.config-dropdown.show{display:block}
+.config-item{display:flex;justify-content:space-between;align-items:center;padding:5px 6px;border-bottom:1px solid #333;font-size:11px;color:#ccc;gap:6px}
+.config-item:last-child{border-bottom:none}
+.config-item .cfg-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+.config-item .cfg-date{font-size:8px;color:#888}
+.config-item .cfg-act-btn{padding:2px 8px;border-radius:3px;border:1px solid #555;background:#2a2a4a;color:#ccc;cursor:pointer;font-size:9px}
+.config-item .cfg-act-btn:hover{background:#e94560;border-color:#e94560;color:#fff}
+.config-item .cfg-del-btn{padding:2px 8px;border-radius:3px;border:1px solid #555;background:#2a2a4a;color:#ccc;cursor:pointer;font-size:9px}
+.config-item .cfg-del-btn:hover{background:#c62828;border-color:#c62828;color:#fff}
+.config-autosave-row{padding:5px 6px;border-bottom:1px solid #555;font-size:10px;color:#888;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.config-autosave-row .cfg-act-btn{background:#1B5E20;border-color:#43A047;color:#fff}
+.display-name-wrap{display:flex;align-items:center;gap:6px}
+.display-name-edit{cursor:pointer;opacity:.4;font-size:10px;color:#ccc;transition:opacity .15s;user-select:none}
+.display-name-edit:hover{opacity:1;color:#e94560}
+.display-name-input{background:#2a2a4a;color:#fff;border:1px solid #e94560;border-radius:3px;padding:2px 6px;font-size:13px;font-weight:700;width:200px;outline:none}
+.toast{position:fixed;bottom:20px;right:20px;background:#1a1a2e;border:1px solid #e94560;color:#fff;padding:8px 16px;border-radius:6px;font-size:12px;z-index:10000;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+.idx-display-hdr{padding:5px 4px 2px;font-size:10px;font-weight:800;color:#1a1a2e;border-bottom:2px solid #d32f2f;background:#f5f0e8;border-radius:3px}
+.stats-display-hdr{font-size:10px;font-weight:800;color:#1a1a2e;padding-bottom:2px;border-bottom:2px solid #d32f2f}
+.loading-overlay{position:fixed;inset:0;background:rgba(26,26,46,.9);display:flex;align-items:center;justify-content:center;z-index:9999;color:#fff;font-size:18px;flex-direction:column;gap:12px}
+.loading-spinner{width:40px;height:40px;border:3px solid #555;border-top-color:#e94560;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.view-toggle{display:flex;gap:2px;background:#2a2a4a;border-radius:4px;padding:2px}
+.view-toggle button{padding:3px 10px;border:none;background:transparent;color:#888;cursor:pointer;font-size:9px;border-radius:3px}
+.view-toggle button.on{background:#e94560;color:#fff}
+.inv-section{margin-bottom:10px}
+.inv-header{background:#1a1a2e;padding:8px 14px;border-radius:8px 8px 0 0;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.inv-header:hover{background:#2a2a4e}
+.inv-caret{color:#e94560;font-size:12px;width:14px;flex-shrink:0}
+.inv-header span:nth-child(2){color:#fff;font-weight:700;font-size:13px}
+.inv-count{color:#888;font-size:10px;margin-left:auto}
+.inv-shelf{position:relative;background:linear-gradient(180deg,#faf8f4,#f0ece0);border-left:2px solid #c8b99a;border-right:2px solid #c8b99a;border-bottom:2px solid #c8b99a;border-radius:0 0 8px 8px;overflow:visible}
+.inv-shelf .product{position:absolute;bottom:auto}
+.inv-shelf .product:hover{z-index:500!important}
+@media print{.topbar,.inv-panel,.key-panel,.display-controls,.add-display-btn,.view-toggle,.inv-section{display:none}body{background:#fff}.main{padding:0}.display-unit{filter:none}}
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loading">
+  <div class="loading-spinner"></div>
+  <div>Loading product catalog...</div>
+</div>
+
+<div class="topbar">
+  <div>
+    <h1>Smoke Shop in a Box — Full Catalog Planogram</h1>
+    <div class="sub" id="subtitle">FRONT VIEW · Shape-based rendering · Drag products across shelves &amp; displays</div>
+  </div>
+  <div class="controls">
+    <div class="view-toggle" id="view-toggle">
+      <button class="on" data-mode="shape">Shapes</button>
+      <button data-mode="image">Images</button>
+      <button data-mode="mixed">Mixed</button>
+    </div>
+    <button class="btn" onclick="resetAll()">Reset</button>
+    <button class="btn" onclick="dlJSON()">Export JSON</button>
+    <div class="config-wrap">
+      <button class="btn" onclick="saveCurrentConfig()" title="Save current layout to browser storage">💾 Save</button>
+      <button class="btn" onclick="toggleConfigDropdown(event)" title="Load a saved layout">📂 Load</button>
+      <div class="config-dropdown" id="config-dropdown"></div>
+    </div>
+    <button class="btn" onclick="generateOrderJSON()" style="background:#1B5E20;border-color:#43A047;color:#fff">Order JSON</button>
+    <button class="btn pri" onclick="window.print()">Print</button>
+  </div>
+</div>
+
+<div class="main">
+  <div class="inv-panel" id="inv-panel">
+    <div id="inventory-container"></div>
+  </div>
+  <div class="plano-wrap">
+    <div id="plano-container"></div>
+  </div>
+  <div class="key-panel" id="key-panel">
+    <div class="panel"><h3>Shelf Utilization</h3><div id="stats"></div></div>
+    <div class="panel">
+      <h3>Product Index <span class="toggle-all" onclick="toggleAll()">show/hide all</span></h3>
+      <input class="idx-filter" type="text" placeholder="Search by SKU or description..." oninput="filterIndex(this.value)">
+      <div class="idx-dim-filter" id="dim-filter"></div>
+      <div class="idx-sort-row">
+        <label for="sort-select">Sort:</label>
+        <select id="sort-select" onchange="setSort(this.value)">
+          <option value="default">Shelf order</option>
+          <option value="revenue-desc">Revenue ↓</option>
+          <option value="revenue-asc">Revenue ↑</option>
+          <option value="qty-desc">Qty Sold ↓</option>
+          <option value="qty-asc">Qty Sold ↑</option>
+          <option value="price-desc">Price ↓</option>
+          <option value="price-asc">Price ↑</option>
+        </select>
+      </div>
+      <div class="idx-line-filter" id="line-filter"></div>
+      <div class="idx-list" id="idx-list"></div>
+    </div>
+    <div class="panel"><h3>Legend</h3><div id="legend"></div></div>
+    <div class="panel" id="catalog-stats-panel"><h3>Catalog Stats</h3><div id="catalog-stats"></div></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div id="tooltip"><div class="tt-n" id="tt-n"></div><div class="tt-d" id="tt-d"></div></div>
+
+<script>
+// ================================================================
+//  CONSTANTS
+// ================================================================
+const PX = 16, SW = 27.5, SD = 10.5;
+const INV_SW = 16;  // inventory panel shelf width — narrower for side-panel layout
+const SHELVES = [
+  {id:'top', name:'Top Shelf', cl:12},
+  {id:'mid', name:'Middle Shelf', cl:12},
+  {id:'bot', name:'Bottom Shelf', cl:10.5}
+];
+
+// Inventory categories — group lines into 3 browseable pools
+const INVENTORY_CATEGORIES = {
+  'herb':  { label: 'Herb Inventory',  lines: ['herb-green','herb-yellow'] },
+  'glass': { label: 'Glass Inventory', lines: ['glass-green','glass-yellow'] },
+  'vape':  { label: 'Vape Inventory',  lines: ['vape-green','vape-yellow'] },
+};
+
+// Default dimensions for products missing real dimensions (by subcategory)
+const DEFAULT_DIMS = {
+  'Atomizers': {w:2, h:2, d:1},
+  'Cart Batteries': {w:1.5, h:4, d:1},
+  'Concentrate Vape': {w:3, h:6, d:2},
+  'E-Nectar': {w:2, h:6, d:1.5},
+  'Flower Vape': {w:3, h:6, d:2},
+  'Grinders': {w:3, h:3, d:3},
+  'Ashtrays': {w:4, h:2, d:4},
+  'Lighters': {w:2, h:5, d:2},
+  'Cones': {w:5, h:5, d:5},
+  'Papers': {w:5, h:6, d:4},
+  'Wraps': {w:5, h:6, d:3},
+  'Tips': {w:4, h:3, d:2},
+  'Hand Pipe': {w:2, h:5, d:2},
+  'Water Pipe': {w:5, h:10, d:5},
+  'Dugout': {w:1.5, h:4, d:1},
+  'Silicone': {w:2, h:4, d:2},
+  'WP Silicone': {w:4, h:8, d:4},
+  'Dab Accessories': {w:2, h:3, d:2},
+  'Bangers': {w:2, h:3, d:2},
+  'Bowls': {w:2, h:2, d:2},
+  'Storage': {w:4, h:4, d:4},
+  'Bic': {w:5.5, h:6.5, d:4},
+  'Trays': {w:6, h:1, d:4},
+  'Downstems': {w:1, h:6, d:1},
+  'Carb Caps': {w:1, h:2, d:1},
+};
+
+// ================================================================
+//  GLOBAL STATE
+// ================================================================
+let CATALOG = null;        // catalog.json data
+let products = {};         // product lookup by SKU
+let categoryColors = {};   // subcategory → color
+let lineColors = {};       // line → color
+let viewMode = 'mixed';    // 'shape' | 'image' | 'mixed'
+let displays = [];
+let nextDisplayId = 1;
+let collapsedInventories = new Set();
+let activeLineFilter = null;
+	let activeDimFilter = null;  // null = all, 'has' = has dimensions, 'est' = estimated
+	let activeSort = 'default';  // 'default' | 'revenue-desc' | 'revenue-asc' | 'qty-desc' | 'qty-asc' | 'price-desc' | 'price-asc'
+		let savedConfigs = {};
+
+	// ================================================================
+//  DATA LOADING
+// ================================================================
+async function loadCatalog() {
+  try {
+    const resp = await fetch('catalog.json');
+    CATALOG = await resp.json();
+    products = CATALOG.products;
+    categoryColors = CATALOG.categories || {};
+    lineColors = {};
+    for (const [lid, info] of Object.entries(CATALOG.lines || {})) {
+      lineColors[lid] = info.color;
+    }
+  } catch (err) {
+    console.error('Failed to load catalog.json:', err);
+    document.getElementById('loading').innerHTML =
+      '<div style="color:#e94560;font-size:24px">✕</div><div>Failed to load catalog.json</div><div style="font-size:12px;color:#888">Run build_catalog.py first</div>';
+    throw err;
+  }
+}
+
+function getProduct(id) {
+  return products[id] || null;
+}
+
+function getProductDims(id) {
+  const p = products[id];
+  if (!p) return {w:2, h:2, d:1, estimated: true};
+  if (p.hasDimensions && p.width && p.height) {
+    return {w: p.width, h: p.height, d: p.depth || 1, estimated: false};
+  }
+  // Use default dimensions for subcategory
+  const sc = p.subcategory || p.category;
+  const def = DEFAULT_DIMS[sc];
+  if (def) return {...def, estimated: true};
+  return {w:2, h:3, d:1, estimated: true};
+}
+
+function getEffectiveDims(sku, rotated) {
+  const dims = getProductDims(sku);
+  if (rotated) {
+    return {w: dims.h, h: dims.w, d: dims.d, estimated: dims.estimated};
+  }
+  return dims;
+}
+
+function getProductColor(id) {
+  const p = products[id];
+  if (!p) return '#888';
+  const sc = p.subcategory || p.category;
+  return categoryColors[sc] || '#888888';
+}
+
+function getProductImage(id) {
+  const p = products[id];
+  if (!p || !p.images || p.images.length === 0) return null;
+  return p.images[0];
+}
+
+// ================================================================
+//  DISPLAY STATE
+// ================================================================
+function createDisplay(label, lineId, skus) {
+  const display = {
+    id: nextDisplayId++,
+    label: label || 'Display',
+    lineId: lineId || null,
+    layout: {top:[], mid:[], bot:[]},
+    shelfRows: 1,
+    hidden: new Set()
+  };
+  // Auto-place products across shelves with width awareness
+  if (skus && skus.length > 0) {
+    autoPlaceProducts(display, skus);
+  }
+  displays.push(display);
+  return display;
+}
+
+function autoPlaceProducts(display, skus) {
+  // Width-aware placement: fill each shelf up to SW (27.5").
+  // When all 3 shelves in a row overflow, create additional shelf rows
+  // so all products are visible and accessible.
+  const shelfOrder = ['top','mid','bot'];
+
+  // Always reset layout for fresh placement
+  display.layout = {top:[], mid:[], bot:[]};
+  display.shelfRows = 1;
+
+  // Track current width used per shelf in the active row
+  let rowWidths = {top: 0, mid: 0, bot: 0};
+  let currentRow = 1;
+
+  for (const sku of skus) {
+    const dims = getProductDims(sku);
+    const w = dims.w;
+
+    // Find first shelf in current row with enough remaining width
+    let placed = false;
+    for (const sid of shelfOrder) {
+      if (rowWidths[sid] + w <= SW) {
+        const key = currentRow === 1 ? sid : sid + currentRow;
+        if (!display.layout[key]) display.layout[key] = [];
+        display.layout[key].push({b: sku, f: null, br: false, fr: false});
+        rowWidths[sid] += w;
+        placed = true;
+        break;
+      }
+    }
+
+    if (!placed) {
+      // Start a new shelf row
+      currentRow++;
+      display.shelfRows = currentRow;
+      rowWidths = {top: 0, mid: 0, bot: 0};
+
+      // Create layout keys for new row
+      for (const sid of shelfOrder) {
+        display.layout[sid + currentRow] = [];
+      }
+
+      // Place on top shelf of new row
+      const newKey = 'top' + currentRow;
+      display.layout[newKey].push({b: sku, f: null, br: false, fr: false});
+      rowWidths.top = w;
+    }
+  }
+}
+
+// Shelf ID helpers for multi-row displays
+function getShelfBase(shelfId) {
+  return shelfId.replace(/\d+$/, '');
+}
+
+function getShelfRow(shelfId) {
+  const m = shelfId.match(/\d+$/);
+  return m ? parseInt(m[0]) : 1;
+}
+
+function getRowShelfIds(display) {
+  const shelfOrder = ['top','mid','bot'];
+  const rows = display.shelfRows || 1;
+  const ids = [];
+  for (let r = 1; r <= rows; r++) {
+    for (const s of shelfOrder) {
+      ids.push(r === 1 ? s : s + r);
+    }
+  }
+  return ids;
+}
+
+function getShelfName(shelfId) {
+  const base = getShelfBase(shelfId);
+  const row = getShelfRow(shelfId);
+  const shelf = SHELVES.find(s => s.id === base);
+  const baseName = shelf ? shelf.name : shelfId;
+  return row > 1 ? baseName + ' ' + row : baseName;
+}
+
+function getShelfClearance(shelfId) {
+  const base = getShelfBase(shelfId);
+  const shelf = SHELVES.find(s => s.id === base);
+  return shelf ? shelf.cl : 12;
+}
+
+function shelfSortKey(shelfId) {
+  const base = getShelfBase(shelfId);
+  const row = getShelfRow(shelfId);
+  const baseOrder = {top:0, mid:1, bot:2};
+  return (row - 1) * 10 + (baseOrder[base] || 0);
+}
+
+function getDisplay(displayId) {
+  return displays.find(d => d.id === parseInt(displayId));
+}
+
+function cloneDisplay(displayId) {
+  const src = getDisplay(displayId);
+  if (!src) return null;
+  const dup = {
+    id: nextDisplayId++,
+    label: src.label + ' (copy)',
+    lineId: src.lineId,
+    layout: {},
+    shelfRows: src.shelfRows || 1,
+    hidden: new Set(src.hidden)
+  };
+  for (const sid of getRowShelfIds(src)) {
+    dup.layout[sid] = (src.layout[sid] || []).map(col => ({b: col.b, f: col.f || null, br: col.br || false, fr: col.fr || false}));
+  }
+  displays.push(dup);
+  return dup;
+}
+
+function removeDisplay(displayId) {
+  if (displays.length <= 1) return;
+  displays = displays.filter(d => d.id !== displayId);
+}
+
+function allPlacements(display) {
+  const out = [];
+  for (const sid of getRowShelfIds(display)) {
+    (display.layout[sid] || []).forEach((col, ci) => {
+      out.push({id: col.b, shelf: sid, col: ci, pos: 'back', displayId: display.id, rotated: col.br || false});
+      if (col.f) out.push({id: col.f, shelf: sid, col: ci, pos: 'front', displayId: display.id, rotated: col.fr || false});
+    });
+  }
+  return out;
+}
+
+// ================================================================
+//  RENDER ALL
+// ================================================================
+function renderAll() {
+  renderInventory();
+  renderPlano();
+  renderIndex();
+  updateStats();
+  renderLegend();
+  renderCatalogStats();
+  renderLineFilter();
+  renderDimFilter();
+  reapplySearch();
+  autoSave();
+}
+
+// ================================================================
+//  INVENTORY SHELVES
+// ================================================================
+function renderInventory() {
+  const container = document.getElementById('inventory-container');
+  container.innerHTML = '';
+
+  for (const [cat, cfg] of Object.entries(INVENTORY_CATEGORIES)) {
+    const skus = [];
+    for (const [sku, p] of Object.entries(products)) {
+      if (cfg.lines.includes(p.line)) skus.push(sku);
+    }
+    skus.sort();
+
+    const isCollapsed = collapsedInventories.has(cat);
+
+    const section = document.createElement('div');
+    section.className = 'inv-section';
+
+    const header = document.createElement('div');
+    header.className = 'inv-header';
+    header.onclick = () => { toggleInventory(cat); };
+    header.innerHTML = `<span class="inv-caret">${isCollapsed ? '▸' : '▾'}</span>
+      <span>${cfg.label}</span>
+      <span class="inv-count">${skus.length} SKUs</span>`;
+    section.appendChild(header);
+
+    if (!isCollapsed) {
+      const rows = computeInvRows(skus);
+      const lastRow = rows[rows.length - 1];
+      const totalH = rows.length > 0 ? (lastRow.y + lastRow.h) : 0;
+
+      const shelf = document.createElement('div');
+      shelf.className = 'inv-shelf';
+      shelf.id = 'inv-' + cat;
+      shelf.style.height = (totalH * PX + 8) + 'px';
+
+      rows.forEach(row => {
+        row.items.forEach(item => {
+          shelf.appendChild(mkInventoryProduct(item.sku, item.dims, item.x, row.y, row.h, cat));
+        });
+      });
+
+      section.appendChild(shelf);
+    }
+
+    container.appendChild(section);
+  }
+}
+
+function computeInvRows(skus) {
+  const rows = [];
+  let x = 0;
+  let currentRow = { y: 0, h: 0, items: [] };
+
+  for (const sku of skus) {
+    const dims = getProductDims(sku);
+    const w = dims.w;
+    const h = dims.h;
+
+    if (x + w > INV_SW && currentRow.items.length > 0) {
+      rows.push(currentRow);
+      const prevBottom = currentRow.y + currentRow.h;
+      currentRow = { y: prevBottom + 0.5, h: 0, items: [] };
+      x = 0;
+    }
+
+    currentRow.items.push({ sku, x, dims });
+    currentRow.h = Math.max(currentRow.h, h);
+    x += w;
+  }
+  if (currentRow.items.length > 0) rows.push(currentRow);
+
+  return rows;
+}
+
+function mkInventoryProduct(sku, dims, x, rowY, rowH, cat) {
+  const product = getProduct(sku);
+  const el = document.createElement('div');
+  const color = getProductColor(sku);
+  const isEstimated = dims.estimated;
+  const hasImage = product && product.images && product.images.length > 0;
+  const imgUrl = hasImage ? product.images[0] : null;
+
+  el.className = 'product is-single' + (isEstimated ? ' estimated' : '') + (!hasImage || viewMode === 'shape' ? ' no-image' : '');
+  el.style.left = (x * PX) + 'px';
+  el.style.top = (rowY * PX) + 'px';
+  el.style.bottom = 'auto';
+  el.style.width = (dims.w * PX) + 'px';
+  el.style.height = (dims.h * PX) + 'px';
+  el.style.borderColor = color;
+  el.style.backgroundColor = hexToRgba(color, isEstimated ? 0.15 : 0.25);
+  el.dataset.id = sku;
+  el.dataset.inventory = 'true';
+  el.dataset.inventoryCat = cat;
+
+  // Shape fill
+  const shapeFill = document.createElement('div');
+  shapeFill.className = 'shape-fill';
+  shapeFill.style.backgroundColor = hexToRgba(color, 0.25);
+  el.appendChild(shapeFill);
+
+  // Product name label
+  if (product) {
+    const pname = document.createElement('div');
+    pname.className = 'p-name';
+    pname.textContent = shortName(product.name);
+    el.appendChild(pname);
+  }
+
+  // Image overlay
+  if (imgUrl && viewMode !== 'shape') {
+    const img = document.createElement('img');
+    img.className = 'pimg';
+    img.src = imgUrl;
+    img.alt = product ? product.name : '';
+    img.draggable = false;
+    img.loading = 'lazy';
+    img.onerror = function() { this.style.display = 'none'; el.classList.add('no-image'); };
+    img.onload = function() { el.classList.remove('no-image'); };
+    el.appendChild(img);
+  }
+
+  // SKU label
+  const lbl = document.createElement('div');
+  lbl.className = 'p-id';
+  lbl.style.backgroundColor = color;
+  lbl.textContent = sku;
+  el.appendChild(lbl);
+
+  // Estimated indicator
+  if (isEstimated) {
+    const est = document.createElement('div');
+    est.style.cssText = 'position:absolute;top:2px;left:2px;font-size:7px;color:#FF8F00;z-index:21;background:rgba(0,0,0,.7);padding:1px 3px;border-radius:3px';
+    est.textContent = 'est';
+    el.appendChild(est);
+  }
+
+  // Tooltip
+  el.addEventListener('pointerenter', e => {
+    if (!product) return;
+    const pStr = isEstimated ? ' (estimated)' : '';
+    let info = `${dims.w}″W × ${dims.h}″H × ${dims.d}″D${pStr}`;
+    if (product.unitPrice) info += `\nPrice: $${product.unitPrice.toFixed(2)}`;
+    if (product.available !== null) info += ` · Stock: ${product.available}`;
+    if (product.brand) info += `\nBrand: ${product.brand}`;
+    document.getElementById('tt-n').textContent = product.name;
+    document.getElementById('tt-d').textContent = info;
+    document.getElementById('tooltip').classList.add('vis');
+    mvTip(e);
+  });
+  el.addEventListener('pointerleave', () => document.getElementById('tooltip').classList.remove('vis'));
+  el.addEventListener('pointermove', e => { if (!dragState) mvTip(e); });
+
+  // Drag start
+  el.addEventListener('pointerdown', e => {
+    if (e.button) return;
+    e.preventDefault();
+    startDrag(sku, dims, el, e);
+  });
+
+  return el;
+}
+
+function toggleInventory(cat) {
+  if (collapsedInventories.has(cat)) {
+    collapsedInventories.delete(cat);
+  } else {
+    collapsedInventories.add(cat);
+  }
+  renderInventory();
+}
+
+// ================================================================
+//  RENDER PLANOGRAM
+// ================================================================
+function renderPlano() {
+  const container = document.getElementById('plano-container');
+  container.innerHTML = '';
+
+  displays.forEach((display, di) => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'display-wrapper';
+    wrapper.dataset.displayId = display.id;
+
+    // Display controls
+    const controls = document.createElement('div');
+    controls.className = 'display-controls';
+
+    const nameWrap = document.createElement('div');
+    nameWrap.className = 'display-name-wrap';
+    const name = document.createElement('span');
+    name.className = 'display-name';
+    const lc = lineColors[display.lineId];
+    if (lc) name.style.color = lc;
+    name.textContent = display.label;
+    name.onclick = () => startRename(display.id, name);
+    name.title = 'Click to rename';
+    nameWrap.appendChild(name);
+    const editIcon = document.createElement('span');
+    editIcon.className = 'display-name-edit';
+    editIcon.textContent = '✎';
+    editIcon.onclick = (e) => { e.stopPropagation(); startRename(display.id, name); };
+    editIcon.title = 'Rename display';
+    nameWrap.appendChild(editIcon);
+    controls.appendChild(nameWrap);
+
+    const actions = document.createElement('div');
+    actions.className = 'display-actions';
+
+    const dupBtn = document.createElement('button');
+    dupBtn.className = 'btn';
+    dupBtn.textContent = 'Duplicate';
+    dupBtn.onclick = () => { cloneDisplay(display.id); renderAll(); toast('Duplicated display'); };
+    actions.appendChild(dupBtn);
+
+    const clrBtn = document.createElement('button');
+    clrBtn.className = 'btn';
+    clrBtn.textContent = 'Clear';
+    clrBtn.onclick = () => { clearDisplay(display.id); };
+    actions.appendChild(clrBtn);
+
+    const rmBtn = document.createElement('button');
+    rmBtn.className = 'btn';
+    rmBtn.textContent = 'Remove';
+    if (displays.length <= 1) { rmBtn.disabled = true; rmBtn.style.opacity = '.4'; }
+    rmBtn.onclick = () => { if(displays.length>1){removeDisplay(display.id);renderAll();toast('Removed display')} };
+    actions.appendChild(rmBtn);
+
+    controls.appendChild(actions);
+    wrapper.appendChild(controls);
+
+    const root = document.createElement('div');
+    root.className = 'display-unit';
+    root.dataset.displayId = display.id;
+    renderDisplayUnit(display, root);
+    wrapper.appendChild(root);
+
+    container.appendChild(wrapper);
+  });
+
+  // Add display button
+  const addBtn = document.createElement('button');
+  addBtn.className = 'add-display-btn';
+  addBtn.textContent = '+ Add Empty Display';
+  addBtn.onclick = () => {
+    createDisplay('Custom Display', null, []);
+    renderAll();
+    toast('Added empty display');
+  };
+  container.appendChild(addBtn);
+}
+
+function renderDisplayUnit(display, root) {
+  const lc = lineColors[display.lineId] || '#c8b99a';
+  root.style.width = (SW * PX + 4) + 'px';
+  root.style.setProperty('--line-color', lc);
+
+  // Header
+  const hdr = document.createElement('div');
+  hdr.className = 'display-header';
+  hdr.style.borderColor = lc;
+  hdr.innerHTML = `<div class="brand">Powered by LuvBuds</div><div class="title">STUFF <span>FOR</span> YOUR <span>PUFF</span></div>`;
+  root.appendChild(hdr);
+
+  const rows = display.shelfRows || 1;
+  for (let r = 1; r <= rows; r++) {
+    // Row separator between shelf rows
+    if (r > 1) {
+      const sep = document.createElement('div');
+      sep.style.cssText = 'height:10px;background:linear-gradient(180deg,#c8b99a 0%,#f5f0e8 40%,#f5f0e8 60%,#c8b99a 100%);border-left:2px solid ' + lc + ';border-right:2px solid ' + lc;
+      root.appendChild(sep);
+    }
+
+    SHELVES.forEach((shelf, si) => {
+      // Banners only on first row
+      if (r === 1 && si === 1) {
+        const b = document.createElement('div');
+        b.className = 'red-banner';
+        b.style.borderLeftColor = lc;
+        b.style.borderRightColor = lc;
+        b.innerHTML = '<span>GRAB & GO!</span><span class="st">THE STUFF FOR YOUR PUFF</span>';
+        root.appendChild(b);
+      }
+      if (r === 1 && si === 2) {
+        const b = document.createElement('div');
+        b.className = 'red-banner';
+        b.style.borderLeftColor = lc;
+        b.style.borderRightColor = lc;
+        b.innerHTML = '<span>SESSION READY!</span><span class="st">FIND YOUR GEAR HERE</span>';
+        root.appendChild(b);
+      }
+
+      const shelfKey = r === 1 ? shelf.id : shelf.id + r;
+      const cols = display.layout[shelfKey] || [];
+      let usedW = 0;
+      cols.forEach(c => {
+        const bkHidden = display.hidden.has(c.b), frHidden = c.f && display.hidden.has(c.f);
+        const bkDims = bkHidden ? null : getEffectiveDims(c.b, c.br || false);
+        const frDims = (frHidden || !c.f) ? null : getEffectiveDims(c.f, c.fr || false);
+        if (bkDims || frDims) {
+          usedW += Math.max(bkDims ? bkDims.w : 0, frDims ? frDims.w : 0);
+        }
+      });
+
+      const shelfName = r === 1 ? shelf.name : shelf.name + ' ' + r;
+      const lbl = document.createElement('div');
+      lbl.className = 'shelf-label';
+      lbl.style.borderLeftColor = lc;
+      lbl.style.borderRightColor = lc;
+      lbl.innerHTML = `<strong>${shelfName}</strong><span>${shelf.cl}″ cl · ${usedW.toFixed(1)}″/${SW}″</span>`;
+      root.appendChild(lbl);
+
+      const area = document.createElement('div');
+      area.className = 'shelf-front';
+      area.style.width = (SW * PX) + 'px';
+      area.style.height = (shelf.cl * PX) + 'px';
+      area.style.borderLeftColor = lc;
+      area.style.borderRightColor = lc;
+      area.dataset.shelf = shelfKey;
+      area.dataset.displayId = display.id;
+
+      let x = 0;
+      cols.forEach((col, ci) => {
+        const bkHidden = display.hidden.has(col.b);
+        const frHidden = col.f && display.hidden.has(col.f);
+        const bkRotated = col.br || false;
+        const frRotated = col.fr || false;
+        const bkDims = bkHidden ? null : getEffectiveDims(col.b, bkRotated);
+        const frDims = (frHidden || !col.f) ? null : getEffectiveDims(col.f, frRotated);
+        if (!bkDims && !frDims) return;
+        let colW = 0;
+        if (bkDims) colW = Math.max(colW, bkDims.w);
+        if (frDims) colW = Math.max(colW, frDims.w);
+        const hasFront = frDims && !frHidden;
+        const bkDepth = (hasFront && frDims) ? 1 : Math.floor(SD / (bkDims ? bkDims.d : 1));
+        if (bkDims && !bkHidden) {
+          area.appendChild(mkProduct(col.b, bkDims, x,
+            hasFront ? 'is-back' : 'is-single', bkDepth, shelfKey, ci, 'back', display.id, bkRotated));
+        }
+        if (frDims && !frHidden) {
+          area.appendChild(mkProduct(col.f, frDims, x,
+            bkDims && !bkHidden ? 'is-front' : 'is-single', 1, shelfKey, ci, 'front', display.id, frRotated));
+        }
+        x += colW;
+      });
+
+      root.appendChild(area);
+      const lip = document.createElement('div');
+      lip.className = 'shelf-surface';
+      lip.style.borderLeftColor = lc;
+      lip.style.borderRightColor = lc;
+      root.appendChild(lip);
+    });
+  }
+
+  const ftr = document.createElement('div');
+  ftr.className = 'display-footer';
+  ftr.style.borderColor = lc;
+  ftr.innerHTML = '<div class="brand">Powered by LuvBuds</div>';
+  root.appendChild(ftr);
+}
+
+function mkProduct(id, dims, x, cls, deep, shelfId, colIdx, pos, displayId, rotated) {
+  const product = getProduct(id);
+  const el = document.createElement('div');
+  const color = getProductColor(id);
+  const isEstimated = dims.estimated;
+  const hasImage = product && product.images && product.images.length > 0;
+  const imgUrl = hasImage ? product.images[0] : null;
+
+  el.className = 'product ' + cls + (isEstimated ? ' estimated' : '') + (!hasImage || viewMode === 'shape' ? ' no-image' : '');
+  el.style.left = (x * PX) + 'px';
+  el.style.width = (dims.w * PX) + 'px';
+  el.style.height = (dims.h * PX) + 'px';
+  el.style.borderColor = color;
+  el.style.backgroundColor = hexToRgba(color, isEstimated ? 0.15 : 0.25);
+  el.dataset.id = id;
+  el.dataset.shelf = shelfId;
+  el.dataset.col = colIdx;
+  el.dataset.pos = pos;
+  el.dataset.displayId = displayId;
+  el.dataset.rotated = rotated ? '1' : '0';
+
+  // Shape fill (always present)
+  const shapeFill = document.createElement('div');
+  shapeFill.className = 'shape-fill';
+  shapeFill.style.backgroundColor = hexToRgba(color, 0.25);
+  el.appendChild(shapeFill);
+
+  // Product name label (visible when no image in mixed mode)
+  if (product) {
+    const pname = document.createElement('div');
+    pname.className = 'p-name';
+    pname.textContent = shortName(product.name);
+    el.appendChild(pname);
+  }
+
+  // Image overlay
+  if (imgUrl && viewMode !== 'shape') {
+    const img = document.createElement('img');
+    img.className = 'pimg';
+    img.src = imgUrl;
+    img.alt = product ? product.name : '';
+    img.draggable = false;
+    img.loading = 'lazy';
+    img.onerror = function() {
+      this.style.display = 'none';
+      el.classList.add('no-image');
+    };
+    img.onload = function() {
+      el.classList.remove('no-image');
+    };
+    el.appendChild(img);
+  }
+
+  // SKU label
+  const lbl = document.createElement('div');
+  lbl.className = 'p-id';
+  lbl.style.backgroundColor = color;
+  lbl.textContent = id;
+  el.appendChild(lbl);
+
+  // Depth badge
+  const badge = document.createElement('div');
+  badge.className = 'depth-badge' + (deep <= 1 ? ' single' : '');
+  badge.textContent = '×' + deep;
+  el.appendChild(badge);
+
+  // Estimated indicator
+  if (isEstimated) {
+    const est = document.createElement('div');
+    est.style.cssText = 'position:absolute;top:2px;left:16px;font-size:7px;color:#FF8F00;z-index:21;background:rgba(0,0,0,.7);padding:1px 3px;border-radius:3px';
+    est.textContent = 'est';
+    el.appendChild(est);
+  }
+
+  // Rotate button
+  const rotBtn = document.createElement('button');
+  rotBtn.className = 'prod-rotate' + (rotated ? ' on' : '');
+  rotBtn.textContent = '↻';
+  rotBtn.title = rotated ? 'Rotated — click to unrotate' : 'Click to rotate 90°';
+  rotBtn.addEventListener('pointerdown', e => {
+    e.stopPropagation(); e.preventDefault();
+    rotateProduct(displayId, shelfId, colIdx, pos);
+  });
+  el.appendChild(rotBtn);
+
+  // Remove button
+  const rmBtn = document.createElement('button');
+  rmBtn.className = 'prod-remove';
+  rmBtn.textContent = '×';
+  rmBtn.addEventListener('pointerdown', e => {
+    e.stopPropagation(); e.preventDefault();
+    removeInstance(id, shelfId, colIdx, pos, displayId);
+  });
+  el.appendChild(rmBtn);
+
+  // Tooltip
+  el.addEventListener('pointerenter', e => {
+    if (!product) return;
+    const pStr = isEstimated ? ' (estimated)' : '';
+    const rStr = rotated ? ' [Rotated 90°]' : '';
+    let info = `${dims.w}″W × ${dims.h}″H × ${dims.d}″D${pStr}${rStr}\nDepth: ×${deep}`;
+    if (product.unitPrice) info += `\nPrice: $${product.unitPrice.toFixed(2)}`;
+    if (product.available !== null) info += ` · Stock: ${product.available}`;
+    if (product.brand) info += `\nBrand: ${product.brand}`;
+    document.getElementById('tt-n').textContent = product.name;
+    document.getElementById('tt-d').textContent = info;
+    document.getElementById('tooltip').classList.add('vis');
+    mvTip(e);
+  });
+  el.addEventListener('pointerleave', () => document.getElementById('tooltip').classList.remove('vis'));
+  el.addEventListener('pointermove', e => { if (!dragState) mvTip(e); });
+
+  // Drag start
+  el.addEventListener('pointerdown', e => {
+    if (e.button) return;
+    e.preventDefault();
+    startDrag(id, dims, el, e);
+  });
+
+  return el;
+}
+
+// ================================================================
+//  DRAG AND DROP
+// ================================================================
+let dragState = null;
+
+function startDrag(id, dims, el, e) {
+  el.classList.add('dragging');
+  document.getElementById('tooltip').classList.remove('vis');
+
+  const ghost = document.createElement('div');
+  ghost.className = 'drag-ghost';
+  ghost.style.width = (dims.w * PX) + 'px';
+  ghost.style.height = (dims.h * PX) + 'px';
+  ghost.style.backgroundColor = hexToRgba(getProductColor(id), 0.7);
+
+  const imgUrl = getProductImage(id);
+  if (imgUrl && viewMode !== 'shape') {
+    const img = document.createElement('img');
+    img.src = imgUrl;
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover';
+    ghost.appendChild(img);
+  }
+
+  document.body.appendChild(ghost);
+
+  dragState = {
+    id, dims, srcEl: el, ghost,
+    offX: e.clientX - el.getBoundingClientRect().left,
+    offY: e.clientY - el.getBoundingClientRect().top,
+    srcShelf: el.dataset.shelf,
+    srcCol: parseInt(el.dataset.col),
+    srcPos: el.dataset.pos,
+    srcDisplayId: parseInt(el.dataset.displayId),
+    srcInventory: el.dataset.inventory === 'true',
+    srcRotated: el.dataset.rotated === '1',
+    startX: e.clientX, startY: e.clientY
+  };
+  posGhost(e);
+
+  document.addEventListener('pointermove', onDragMove);
+  document.addEventListener('pointerup', onDragEnd);
+}
+
+function posGhost(e) {
+  if (!dragState) return;
+  dragState.ghost.style.left = (e.clientX - dragState.offX) + 'px';
+  dragState.ghost.style.top = (e.clientY - dragState.offY) + 'px';
+}
+
+function onDragMove(e) {
+  if (!dragState) return;
+  posGhost(e);
+  document.querySelectorAll('.shelf-front').forEach(s => s.classList.remove('drop-target'));
+  const target = getShelfUnder(e);
+  if (target) target.classList.add('drop-target');
+}
+
+function clickToAddToDisplay(sku) {
+  // Insert into the first display at the first available shelf position.
+  if (!displays.length) return false;
+  const display = displays[0];
+  const shelfOrder = ['top','mid','bot'];
+  const dims = getProductDims(sku);
+  const w = dims.w;
+
+  // Check all shelf rows for available width
+  for (let r = 1; r <= (display.shelfRows || 1); r++) {
+    for (const sid of shelfOrder) {
+      const key = r === 1 ? sid : sid + r;
+      const cols = display.layout[key] || [];
+      let used = 0;
+      for (const col of cols) {
+        const bd = getEffectiveDims(col.b, col.br || false);
+        const fd = col.f ? getEffectiveDims(col.f, col.fr || false) : null;
+        used += Math.max(bd.w, fd ? fd.w : 0);
+      }
+      if (used + w <= SW) {
+        if (!display.layout[key]) display.layout[key] = [];
+        display.layout[key].push({b: sku, f: null, br: false, fr: false});
+        toast(`Added ${sku} to ${display.label} → ${getShelfName(key)}`);
+        return true;
+      }
+    }
+  }
+  // No room in existing rows — add a new row
+  const newRow = (display.shelfRows || 1) + 1;
+  display.shelfRows = newRow;
+  for (const sid of shelfOrder) {
+    display.layout[sid + newRow] = [];
+  }
+  display.layout['top' + newRow].push({b: sku, f: null, br: false, fr: false});
+  toast(`Added ${sku} to ${display.label} → ${getShelfName('top' + newRow)} (new row)`);
+  return true;
+}
+
+function onDragEnd(e) {
+  if (!dragState) return;
+  document.removeEventListener('pointermove', onDragMove);
+  document.removeEventListener('pointerup', onDragEnd);
+  document.querySelectorAll('.shelf-front').forEach(s => s.classList.remove('drop-target'));
+  dragState.ghost.remove();
+  dragState.srcEl.classList.remove('dragging');
+
+  const target = getShelfUnder(e);
+  const dx = e.clientX - dragState.startX;
+  const dy = e.clientY - dragState.startY;
+  const moved = Math.sqrt(dx * dx + dy * dy);
+
+  if (target) {
+    const targetShelf = target.dataset.shelf;
+    const targetDisplayId = parseInt(target.dataset.displayId);
+    const rect = target.getBoundingClientRect();
+    const dropX = Math.max(0, (e.clientX - rect.left) / PX);
+    if (dragState.srcInventory) {
+      insertIntoDisplay(dragState.id, targetShelf, dropX, targetDisplayId);
+    } else {
+      moveProduct(dragState.id, targetShelf, dropX,
+        dragState.srcShelf, dragState.srcCol, dragState.srcPos,
+        dragState.srcDisplayId, targetDisplayId);
+    }
+  } else if (dragState.srcInventory && moved < 8) {
+    // Click-to-add: quick tap on inventory item → auto-place in first display
+    clickToAddToDisplay(dragState.id);
+  }
+
+  dragState = null;
+  renderAll();
+}
+
+function getShelfUnder(e) {
+  if (dragState && dragState.ghost) dragState.ghost.style.display = 'none';
+  const el = document.elementFromPoint(e.clientX, e.clientY);
+  if (dragState && dragState.ghost) dragState.ghost.style.display = '';
+  if (!el) return null;
+  return el.closest('.shelf-front');
+}
+
+function moveProduct(pid, targetShelf, dropX, srcShelf, srcCol, srcPos, srcDisplayId, targetDisplayId) {
+  // Remove from source
+  const srcDisplay = getDisplay(srcDisplayId);
+  if (srcDisplay && srcShelf !== undefined && srcCol !== undefined) {
+    const srcCols = srcDisplay.layout[srcShelf];
+    if (srcCol < srcCols.length) {
+      const c = srcCols[srcCol];
+      if (srcPos === 'front' && c.f === pid) {
+        c.f = null; c.fr = false;
+      } else if (c.b === pid) {
+        if (c.f) { c.b = c.f; c.f = null; c.br = c.fr || false; c.fr = false; }
+        else { srcCols.splice(srcCol, 1); }
+      }
+    }
+  }
+
+  // Insert into target
+  const targetDisplay = getDisplay(targetDisplayId);
+  if (!targetDisplay) return;
+
+  const cols = targetDisplay.layout[targetShelf];
+  let x = 0, insertIdx = cols.length;
+  for (let i = 0; i < cols.length; i++) {
+    const bkDims = getEffectiveDims(cols[i].b, cols[i].br || false);
+    const frDims = cols[i].f ? getEffectiveDims(cols[i].f, cols[i].fr || false) : null;
+    const cw = Math.max(bkDims.w, frDims ? frDims.w : 0);
+    if (dropX < x + cw / 2) { insertIdx = i; break; }
+    x += cw;
+  }
+  cols.splice(insertIdx, 0, {b: pid, f: null, br: dragState.srcRotated || false, fr: false});
+}
+
+function insertIntoDisplay(pid, targetShelf, dropX, targetDisplayId) {
+  const targetDisplay = getDisplay(targetDisplayId);
+  if (!targetDisplay) return;
+  const cols = targetDisplay.layout[targetShelf];
+  let x = 0, insertIdx = cols.length;
+  for (let i = 0; i < cols.length; i++) {
+    const bkDims = getEffectiveDims(cols[i].b, cols[i].br || false);
+    const frDims = cols[i].f ? getEffectiveDims(cols[i].f, cols[i].fr || false) : null;
+    const cw = Math.max(bkDims.w, frDims ? frDims.w : 0);
+    if (dropX < x + cw / 2) { insertIdx = i; break; }
+    x += cw;
+  }
+  cols.splice(insertIdx, 0, {b: pid, f: null, br: false, fr: false});
+}
+
+// ================================================================
+//  PRODUCT INDEX
+// ================================================================
+function renderIndex() {
+  const list = document.getElementById('idx-list');
+  list.innerHTML = '';
+
+  displays.forEach((display, di) => {
+    if (displays.length > 1) {
+      const dDiv = document.createElement('div');
+      dDiv.className = 'idx-display-hdr';
+      dDiv.style.marginTop = di > 0 ? '8px' : '0';
+      dDiv.textContent = display.label;
+      list.appendChild(dDiv);
+    }
+
+    const placements = allPlacements(display);
+    let all = [...placements];
+
+    // Filter by active line
+    if (activeLineFilter) {
+      all = all.filter(pl => {
+        const p = getProduct(pl.id);
+        return p && p.line === activeLineFilter;
+      });
+    }
+
+    // Filter by dimension status
+    if (activeDimFilter) {
+      all = all.filter(pl => {
+        const dims = getProductDims(pl.id);
+        return activeDimFilter === 'has' ? !dims.estimated : dims.estimated;
+      });
+    }
+
+    // Sort
+    if (activeSort === 'default') {
+      all.sort((a, b) => (shelfSortKey(a.shelf) - shelfSortKey(b.shelf)) || a.col - b.col);
+    } else if (activeSort === 'revenue-desc' || activeSort === 'revenue-asc') {
+      all.sort((a, b) => {
+        const pa = getProduct(a.id), pb = getProduct(b.id);
+        const va = pa ? (pa.revenue || 0) : 0;
+        const vb = pb ? (pb.revenue || 0) : 0;
+        return activeSort === 'revenue-desc' ? vb - va : va - vb;
+      });
+    } else if (activeSort === 'qty-desc' || activeSort === 'qty-asc') {
+      all.sort((a, b) => {
+        const pa = getProduct(a.id), pb = getProduct(b.id);
+        const va = pa ? (pa.qtySold || 0) : 0;
+        const vb = pb ? (pb.qtySold || 0) : 0;
+        return activeSort === 'qty-desc' ? vb - va : va - vb;
+      });
+    } else if (activeSort === 'price-desc' || activeSort === 'price-asc') {
+      all.sort((a, b) => {
+        const pa = getProduct(a.id), pb = getProduct(b.id);
+        const va = pa ? (pa.unitPrice || 0) : 0;
+        const vb = pb ? (pb.unitPrice || 0) : 0;
+        return activeSort === 'price-desc' ? vb - va : va - vb;
+      });
+    }
+
+    let lastShelf = '';
+    all.forEach(pl => {
+      const product = getProduct(pl.id);
+      if (!product) return;
+      const dims = getEffectiveDims(pl.id, pl.rotated || false);
+      const isHidden = display.hidden.has(pl.id);
+      const shelfName = getShelfName(pl.shelf);
+
+      if (pl.shelf !== lastShelf) {
+        lastShelf = pl.shelf;
+        const div = document.createElement('div');
+        div.style.cssText = 'padding:4px 4px 2px;font-size:9px;font-weight:700;color:#d32f2f;border-bottom:1px solid #eee;margin-top:4px';
+        div.textContent = shelfName;
+        list.appendChild(div);
+      }
+
+      const row = document.createElement('div');
+      row.className = 'idx-item' + (isHidden ? ' idx-hidden' : '');
+      row.dataset.id = pl.id;
+      row.dataset.displayId = display.id;
+      row.dataset.shelf = pl.shelf;
+      row.dataset.col = pl.col;
+      row.dataset.pos = pl.pos;
+
+      const color = getProductColor(pl.id);
+      const dot = document.createElement('div');
+      dot.className = 'idx-dot';
+      dot.style.backgroundColor = color;
+      row.appendChild(dot);
+
+      const thumb = document.createElement('img');
+      thumb.className = 'idx-thumb';
+      const imgUrl = getProductImage(pl.id);
+      if (imgUrl) {
+        thumb.src = imgUrl;
+        thumb.onerror = function() { this.style.display = 'none'; };
+      }
+      row.appendChild(thumb);
+
+      const info = document.createElement('div');
+      info.className = 'idx-info';
+      const metaParts = [`${dims.w}″w × ${dims.h}″h`];
+      if (dims.estimated) metaParts.push('<span class="idx-est">est</span>');
+      if (product.unitPrice) metaParts.push(`$${product.unitPrice.toFixed(2)}`);
+      const posLabel = pl.pos + (pl.rotated ? ' ↻' : '');
+      info.innerHTML = `<div class="idx-sku">${pl.id}</div>
+        <div class="idx-meta">${metaParts.join(' · ')} &bull; ${posLabel}</div>`;
+      row.appendChild(info);
+
+      const eye = document.createElement('button');
+      eye.className = 'idx-eye';
+      eye.textContent = isHidden ? '🚫' : '👁';
+      eye.title = isHidden ? 'Show' : 'Hide';
+      eye.addEventListener('click', e => {
+        e.stopPropagation();
+        toggleProduct(pl.id, display.id);
+      });
+      row.appendChild(eye);
+
+      // Quantity stepper
+      const instCount = countInstances(pl.id, display);
+      const stepper = document.createElement('div');
+      stepper.className = 'idx-stepper';
+
+      const minusBtn = document.createElement('button');
+      minusBtn.className = 'idx-minus';
+      minusBtn.textContent = '−';
+      minusBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        removeInstance(pl.id, pl.shelf, pl.col, pl.pos, display.id);
+      });
+      stepper.appendChild(minusBtn);
+
+      const qtyLabel = document.createElement('span');
+      qtyLabel.className = 'idx-qty';
+      qtyLabel.textContent = instCount;
+      stepper.appendChild(qtyLabel);
+
+      const plusBtn = document.createElement('button');
+      plusBtn.className = 'idx-plus';
+      plusBtn.textContent = '+';
+      plusBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        duplicateProduct(pl.id, pl.shelf, display.id);
+      });
+      stepper.appendChild(plusBtn);
+
+      row.appendChild(stepper);
+
+      // Drag from sidebar
+      row.addEventListener('pointerdown', e => {
+        if (e.button || e.target.closest('button')) return;
+        e.preventDefault();
+        const sx = e.clientX, sy = e.clientY;
+        let started = false;
+        function onMove(me) {
+          if (!started && Math.abs(me.clientX - sx) + Math.abs(me.clientY - sy) > 5) {
+            started = true;
+            startDrag(pl.id, dims, row, e);
+            document.removeEventListener('pointermove', onMove);
+            document.removeEventListener('pointerup', onUp);
+          }
+        }
+        function onUp() {
+          document.removeEventListener('pointermove', onMove);
+          document.removeEventListener('pointerup', onUp);
+          if (!started) highlightProduct(pl.id, display.id);
+        }
+        document.addEventListener('pointermove', onMove);
+        document.addEventListener('pointerup', onUp);
+      });
+
+      list.appendChild(row);
+    });
+  });
+}
+
+function renderLineFilter() {
+  const container = document.getElementById('line-filter');
+  container.innerHTML = '';
+  const lines = [...new Set(Object.values(products).map(p => p.line).filter(Boolean))].sort();
+
+  const allChip = document.createElement('span');
+  allChip.className = 'idx-line-chip' + (!activeLineFilter ? ' on' : '');
+  allChip.textContent = 'All';
+  allChip.onclick = () => { activeLineFilter = null; renderIndex(); renderLineFilter(); renderDimFilter(); reapplySearch(); };
+  container.appendChild(allChip);
+
+  lines.forEach(lid => {
+    const chip = document.createElement('span');
+    chip.className = 'idx-line-chip' + (activeLineFilter === lid ? ' on' : '');
+    if (activeLineFilter === lid) {
+      chip.style.backgroundColor = lineColors[lid] || '#888';
+    }
+    chip.textContent = (CATALOG.lines[lid]?.label || lid).replace(' — ', ' ');
+    chip.onclick = () => {
+      activeLineFilter = activeLineFilter === lid ? null : lid;
+      renderIndex();
+      renderLineFilter();
+      renderDimFilter();
+      reapplySearch();
+    };
+    container.appendChild(chip);
+  });
+}
+
+function renderDimFilter() {
+  const container = document.getElementById('dim-filter');
+  container.innerHTML = '';
+
+  const chips = [
+    { val: null, label: 'All' },
+    { val: 'has', label: 'Has Dims' },
+    { val: 'est', label: 'Estimated' },
+  ];
+
+  chips.forEach(({ val, label }) => {
+    const chip = document.createElement('span');
+    chip.className = 'idx-dim-chip' + (activeDimFilter === val ? ' on' : '');
+    chip.textContent = label;
+    chip.onclick = () => {
+      activeDimFilter = activeDimFilter === val ? null : val;
+      renderIndex();
+      renderDimFilter();
+      reapplySearch();
+    };
+    container.appendChild(chip);
+  });
+}
+
+function setSort(val) {
+  activeSort = val;
+  renderIndex();
+  reapplySearch();
+}
+
+function toggleProduct(pid, displayId) {
+  const display = getDisplay(displayId);
+  if (!display) return;
+  if (display.hidden.has(pid)) display.hidden.delete(pid);
+  else display.hidden.add(pid);
+  renderAll();
+}
+
+function toggleAll() {
+  displays.forEach(display => {
+    const allIds = allPlacements(display).map(p => p.id);
+    if (display.hidden.size < allIds.length / 2) {
+      allIds.forEach(id => display.hidden.add(id));
+    } else {
+      display.hidden.clear();
+    }
+  });
+  renderAll();
+}
+
+function filterIndex(q) {
+  q = q.toLowerCase();
+  document.querySelectorAll('.idx-item').forEach(row => {
+    const id = row.dataset.id || '';
+    const p = getProduct(id);
+    const text = (id + ' ' + (p ? p.name : '')).toLowerCase();
+    if (!text.includes(q)) { row.style.display = 'none'; return; }
+    if (activeDimFilter) {
+      const dims = getProductDims(id);
+      const match = activeDimFilter === 'est' ? dims.estimated : !dims.estimated;
+      if (!match) { row.style.display = 'none'; return; }
+    }
+    row.style.display = '';
+  });
+}
+
+function reapplySearch() {
+  const inp = document.querySelector('.idx-filter');
+  if (inp && inp.value.trim()) filterIndex(inp.value);
+}
+
+function highlightProduct(pid, displayId) {
+  document.querySelectorAll('.product.highlighted').forEach(el => el.classList.remove('highlighted'));
+  const selector = displayId
+    ? `.display-unit[data-display-id="${displayId}"] .product[data-id="${pid}"]`
+    : `.product[data-id="${pid}"]`;
+  document.querySelectorAll(selector).forEach(el => {
+    el.classList.add('highlighted');
+    el.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+    setTimeout(() => el.classList.remove('highlighted'), 2000);
+  });
+}
+
+// ================================================================
+//  DUPLICATE / REMOVE
+// ================================================================
+function countInstances(pid, display) {
+  let count = 0;
+  for (const sid of getRowShelfIds(display)) {
+    for (const col of (display.layout[sid] || [])) {
+      if (col.b === pid) count++;
+      if (col.f === pid) count++;
+    }
+  }
+  return count;
+}
+
+function duplicateProduct(pid, shelfId, displayId) {
+  const display = getDisplay(displayId);
+  if (!display) return;
+  display.hidden.delete(pid);
+  display.layout[shelfId].push({b: pid, f: null, br: false, fr: false});
+  renderAll();
+  toast('Added duplicate: ' + pid);
+}
+
+function removeInstance(pid, shelfId, colIdx, pos, displayId) {
+  const display = getDisplay(displayId);
+  if (!display) return;
+  const cols = display.layout[shelfId];
+  if (colIdx >= cols.length) return;
+  const col = cols[colIdx];
+  if (pos === 'front' && col.f === pid) {
+    col.f = null; col.fr = false;
+  } else if (col.b === pid) {
+    if (col.f) { col.b = col.f; col.f = null; col.br = col.fr || false; col.fr = false; }
+    else { cols.splice(colIdx, 1); }
+  }
+  renderAll();
+  toast('Removed: ' + pid);
+}
+
+function rotateProduct(displayId, shelfKey, colIdx, pos) {
+  const display = getDisplay(displayId);
+  if (!display) return;
+  const cols = display.layout[shelfKey];
+  if (colIdx >= cols.length) return;
+  const col = cols[colIdx];
+  if (pos === 'front' && col.f) {
+    col.fr = !col.fr;
+  } else if (pos === 'back') {
+    col.br = !col.br;
+  }
+  renderAll();
+}
+
+// ================================================================
+//  STATS
+// ================================================================
+function updateStats() {
+  let html = '';
+  displays.forEach((display, di) => {
+    if (displays.length > 1) {
+      html += `<div class="stats-display-hdr" style="margin-top:${di>0?'8':'0'}px">${display.label}</div>`;
+    }
+    for (const sid of getRowShelfIds(display)) {
+      const cols = display.layout[sid] || [];
+      let w = 0, skus = 0;
+      cols.forEach(c => {
+        const bkHidden = display.hidden.has(c.b);
+        const frHidden = c.f && display.hidden.has(c.f);
+        const bkDims = bkHidden ? null : getEffectiveDims(c.b, c.br || false);
+        const frDims = (frHidden || !c.f) ? null : getEffectiveDims(c.f, c.fr || false);
+        if (bkDims || frDims) {
+          w += Math.max(bkDims ? bkDims.w : 0, frDims ? frDims.w : 0);
+        }
+        if (!bkHidden) skus++;
+        if (c.f && !frHidden) skus++;
+      });
+      const pct = w / SW * 100;
+      const cls = pct > 100 ? 'u-over' : pct > 90 ? 'u-warn' : 'u-ok';
+      html += `<div class="stat-row"><span>${getShelfName(sid)}</span><span>${w.toFixed(1)}″/${SW}″ (${pct.toFixed(0)}%) · ${skus} items</span></div>
+        <div class="util-bar"><div class="util-fill ${cls}" style="width:${Math.min(pct,100)}%"></div></div>`;
+    }
+    const plc = allPlacements(display);
+    const total = plc.length;
+    let hidCount = 0;
+    plc.forEach(p => { if (display.hidden.has(p.id)) hidCount++; });
+    const visible = total - hidCount;
+    html += `<div class="stat-row" style="margin-top:4px;padding-top:4px;border-top:2px solid #ddd"><span>Visible / Total</span><span>${visible} / ${total}</span></div>`;
+  });
+  document.getElementById('stats').innerHTML = html || '<div style="font-size:10px;color:#999">No displays</div>';
+}
+
+function renderLegend() {
+  const container = document.getElementById('legend');
+  let html = '';
+  // Group by product line
+  const seenSubcats = new Set();
+  for (const [lid, lineInfo] of Object.entries(CATALOG.lines || {}).sort()) {
+    const lineProducts = Object.values(products).filter(p => p.line === lid);
+    const subcats = [...new Set(lineProducts.map(p => p.subcategory || p.category))].sort();
+    if (subcats.length === 0) continue;
+    html += `<div style="font-size:9px;font-weight:700;color:${lineInfo.color};margin-top:4px;margin-bottom:2px">${lineInfo.label}</div>`;
+    subcats.forEach(sc => {
+      if (seenSubcats.has(sc)) return;
+      seenSubcats.add(sc);
+      const color = categoryColors[sc] || '#888';
+      html += `<div class="legend-item"><div class="legend-sw" style="border-color:${color};background:${hexToRgba(color, 0.2)}"></div>${sc}</div>`;
+    });
+  }
+  container.innerHTML = html || '<div style="font-size:10px;color:#999">No categories</div>';
+}
+
+function renderCatalogStats() {
+  const total = Object.keys(products).length;
+  const missing = Object.values(products).filter(p => !p.hasDimensions).length;
+  const withImages = Object.values(products).filter(p => p.images && p.images.length > 0).length;
+  const lines = {};
+  Object.values(products).forEach(p => { lines[p.line] = (lines[p.line] || 0) + 1; });
+  let html = `<div class="stat-row"><span>Total SKUs</span><span>${total}</span></div>`;
+  html += `<div class="stat-row"><span>With dimensions</span><span>${total - missing}</span></div>`;
+  html += `<div class="stat-row"><span>Missing dimensions</span><span>${missing}</span></div>`;
+  html += `<div class="stat-row"><span>With images</span><span>${withImages}</span></div>`;
+  html += `<div class="stat-row"><span>Product lines</span><span>${Object.keys(lines).length}</span></div>`;
+  for (const [lid, count] of Object.entries(lines).sort()) {
+    const lc = lineColors[lid] || '#888';
+    html += `<div class="stat-row"><span style="color:${lc}">${CATALOG.lines[lid]?.label || lid}</span><span>${count}</span></div>`;
+  }
+  document.getElementById('catalog-stats').innerHTML = html;
+}
+
+// ================================================================
+//  VIEW MODE TOGGLE
+// ================================================================
+document.getElementById('view-toggle').addEventListener('click', e => {
+  if (e.target.tagName !== 'BUTTON') return;
+  viewMode = e.target.dataset.mode;
+  document.querySelectorAll('#view-toggle button').forEach(b => b.classList.toggle('on', b.dataset.mode === viewMode));
+  renderAll();
+});
+
+// ================================================================
+//  TOOLTIP
+// ================================================================
+function mvTip(e) {
+  const t = document.getElementById('tooltip');
+  let x = e.clientX + 14, y = e.clientY + 14;
+  if (x + 300 > innerWidth) x = e.clientX - 300;
+  if (y + 180 > innerHeight) y = e.clientY - 180;
+  t.style.left = x + 'px';
+  t.style.top = y + 'px';
+}
+
+// ================================================================
+//  ACTIONS
+// ================================================================
+function resetAll() {
+  // Clear filters + search
+  activeLineFilter = null;
+  activeDimFilter = null;
+  activeSort = 'default';
+  collapsedInventories.clear();
+  const inp = document.querySelector('.idx-filter');
+  if (inp) inp.value = '';
+  document.getElementById('sort-select').value = 'default';
+  // Rebuild all displays from catalog
+  displays = [];
+  buildDefaultDisplays();
+  localStorage.removeItem('planogram-autosave');
+  renderAll();
+  toast('Reset all displays');
+}
+
+function clearDisplay(displayId) {
+  const display = getDisplay(displayId);
+  if (!display) return;
+  for (const sid of getRowShelfIds(display)) { display.layout[sid] = []; }
+  display.shelfRows = 1;
+  display.layout = {top:[], mid:[], bot:[]};
+  display.hidden.clear();
+  renderAll();
+  toast('Cleared display');
+}
+
+function dlJSON() {
+  const d = {
+    generated: new Date().toISOString(),
+    displays: displays.map((display, di) => ({
+      name: display.label,
+      lineId: display.lineId,
+      shelves: getRowShelfIds(display).map(sid => {
+        const clearance = getShelfClearance(sid);
+        return {
+          name: getShelfName(sid), clearance: clearance,
+          columns: (display.layout[sid] || []).map(c => {
+            const bkDims = getEffectiveDims(c.b, c.br || false);
+            const frDims = c.f ? getEffectiveDims(c.f, c.fr || false) : null;
+            return {
+              back: {id: c.b, rotated: c.br || false, ...bkDims},
+              front: frDims ? {id: c.f, rotated: c.fr || false, ...frDims} : null,
+              columnWidth: Math.max(bkDims.w, frDims ? frDims.w : 0)
+            };
+          })
+        };
+      }),
+      hidden: [...display.hidden]
+    }))
+  };
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(d, null, 2)], {type: 'application/json'}));
+  a.download = 'planogram-v2-' + new Date().toISOString().slice(0, 10) + '.json';
+  a.click();
+  toast('Exported planogram JSON');
+}
+
+function generateOrderJSON() {
+  const allProducts = [];
+
+  displays.forEach((display, di) => {
+    const skuData = {};
+
+    for (const sid of getRowShelfIds(display)) {
+      const cols = display.layout[sid] || [];
+      cols.forEach(col => {
+        [col.b, col.f].filter(Boolean).forEach(sku => {
+          if (display.hidden.has(sku)) return;
+          const p = getProduct(sku);
+          if (!p) return;
+          const dims = getProductDims(sku);
+          const deep = col.f ? 1 : Math.floor(SD / dims.d);
+          if (!skuData[sku]) skuData[sku] = {qty: 0};
+          skuData[sku].qty += (sku === col.f ? 1 : deep);
+        });
+      });
+    }
+
+    for (const [sku, d] of Object.entries(skuData)) {
+      const p = getProduct(sku);
+      if (!p) continue;
+      const qty = d.qty;
+      const basePrice = p.unitPrice ? p.unitPrice.toFixed(4) : '0.0000';
+      const baseTotal = (p.unitPrice ? (p.unitPrice * qty).toFixed(4) : '0.0000');
+      const costPrice = p.unitCost ? p.unitCost.toFixed(4) : '0.0000';
+      const dims = getProductDims(sku);
+
+      allProducts.push({
+        product_id: 0,
+        variant_id: 0,
+        name: p.name,
+        name_customer: p.name,
+        name_merchant: p.name,
+        sku: sku,
+        upc: '',
+        type: 'physical',
+        base_price: basePrice,
+        price_ex_tax: basePrice,
+        price_inc_tax: basePrice,
+        price_tax: '0.0000',
+        base_total: baseTotal,
+        total_ex_tax: baseTotal,
+        total_inc_tax: baseTotal,
+        total_tax: '0.0000',
+        weight: '0.0000',
+        width: dims.w.toFixed(4),
+        height: dims.h.toFixed(4),
+        depth: dims.d.toFixed(4),
+        quantity: qty,
+        base_cost_price: costPrice,
+        cost_price_inc_tax: costPrice,
+        cost_price_ex_tax: costPrice,
+        cost_price_tax: '0.0000',
+        is_refunded: false,
+        quantity_refunded: 0,
+        refund_amount: '0.0000',
+        return_id: 0,
+        wrapping_id: 0,
+        wrapping_name: '',
+        base_wrapping_cost: '0.0000',
+        wrapping_cost_ex_tax: '0.0000',
+        wrapping_cost_inc_tax: '0.0000',
+        wrapping_cost_tax: '0.0000',
+        wrapping_message: '',
+        quantity_shipped: 0,
+        event_name: null,
+        event_date: null,
+        fixed_shipping_cost: '0.0000',
+        ebay_item_id: '',
+        ebay_transaction_id: '',
+        option_set_id: null,
+        parent_order_product_id: null,
+        is_bundled_product: false,
+        bin_picking_number: '',
+        external_id: null,
+        fulfillment_source: '',
+        brand: p.brand || '',
+        applied_discounts: [],
+        product_options: [],
+        configurable_fields: [],
+        discounted_total_inc_tax: baseTotal,
+        _display: display.label
+      });
+    }
+  });
+
+  if (allProducts.length === 0) { toast('No visible products to export'); return; }
+
+  const blob = new Blob([JSON.stringify(allProducts, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'bigcommerce-order-' + new Date().toISOString().slice(0, 10) + '.json';
+  a.click();
+  toast(`Order JSON exported — ${allProducts.length} line items`);
+}
+
+function toast(m) {
+  const t = document.getElementById('toast');
+  t.textContent = m;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ================================================================
+//  HELPERS
+// ================================================================
+function hexToRgba(hex, alpha) {
+  hex = hex.replace('#', '');
+  if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  const r = parseInt(hex.substring(0,2), 16);
+  const g = parseInt(hex.substring(2,4), 16);
+  const b = parseInt(hex.substring(4,6), 16);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+
+function shortName(name) {
+  if (!name) return '';
+  // Trim brand prefix and long qualifiers
+  let s = name.replace(/^(.+?)\s*[-–—]\s*/, '').trim();
+  // Take first 40 chars
+  if (s.length > 40) s = s.substring(0, 37) + '...';
+  return s;
+}
+
+function buildDefaultDisplays() {
+  // Group products by line, alphabetically sort within each
+  const byLine = {};
+  for (const [sku, p] of Object.entries(products)) {
+    const line = p.line || 'unknown';
+    if (!byLine[line]) byLine[line] = [];
+    byLine[line].push(sku);
+  }
+
+  // Sort lines consistently
+  const lineOrder = ['vape-green','vape-yellow','herb-green','herb-yellow','glass-green','glass-yellow'];
+  for (const lid of lineOrder) {
+    if (byLine[lid] && byLine[lid].length > 0) {
+      byLine[lid].sort();
+      const label = (CATALOG.lines[lid]?.label || lid) + ` (${byLine[lid].length} SKUs)`;
+      createDisplay(label, lid, byLine[lid]);
+    }
+  }
+
+  // Handle any lines not in the canonical order
+  for (const [lid, skus] of Object.entries(byLine)) {
+    if (!lineOrder.includes(lid) && skus.length > 0) {
+      skus.sort();
+      createDisplay(lid + ` (${skus.length} SKUs)`, lid, skus);
+    }
+  }
+}
+
+// ================================================================
+//  SAVE / LOAD CONFIGURATIONS
+// ================================================================
+function serializeDisplays() {
+  return displays.map(function(d) {
+    var lo = {};
+    for (var k in d.layout) { lo[k] = d.layout[k].slice(); }
+    return { id: d.id, label: d.label, lineId: d.lineId, layout: lo, shelfRows: d.shelfRows, hidden: Array.from(d.hidden) };
+  });
+}
+
+function restoreDisplays(data) {
+  displays = [];
+  nextDisplayId = 1;
+  data.forEach(function(d) {
+    var lo = {};
+    for (var k in d.layout) { lo[k] = d.layout[k].slice(); }
+    displays.push({ id: d.id, label: d.label, lineId: d.lineId, layout: lo, shelfRows: d.shelfRows || 1, hidden: new Set(d.hidden || []) });
+    if (d.id >= nextDisplayId) nextDisplayId = d.id + 1;
+  });
+}
+
+function autoSave() {
+  try { localStorage.setItem('planogram-autosave', JSON.stringify(serializeDisplays())); } catch(e) {}
+}
+
+function restoreAutoSave() {
+  var raw = localStorage.getItem('planogram-autosave');
+  if (!raw) return;
+  try {
+    var data = JSON.parse(raw);
+    if (Array.isArray(data) && data.length > 0 && data[0].layout) {
+      restoreDisplays(data);
+    }
+  } catch(e) {}
+}
+
+function loadSavedConfigs() {
+  try {
+    var raw = localStorage.getItem('planogram-saved-configs');
+    savedConfigs = raw ? JSON.parse(raw) : {};
+  } catch(e) { savedConfigs = {}; }
+}
+
+function saveConfigsToStorage() {
+  try { localStorage.setItem('planogram-saved-configs', JSON.stringify(savedConfigs)); } catch(e) {}
+}
+
+function saveCurrentConfig() {
+  var name = prompt('Name this configuration:', 'Config ' + new Date().toLocaleDateString());
+  if (!name) return;
+  name = name.trim();
+  if (!name) return;
+  loadSavedConfigs();
+  savedConfigs[name] = { date: new Date().toISOString(), displays: serializeDisplays() };
+  saveConfigsToStorage();
+  toast('Saved: ' + escHtml(name));
+}
+
+function loadConfig(name) {
+  if (!savedConfigs[name]) return;
+  if (!confirm('Load "' + name + '"? This replaces current displays.')) return;
+  restoreDisplays(savedConfigs[name].displays);
+  renderAll();
+  toast('Loaded: ' + escHtml(name));
+}
+
+function deleteConfig(name, e) {
+  e.stopPropagation();
+  if (!confirm('Delete "' + name + '"?')) return;
+  loadSavedConfigs();
+  delete savedConfigs[name];
+  saveConfigsToStorage();
+  renderConfigDropdown();
+  toast('Deleted: ' + escHtml(name));
+}
+
+function renderConfigDropdown() {
+  var dd = document.getElementById('config-dropdown');
+  if (!dd) return;
+  loadSavedConfigs();
+  var html = '<div class="config-autosave-row"><span>Autosave</span><button class="cfg-act-btn" onclick="restoreAutoSave();renderAll();toast(\'Autosave restored\');">Restore</button></div>';
+  var names = Object.keys(savedConfigs).sort(function(a,b) { return a.localeCompare(b); });
+  if (names.length === 0) {
+    html += '<div class="config-item" style="color:#888">No saved configs</div>';
+  } else {
+    names.forEach(function(n) {
+      var d = savedConfigs[n].date ? new Date(savedConfigs[n].date).toLocaleDateString() : '';
+      html += '<div class="config-item">' +
+        '<span class="cfg-name" title="' + escAttr(n) + '">' + escHtml(n) + '</span>' +
+        '<span class="cfg-date">' + escHtml(d) + '</span>' +
+        '<button class="cfg-act-btn" onclick="loadConfig(\'' + escAttr(n) + '\');closeConfigDropdown();">Load</button>' +
+        '<button class="cfg-del-btn" onclick="deleteConfig(\'' + escAttr(n) + '\', event)">✕</button>' +
+        '</div>';
+    });
+  }
+  dd.innerHTML = html;
+}
+
+function toggleConfigDropdown(e) {
+  e.stopPropagation();
+  var dd = document.getElementById('config-dropdown');
+  if (!dd) return;
+  if (dd.classList.contains('show')) { closeConfigDropdown(); return; }
+  renderConfigDropdown();
+  dd.classList.add('show');
+  setTimeout(function() { document.addEventListener('click', closeConfigDropdown, {once: true}); }, 10);
+}
+
+function closeConfigDropdown() {
+  var dd = document.getElementById('config-dropdown');
+  if (dd) dd.classList.remove('show');
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function escAttr(s) {
+  return String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"');
+}
+
+// ================================================================
+//  DISPLAY RENAME
+// ================================================================
+function startRename(displayId, nameEl) {
+  var display = getDisplay(displayId);
+  if (!display) return;
+  var input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'display-name-input';
+  input.value = display.label;
+  input.onblur = function() { finishRename(display, input.value, nameEl); };
+  input.onkeydown = function(e) {
+    if (e.key === 'Enter') { finishRename(display, input.value, nameEl); }
+    if (e.key === 'Escape') { finishRename(display, display.label, nameEl); }
+  };
+  nameEl.replaceWith(input);
+  input.focus();
+  input.select();
+}
+
+function finishRename(display, newName, nameEl) {
+  var input = document.querySelector('.display-name-input');
+  newName = (newName || '').trim();
+  if (!newName) newName = display.label;
+  display.label = newName;
+  if (input) {
+    var wrap = input.closest('.display-name-wrap') || input.parentElement;
+    var name = document.createElement('span');
+    name.className = 'display-name';
+    var lc = lineColors[display.lineId];
+    if (lc) name.style.color = lc;
+    name.textContent = display.label;
+    name.onclick = function() { startRename(display.id, name); };
+    name.title = 'Click to rename';
+    input.replaceWith(name);
+  }
+  renderAll();
+  toast('Display renamed');
+}
+
+// ================================================================
+//  INIT
+// ================================================================
+(async function init() {
+  await loadCatalog();
+
+  // Build default displays from catalog
+  buildDefaultDisplays();
+
+  // Restore auto-saved state (survives page refresh)
+  restoreAutoSave();
+
+  // Hide loading overlay
+  document.getElementById('loading').style.display = 'none';
+
+  // Update subtitle
+  document.getElementById('subtitle').textContent =
+    `FRONT VIEW · Shape-based rendering · ${Object.keys(products).length} products · ${displays.length} displays · Drag across shelves & displays`;
+
+  renderAll();
+})();
+</script>
+</body>
+</html>
