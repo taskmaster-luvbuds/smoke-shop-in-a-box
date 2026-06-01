@@ -53,6 +53,12 @@
                 <span id="product-price" class="text-4xl font-bold">$26.00</span>
             </div>
         </div>
+        <div class="relative w-full rounded-[2rem] bg-brand-card border border-white/5 overflow-hidden aspect-[16/9] shadow-2xl">
+            <video id="product-video" preload="auto" src="https://d1yei2z3i6k35z.cloudfront.net/10816672/6a1dd3dd39ae35.89722457_glass6inch.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
+            <button onclick="toggleMute()" class="absolute bottom-4 right-4 z-20 bg-black/60 backdrop-blur-md w-14 h-14 rounded-full flex items-center justify-center transition active:scale-90">
+                <i id="mute-icon" data-lucide="volume-x" class="w-7 h-7 text-white"></i>
+            </button>
+        </div>
         <div class="bg-brand-card border border-white/5 rounded-[2rem] p-6 flex flex-col items-center gap-3">
             <h3 class="text-lg font-semibold">Product QR Code</h3>
             <p class="text-white/50 text-sm text-center">Scan to open this page on your phone — share with customers</p>
