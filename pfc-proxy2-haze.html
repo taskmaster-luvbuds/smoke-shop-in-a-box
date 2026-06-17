@@ -54,9 +54,7 @@
                 <p class="text-brand-orange text-sm font-semibold tracking-wide uppercase mb-1">Powered by LuvBuds</p>
                 <h1 class="text-3xl font-bold leading-tight">Puffco Proxy Kit — Haze</h1>
             </div>
-            <div class="flex items-baseline gap-2 mt-1">
-                <span id="product-price" class="text-4xl font-bold">—</span>
-            </div>
+            
         </div>
         <div class="relative w-full rounded-[2rem] bg-brand-card border border-white/5 overflow-hidden aspect-[16/9] shadow-2xl">
             <video id="product-video" preload="auto" src="https://d1yei2z3i6k35z.cloudfront.net/10816672/69fa3da5ebe210.11634705_whiteproxypipe.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
@@ -252,30 +250,6 @@
         }
     </script>
 
-  <!-- Google Sheet live pricing — replace SHEET_ID per store -->
-  <script>
-    (function() {
-      var SHEET_ID = 'REPLACE_WITH_STORE_SHEET_ID';
-      var SKU = 'PFC-PROXY2-HAZE';
-      fetch('https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:json&sheet=products')
-        .then(function(r) { return r.text(); })
-        .then(function(raw) {
-          var data = JSON.parse(raw.slice(47, -2));
-          var row = data.table.rows.find(function(r) { return r.c[0] && r.c[0].v === SKU; });
-          if (!row) return;
-          var price = row.c[1] && row.c[1].v;
-          var desc  = row.c[2] && row.c[2].v;
-          if (price) {
-            var el = document.getElementById('product-price');
-            if (el) el.textContent = '$' + Number(price).toFixed(2);
-          }
-          if (desc) {
-            var el = document.getElementById('product-desc');
-            if (el) el.textContent = desc;
-          }
-        })
-        .catch(function() {});  // keep hardcoded fallback on any error
-    })();
-  </script>
+  
 </body>
 </html>
