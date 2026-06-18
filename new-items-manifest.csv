@@ -1,0 +1,27 @@
+rank,sku,slug,landing_url,product_name,image_source,qr_file,page_file
+5,HP-CHILL3,hp-chill3,https://box.shopluvbuds.com/hp-chill3.html,"3"" Glass Chillum",catalog/scrape,qr-codes/HP-CHILL3.png,hp-chill3.html
+8,HP-2.5P40G,hp-2.5p40g,https://box.shopluvbuds.com/hp-2.5p40g.html,"2.5"" Glass Hand Pipe",catalog/scrape,qr-codes/HP-2.5P40G.png,hp-2.5p40g.html
+9,BT-350VV,bt-350vv,https://box.shopluvbuds.com/bt-350vv.html,350mAh Variable Voltage Battery,catalog/scrape,qr-codes/BT-350VV.png,bt-350vv.html
+10,PFC-PROXYCOREKIT,pfc-proxycorekit,https://box.shopluvbuds.com/pfc-proxycorekit.html,"Puffco Proxy Core Kit, Onyx",catalog/scrape,qr-codes/PFC-PROXYCOREKIT.png,pfc-proxycorekit.html
+11,OOZ-1453,ooz-1453,https://box.shopluvbuds.com/ooz-1453.html,Ooze HiLo Conceal 510 Battery,catalog/scrape,qr-codes/OOZ-1453.png,ooz-1453.html
+13,BT-V985D,bt-v985d,https://box.shopluvbuds.com/bt-v985d.html,Pulsar 510 DL 5.0 Auto-Draw Battery,catalog/scrape,qr-codes/BT-V985D.png,bt-v985d.html
+14,KA-WP-STEELCHILL13,ka-wp-steelchill13,https://box.shopluvbuds.com/ka-wp-steelchill13.html,"13"" Chill Stainless Steel Bong",local-file,qr-codes/KA-WP-STEELCHILL13.png,ka-wp-steelchill13.html
+15,ZZUT48,zzut48,https://box.shopluvbuds.com/zzut48.html,"Zig-Zag Ultra Thin 1 1/4"" Rolling Papers",catalog/scrape,qr-codes/ZZUT48.png,zzut48.html
+18,PFC-PEAKNEWBLK,pfc-peaknewblk,https://box.shopluvbuds.com/pfc-peaknewblk.html,"The New Puffco Peak, Onyx",catalog/scrape,qr-codes/PFC-PEAKNEWBLK.png,pfc-peaknewblk.html
+24,BT-V1180D,bt-v1180d,https://box.shopluvbuds.com/bt-v1180d.html,"Pulsar 510 DL 5.0 Battery, Thermo Series",catalog/scrape,qr-codes/BT-V1180D.png,bt-v1180d.html
+26,SE-BT-380VV-BX-24PK,se-bt-380vv-bx-24pk,https://box.shopluvbuds.com/se-bt-380vv-bx-24pk.html,SirEEL 380mAh Preheat Battery,catalog/scrape,qr-codes/SE-BT-380VV-BX-24PK.png,se-bt-380vv-bx-24pk.html
+27,OOZ-1379,ooz-1379,https://box.shopluvbuds.com/ooz-1379.html,Ooze Smart Battery 650mAh,catalog/scrape,qr-codes/OOZ-1379.png,ooz-1379.html
+32,CLIP-PROMO-HAZMAT,clip-promo-hazmat,https://box.shopluvbuds.com/clip-promo-hazmat.html,Clipper Large Lighter,local-file,qr-codes/CLIP-PROMO-HAZMAT.png,clip-promo-hazmat.html
+34,HP-3P55G,hp-3p55g,https://box.shopluvbuds.com/hp-3p55g.html,"3.5"" Glass Hand Pipe",catalog/scrape,qr-codes/HP-3P55G.png,hp-3p55g.html
+36,PC-6PCK-PINK-MC,pc-6pck-pink-mc,https://box.shopluvbuds.com/pc-6pck-pink-mc.html,"Blazy Susan 1 1/4"" Pink Pre-Rolled Cones, 6 Pack",catalog/scrape,qr-codes/PC-6PCK-PINK-MC.png,pc-6pck-pink-mc.html
+37,POP-114-VARIETY-UB2.0,pop-114-variety-ub2.0,https://box.shopluvbuds.com/pop-114-variety-ub2.0.html,"Pop Cones Unbleached 1 1/4"" Variety, 25 Pack",catalog/scrape,qr-codes/POP-114-VARIETY-UB2.0.png,pop-114-variety-ub2.0.html
+38,SE-WP-BEAKUV,se-wp-beakuv,https://box.shopluvbuds.com/se-wp-beakuv.html,"10"" SirEEL UV Beaker Bong",catalog/scrape,qr-codes/SE-WP-BEAKUV.png,se-wp-beakuv.html
+39,HP-4P85G,hp-4p85g,https://box.shopluvbuds.com/hp-4p85g.html,"4.5"" Glass Hand Pipe",catalog/scrape,qr-codes/HP-4P85G.png,hp-4p85g.html
+41,CCELL-M4BPRO-ASST,ccell-m4bpro-asst,https://box.shopluvbuds.com/ccell-m4bpro-asst.html,CCELL M4B Pro 290mAh Battery,catalog/scrape,qr-codes/CCELL-M4BPRO-ASST.png,ccell-m4bpro-asst.html
+42,PFC-PEAKNEWSAPPHIRE,pfc-peaknewsapphire,https://box.shopluvbuds.com/pfc-peaknewsapphire.html,"The New Puffco Peak, Sapphire Edition",catalog/scrape,qr-codes/PFC-PEAKNEWSAPPHIRE.png,pfc-peaknewsapphire.html
+44,NWTN-WP-DECOGP-ASST,nwtn-wp-decogp-asst,https://box.shopluvbuds.com/nwtn-wp-decogp-asst.html,NWTN Deco Gravity Bong,local-file,qr-codes/NWTN-WP-DECOGP-ASST.png,nwtn-wp-decogp-asst.html
+45,RAWCONEDISP20PK114,rawconedisp20pk114,https://box.shopluvbuds.com/rawconedisp20pk114.html,"RAW Classic 1 1/4"" Pre-Rolled Cones, 20 Pack",catalog/scrape,qr-codes/RAWCONEDISP20PK114.png,rawconedisp20pk114.html
+47,GRAV-PBS.0,grav-pbs.0,https://box.shopluvbuds.com/grav-pbs.0.html,"GRAV 3"" Spherical Pocket Bubbler",local-file,qr-codes/GRAV-PBS.0.png,grav-pbs.0.html
+50,PFC-PEAKNEWZEST,pfc-peaknewzest,https://box.shopluvbuds.com/pfc-peaknewzest.html,"The New Puffco Peak, Zest Edition",catalog/scrape,qr-codes/PFC-PEAKNEWZEST.png,pfc-peaknewzest.html
+51,BT-V852D,bt-v852d,https://box.shopluvbuds.com/bt-v852d.html,"Pulsar 510 DL 2.0 PRO Vape Bar, Mist Series",catalog/scrape,qr-codes/BT-V852D.png,bt-v852d.html
+52,YOCAN-ZIVAPRO-ASST-10PK,yocan-zivapro-asst-10pk,https://box.shopluvbuds.com/yocan-zivapro-asst-10pk.html,Yocan ZIVA PRO 650mAh Battery,catalog/scrape,qr-codes/YOCAN-ZIVAPRO-ASST-10PK.png,yocan-zivapro-asst-10pk.html
