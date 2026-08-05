@@ -158,6 +158,25 @@
     <script>
         lucide.createIcons();
 
+        // Force autoplay on Safari/iOS
+        (function() {
+            var video = document.getElementById('product-video');
+            if (!video) return;
+            video.muted = true;
+            var playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(function() {
+                    var events = ['touchstart', 'scroll', 'click'];
+                    function tryPlay() {
+                        video.muted = true;
+                        video.play();
+                        events.forEach(function(e) { document.removeEventListener(e, tryPlay); });
+                    }
+                    events.forEach(function(e) { document.addEventListener(e, tryPlay, { once: true }); });
+                });
+            }
+        })();
+
         function openModal() {
             const modal = document.getElementById('signup-modal');
             const backdrop = document.getElementById('modal-backdrop');

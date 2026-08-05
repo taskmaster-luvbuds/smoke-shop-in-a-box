@@ -14,4 +14,34 @@
 <div class="grid grid-cols-2 gap-4"><div class="bg-brand-card border border-white/5 rounded-[2rem] p-5 flex flex-col gap-3 justify-center items-start"><div class="w-10 h-10 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center"><i data-lucide="flame" class="w-5 h-5"></i></div><div><h4 class="font-semibold text-sm">Slow Burn</h4><p class="text-xs text-white/50 mt-0.5">Even every time</p></div></div><div class="bg-brand-card border border-white/5 rounded-[2rem] p-5 flex flex-col gap-3 justify-center items-start"><div class="w-10 h-10 rounded-full bg-brand-green/20 text-brand-green flex items-center justify-center"><i data-lucide="leaf" class="w-5 h-5"></i></div><div><h4 class="font-semibold text-sm">Clean Draw</h4><p class="text-xs text-white/50 mt-0.5">Pure flavor</p></div></div><div class="bg-brand-card border border-white/5 rounded-[2rem] p-5 flex flex-col gap-3 justify-center items-start"><div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center"><i data-lucide="check-circle" class="w-5 h-5"></i></div><div><h4 class="font-semibold text-sm">Ready to Roll</h4><p class="text-xs text-white/50 mt-0.5">No fuss</p></div></div><div class="bg-brand-card border border-white/5 rounded-[2rem] p-5 flex flex-col gap-3 justify-center items-start"><div class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center"><i data-lucide="shield-check" class="w-5 h-5"></i></div><div><h4 class="font-semibold text-sm">LuvBuds QA</h4><p class="text-xs text-white/50 mt-0.5">Verified Quality</p></div></div></div>
 </main>
 <div class="fixed bottom-0 left-0 w-full z-50 bg-brand-dark/90 backdrop-blur-2xl border-t border-white/10 pt-4 px-4 pb-6"><div class="max-w-md mx-auto flex items-center gap-4"><button class="w-14 h-14 shrink-0 rounded-2xl bg-brand-card border border-white/10 flex items-center justify-center"><i data-lucide="heart" class="w-6 h-6"></i></button><button class="flex-1 h-14 rounded-2xl bg-brand-orange text-white font-bold text-lg flex items-center justify-center gap-2"><span>Grab it Now</span><i data-lucide="arrow-right" class="w-5 h-5"></i></button></div></div>
-<script>lucide.createIcons();</script><script>(function(){var SHEET_ID='REPLACE_WITH_STORE_SHEET_ID';var SKU='ZZUB11436';fetch('https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:json&sheet=products').then(function(r){return r.text();}).then(function(raw){var d=JSON.parse(raw.slice(47,-2));var row=d.table.rows.find(function(r){return r.c[0]&&r.c[0].v===SKU;});if(!row)return;var x=row.c[2]&&row.c[2].v;if(x){var el=document.getElementById('product-desc');if(el)el.textContent=x;}}).catch(function(){});})();</script></body></html>
+<script>lucide.createIcons();
+
+        // Force autoplay on Safari/iOS
+        (function() {
+            var video = document.getElementById('product-video');
+            if (!video) return;
+            video.muted = true;
+            var playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(function() {
+                    var events = ['touchstart', 'scroll', 'click'];
+                    function tryPlay() {
+                        video.muted = true;
+                        video.play();
+                        events.forEach(function(e) { document.removeEventListener(e, tryPlay); });
+                    }
+                    events.forEach(function(e) { document.addEventListener(e, tryPlay, { once: true }); });
+                });
+            }
+        })();
+</script><script>(function(){var SHEET_ID='REPLACE_WITH_STORE_SHEET_ID';var SKU='ZZUB11436';fetch('https://docs.google.com/spreadsheets/d/'+SHEET_ID+'/gviz/tq?tqx=out:json&sheet=products').then(function(r){return r.text();}).then(function(raw){var d=JSON.parse(raw.slice(47,-2));var row=d.table.rows.find(function(r){return r.c[0]&&r.c[0].v===SKU;});if(!row)return;var x=row.c[2]&&row.c[2].v;if(x){var el=document.getElementById('product-desc');if(el)el.textContent=x;}}).catch(function(){});})();
+        function toggleMute() {
+            const video = document.getElementById('product-video');
+            const icon = document.getElementById('mute-icon');
+            if (!video || !icon) return;
+            video.muted = !video.muted;
+            icon.setAttribute('data-lucide', video.muted ? 'volume-x' : 'volume-2');
+            lucide.createIcons();
+        }
+
+    </script></body></html>
