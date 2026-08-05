@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SirEEL Hover EV 10pk, Electro | Smoke Shop in a Box</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: {
+                fontFamily: { sans: ['Outfit','sans-serif'] },
+                colors: { brand: { orange:'#F97316', green:'#22C55E', dark:'#0a0a0a', card:'#171717' } },
+                animation: { blob:'blob 7s infinite' },
+                keyframes: { blob: { '0%':{transform:'translate(0px,0px) scale(1)'}, '33%':{transform:'translate(30px,-50px) scale(1.1)'}, '66%':{transform:'translate(-20px,20px) scale(0.9)'}, '100%':{transform:'translate(0px,0px) scale(1)'} } }
+            } }
+        }
+    </script>
+    <style>::-webkit-scrollbar{display:none}body{-ms-overflow-style:none;scrollbar-width:none;-webkit-tap-highlight-color:transparent}</style>
+</head>
+<body class="bg-brand-dark text-white font-sans antialiased pb-28">
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-brand-orange/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-brand-green/10 rounded-full mix-blend-screen filter blur-[100px] animate-blob"></div>
+    </div>
+    <nav class="fixed top-0 w-full z-50 bg-brand-dark/80 backdrop-blur-xl border-b border-white/5">
+        <div class="w-full px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="package" class="w-6 h-6 text-brand-orange"></i>
+                <span class="font-bold tracking-tight text-lg">Smoke Shop in a Box</span>
+            </div>
+            <button class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition">
+                <i data-lucide="share" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </nav>
+    <main class="relative z-10 pt-20 px-4 w-full flex flex-col gap-6">
+        <div class="relative w-full aspect-square rounded-[2rem] bg-brand-card border border-white/5 overflow-hidden group">
+            <div class="absolute top-4 left-4 z-20 bg-brand-dark/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 flex items-center gap-1.5">
+                <div class="w-2 h-2 rounded-full bg-brand-green animate-pulse"></div>
+                <span class="text-xs font-semibold tracking-wide uppercase">In Stock</span>
+            </div>
+            <img src="https://cdn11.bigcommerce.com/s-v5qpematq2/products/840/images/10382/LUVBUDS-SE-HOVER-Z__74316.1761081589.500.750__20580.1782318721.386.513.png?c=1" alt="SirEEL Hover EV 10pk, Electro" class="absolute inset-0 w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105">
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent"></div>
+        </div>
+        <div class="flex flex-col gap-2">
+            <div>
+                <p class="text-brand-orange text-sm font-semibold tracking-wide uppercase mb-1">Powered by LuvBuds</p>
+                <h1 class="text-3xl font-bold leading-tight">SirEEL Hover EV 10pk, Electro</h1>
+            </div>
+            
+        </div>
+        <div class="relative w-full rounded-[2rem] bg-brand-card border border-white/5 overflow-hidden aspect-[16/9] shadow-2xl">
+            <video id="product-video" preload="auto" src="https://d1yei2z3i6k35z.cloudfront.net/10816672/6a735bbca5d7e7.55208353_SE-BT-EV-ELECTRO-10PK.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
+            <button onclick="toggleMute()" class="absolute bottom-4 right-4 z-20 bg-black/60 backdrop-blur-md w-14 h-14 rounded-full flex items-center justify-center transition active:scale-90">
+                <i id="mute-icon" data-lucide="volume-x" class="w-7 h-7 text-white"></i>
+            </button>
+        </div>
+        <div class="bg-brand-card/50 border border-white/5 rounded-[2rem] p-6">
+            <h3 class="text-lg font-semibold mb-3">About this item</h3>
+            <p id="product-desc" class="text-white/70 leading-relaxed text-sm">The SirEEL Hover EV hides a real flashlight in the back, just hold the button five seconds and it lights your way instead of your cart. Five voltage modes dial in exactly how you want your hit, it fits pods up to 2 grams, and the color-shifting electro finish changes look depending on the light.</p>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="bg-brand-card border border-white/5 rounded-[2rem] p-5 flex flex-col gap-3 justify-center items-start">
+                <div class="w-10 h-10 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center">
+                    <i data-lucide="zap" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm">Variable Voltage</h4>
+                    <p class="text-xs text-white/50 mt-0.5">Dial your hit</p>
+                </div>
+            </div>
+            <div class="bg-brand-card border border-white/5 rounded-[2rem] p-5 flex flex-col gap-3 justify-center items-start">
+                <div class="w-10 h-10 rounded-full bg-brand-green/20 text-brand-green flex items-center justify-center">
+                    <i data-lucide="battery-charging" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm">Rechargeable</h4>
+                    <p class="text-xs text-white/50 mt-0.5">USB charging</p>
+                </div>
+            </div>
+            <div class="bg-brand-card border border-white/5 rounded-[2rem] p-5 flex flex-col gap-3 justify-center items-start">
+                <div class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center">
+                    <i data-lucide="box" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm">510 Thread</h4>
+                    <p class="text-xs text-white/50 mt-0.5">Fits any cart</p>
+                </div>
+            </div>
+            <div class="bg-brand-card border border-white/5 rounded-[2rem] p-5 flex flex-col gap-3 justify-center items-start">
+                <div class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center">
+                    <i data-lucide="shield-check" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-sm">LuvBuds QA</h4>
+                    <p class="text-xs text-white/50 mt-0.5">Verified Quality</p>
+                </div>
+            </div>
+        </div>
+        <div class="flex items-center gap-2 px-1 pb-2">
+            <span class="text-xs text-white/30 font-mono">SKU: SE-BT-EV-ELECTRO-10PK</span>
+        </div>
+    </main>
+
+    <!-- Signup Modal -->
+    <div id="signup-modal" class="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto pointer-events-none">
+        <div id="modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-none"></div>
+        <div id="modal-sheet" class="relative w-full max-w-md mx-4 my-auto bg-[#111] border border-white/10 rounded-[2rem] p-6 pb-8 scale-95 opacity-0 transition-all duration-300 ease-out pointer-events-none">
+            <!-- Handle -->
+            <div class="w-10 h-1 rounded-full bg-white/20 mx-auto mb-6"></div>
+            <h2 class="text-2xl font-bold mb-1">Get Exclusive Deals</h2>
+            <p class="text-white/50 text-sm mb-6">Sign up for email & text alerts and be the first to know about drops, discounts, and new arrivals.</p>
+            <div id="signup-form" class="flex flex-col gap-3">
+                <input id="signup-name" type="text" placeholder="Your name" autocomplete="name"
+                    class="w-full h-12 rounded-xl bg-white/5 border border-white/10 px-4 text-white placeholder-white/30 text-sm focus:outline-none focus:border-brand-orange transition">
+                <input id="signup-email" type="email" placeholder="Email address" autocomplete="email"
+                    class="w-full h-12 rounded-xl bg-white/5 border border-white/10 px-4 text-white placeholder-white/30 text-sm focus:outline-none focus:border-brand-orange transition">
+                <input id="signup-phone" type="tel" placeholder="Phone number (for text alerts)" autocomplete="tel"
+                    class="w-full h-12 rounded-xl bg-white/5 border border-white/10 px-4 text-white placeholder-white/30 text-sm focus:outline-none focus:border-brand-orange transition">
+                <button onclick="submitSignup()" class="w-full h-14 mt-1 rounded-2xl bg-brand-orange hover:bg-orange-500 text-white font-bold text-lg flex items-center justify-center gap-2 transition-all active:scale-95 shadow-[0_0_20px_rgba(249,115,22,0.4)]">
+                    <i data-lucide="bell" class="w-5 h-5"></i>
+                    <span>Send Me Deals</span>
+                </button>
+            </div>
+            <div id="signup-success" class="hidden flex-col items-center gap-3 py-4 text-center">
+                <div class="w-14 h-14 rounded-full bg-brand-green/20 text-brand-green flex items-center justify-center">
+                    <i data-lucide="check" class="w-7 h-7"></i>
+                </div>
+                <h3 class="text-xl font-bold">You're in!</h3>
+                <p class="text-white/50 text-sm">Watch for exclusive deals in your inbox and on your phone.</p>
+            </div>
+            <button onclick="closeModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/50 hover:text-white transition">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Sticky Bottom Bar -->
+    <div class="fixed bottom-0 left-0 w-full z-50 bg-brand-dark/90 backdrop-blur-2xl border-t border-white/10 pt-4 px-4 pb-6">
+        <div class="w-full flex items-center gap-3">
+            <button onclick="shareProduct()" class="w-14 h-14 shrink-0 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition active:scale-95">
+                <i data-lucide="share-2" class="w-5 h-5"></i>
+            </button>
+            <button onclick="openModal()" class="flex-1 h-14 rounded-2xl bg-brand-orange hover:bg-orange-500 text-white font-bold text-lg flex items-center justify-center gap-2 transition-all active:scale-95 shadow-[0_0_20px_rgba(249,115,22,0.3)]">
+                <i data-lucide="tag" class="w-5 h-5"></i>
+                <span>Get the Deal</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // Force autoplay on Safari/iOS
+        (function() {
+            var video = document.getElementById('product-video');
+            if (!video) return;
+            video.muted = true;
+            var playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(function() {
+                    // If autoplay still blocked, play on first user interaction
+                    var events = ['touchstart', 'scroll', 'click'];
+                    function tryPlay() {
+                        video.muted = true;
+                        video.play();
+                        events.forEach(function(e) { document.removeEventListener(e, tryPlay); });
+                    }
+                    events.forEach(function(e) { document.addEventListener(e, tryPlay, { once: true }); });
+                });
+            }
+        })();
+
+        function openModal() {
+            const modal = document.getElementById('signup-modal');
+            const backdrop = document.getElementById('modal-backdrop');
+            const sheet = document.getElementById('modal-sheet');
+            modal.classList.remove('pointer-events-none');
+            backdrop.classList.remove('pointer-events-none');
+            backdrop.classList.add('opacity-100');
+            sheet.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+            sheet.classList.add('scale-100', 'opacity-100');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('signup-modal');
+            const backdrop = document.getElementById('modal-backdrop');
+            const sheet = document.getElementById('modal-sheet');
+            backdrop.classList.remove('opacity-100');
+            sheet.classList.remove('scale-100', 'opacity-100');
+            sheet.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                modal.classList.add('pointer-events-none');
+                backdrop.classList.add('pointer-events-none');
+            }, 300);
+        }
+
+        document.getElementById('modal-backdrop').addEventListener('click', closeModal);
+
+        function submitSignup() {
+            const name  = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const phone = document.getElementById('signup-phone').value.trim();
+            if (!email && !phone) {
+                document.getElementById('signup-email').focus();
+                return;
+            }
+            // Show success immediately for fast UX
+            document.getElementById('signup-form').classList.add('hidden');
+            const success = document.getElementById('signup-success');
+            success.classList.remove('hidden');
+            success.classList.add('flex');
+            lucide.createIcons();
+            setTimeout(closeModal, 2500);
+            // Send data to Google Sheet + email notification via hidden form
+            var h1 = document.querySelector('h1');
+            var skuEl = document.querySelector('.font-mono');
+            var iframe = document.createElement('iframe');
+            iframe.name = 'lead_submit';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'https://script.google.com/macros/s/AKfycbzTZwbq4TIm93c0jtwa9VP0-Req7bE6A5q2q_WuvbeE2rm68QRFHaHZx5dYkO5Ja5ay/exec';
+            form.target = 'lead_submit';
+            var fields = {
+                name: name,
+                email: email,
+                phone: phone,
+                product: h1 ? h1.textContent : '',
+                sku: skuEl ? skuEl.textContent.replace('SKU: ', '') : '',
+                pageUrl: window.location.href
+            };
+            for (var key in fields) {
+                var input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = fields[key];
+                form.appendChild(input);
+            }
+            document.body.appendChild(form);
+            form.submit();
+            setTimeout(function() { document.body.removeChild(form); document.body.removeChild(iframe); }, 5000);
+        }
+
+        function shareProduct() {
+            if (navigator.share) {
+                navigator.share({ title: document.title, url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    const btn = document.querySelector('[onclick="shareProduct()"]');
+                    btn.innerHTML = '<i data-lucide="check" class="w-5 h-5 text-brand-green"></i>';
+                    lucide.createIcons();
+                    setTimeout(() => { btn.innerHTML = '<i data-lucide="share-2" class="w-5 h-5"></i>'; lucide.createIcons(); }, 2000);
+                });
+            }
+        }
+    
+        function toggleMute() {
+            const video = document.getElementById('product-video');
+            const icon = document.getElementById('mute-icon');
+            video.muted = !video.muted;
+            icon.setAttribute('data-lucide', video.muted ? 'volume-x' : 'volume-2');
+            lucide.createIcons();
+        }
+
+    </script>
+
+  
+</body>
+</html>

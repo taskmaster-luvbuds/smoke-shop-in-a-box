@@ -52,11 +52,10 @@
             
         </div>
         <div class="relative w-full rounded-[2rem] bg-brand-card border border-white/5 overflow-hidden aspect-[16/9] shadow-2xl">
-            <img src="assets/video-placeholder.png" class="absolute inset-0 w-full h-full object-cover opacity-80" alt="Product demo coming soon">
-            <div class="absolute bottom-3 right-3 bg-black/50 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1">
-                <i data-lucide="play" class="w-3 h-3 text-white"></i>
-                <span class="text-[10px] font-medium uppercase tracking-wider">Coming Soon</span>
-            </div>
+            <video id="product-video" preload="auto" src="https://d1yei2z3i6k35z.cloudfront.net/10816672/6a735bbe3d0fa1.30500927_SE-WP-MARBLEDRIG6-BX.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
+            <button onclick="toggleMute()" class="absolute bottom-4 right-4 z-20 bg-black/60 backdrop-blur-md w-14 h-14 rounded-full flex items-center justify-center transition active:scale-90">
+                <i id="mute-icon" data-lucide="volume-x" class="w-7 h-7 text-white"></i>
+            </button>
         </div>
         <div class="bg-brand-card/50 border border-white/5 rounded-[2rem] p-6">
             <h3 class="text-lg font-semibold mb-3">About this item</h3>
@@ -154,6 +153,26 @@
     <script>
         lucide.createIcons();
 
+        // Force autoplay on Safari/iOS
+        (function() {
+            var video = document.getElementById('product-video');
+            if (!video) return;
+            video.muted = true;
+            var playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(function() {
+                    // If autoplay still blocked, play on first user interaction
+                    var events = ['touchstart', 'scroll', 'click'];
+                    function tryPlay() {
+                        video.muted = true;
+                        video.play();
+                        events.forEach(function(e) { document.removeEventListener(e, tryPlay); });
+                    }
+                    events.forEach(function(e) { document.addEventListener(e, tryPlay, { once: true }); });
+                });
+            }
+        })();
+
         function openModal() {
             const modal = document.getElementById('signup-modal');
             const backdrop = document.getElementById('modal-backdrop');
@@ -238,6 +257,15 @@
                 });
             }
         }
+    
+        function toggleMute() {
+            const video = document.getElementById('product-video');
+            const icon = document.getElementById('mute-icon');
+            video.muted = !video.muted;
+            icon.setAttribute('data-lucide', video.muted ? 'volume-x' : 'volume-2');
+            lucide.createIcons();
+        }
+
     </script>
 
   
