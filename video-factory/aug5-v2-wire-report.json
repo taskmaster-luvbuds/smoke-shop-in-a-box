@@ -1,0 +1,88 @@
+{
+  "wired_at": "2026-08-06T08:26:22.552642+00:00",
+  "wired": [
+    {
+      "sku": "ZZUT48",
+      "page": "zzut48.html",
+      "url": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a738728837d33.00034071_ZZUT48.mp4",
+      "file_stem": "ZZUT48"
+    },
+    {
+      "sku": "YOCAN-ZIVAPRO-ASST-10PK",
+      "page": "yocan-zivapro-asst-10pk.html",
+      "url": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a738727bd42c3.77277786_YOCAN-ZIVAPRO-ASST-10PK.mp4",
+      "file_stem": "YOCAN-ZIVAPRO-ASST-10PK"
+    },
+    {
+      "sku": "SE-BT-380VV-BLK",
+      "page": "se-bt-380vv-blk.html",
+      "url": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a73871f4d9939.61593988_SE-BT-380VV-BLK.mp4",
+      "file_stem": "SE-BT-380VV-BLK"
+    },
+    {
+      "sku": "PFC-PEAKNEWBLK",
+      "page": "pfc-peaknewblk.html",
+      "url": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a73871f4d2fb3.54040297_PFC-PEAKNEWBLK.mp4",
+      "file_stem": "PFC-PEAKNEWBLK"
+    },
+    {
+      "sku": "POP-114-VARIETY-UB2.0",
+      "page": "pop-114-variety-ub2.0.html",
+      "url": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a73871f4cff16.29890538_POP-114-VARIETY-UB.mp4",
+      "file_stem": "POP-114-VARIETY-UB"
+    },
+    {
+      "sku": "BT-V985D",
+      "page": "bt-v985d.html",
+      "url": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a73871f4c3a87.21993073_BT-V985D.mp4",
+      "file_stem": "BT-V985D"
+    },
+    {
+      "sku": "SE-BT-380VV-BX-24PK",
+      "page": "se-bt-380vv-bx-24pk.html",
+      "url": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a73871f4b93c2.30143352_SE-BT-380VV-BX-24PK.mp4",
+      "file_stem": "SE-BT-380VV-BX-24PK"
+    },
+    {
+      "sku": "SE-CC-SPINSHROOM-BX-12PK",
+      "page": "se-cc-spinshroom-bx-12pk.html",
+      "url": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a73871f4b4ff9.17621446_SE-CC-SPINSHROOM-BX-12PK.mp4",
+      "file_stem": "SE-CC-SPINSHROOM-BX-12PK"
+    },
+    {
+      "sku": "RAWCONEDISP20PK114",
+      "page": "rawconedisp20pk114.html",
+      "url": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a73871f4a1196.90181737_RAW-CONEDISP20PK.mp4",
+      "file_stem": "RAW-CONEDISP20PK"
+    },
+    {
+      "sku": "OOZ-1453",
+      "page": "ooz-1453.html",
+      "url": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a73871f4973f4.38708805_OOZ-1453.mp4",
+      "file_stem": "OOZ-1453"
+    }
+  ],
+  "skipped_already_live": [
+    {
+      "sku": "GND-ZNC50",
+      "page": "gnd-znc50.html",
+      "url": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a738726cab536.20559042_SE-GND-ZNC63-6PK.mp4",
+      "reason": "already has live video"
+    },
+    {
+      "sku": "RAW-CONE6PK",
+      "page": "raw-cone6pk.html",
+      "url": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a73871f4add83.76816896_RAW-CONE6PK.mp4",
+      "reason": "already has live video"
+    },
+    {
+      "sku": "GND-ZNC50",
+      "page": "gnd-znc50.html",
+      "url": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a73871f4829e0.26069468_SE-GND-ZNC50-6PK.mp4",
+      "reason": "already has live video"
+    }
+  ],
+  "failed": [],
+  "has_video_before": 88,
+  "has_video_after": 98
+}

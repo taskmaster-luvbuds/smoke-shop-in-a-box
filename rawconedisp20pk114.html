@@ -28,8 +28,10 @@
         </div>
         <div class="flex flex-col gap-2"><div><p class="text-brand-orange text-sm font-semibold tracking-wide uppercase mb-1">Powered by LuvBuds</p><h1 class="text-3xl font-bold leading-tight">RAW Classic 1 1/4&quot; Pre-Rolled Cones, 20 Pack</h1></div></div>
         <div class="relative w-full rounded-[2rem] bg-brand-card border border-white/5 overflow-hidden aspect-[16/9] shadow-2xl">
-            <img src="assets/video-placeholder.png" class="absolute inset-0 w-full h-full object-cover opacity-80" alt="Product demo coming soon">
-            <div class="absolute bottom-3 right-3 bg-black/50 backdrop-blur-md px-2 py-1 rounded-lg flex items-center gap-1"><i data-lucide="play" class="w-3 h-3 text-white"></i><span class="text-[10px] font-medium uppercase tracking-wider">Coming Soon</span></div>
+            <video id="product-video" preload="auto" src="https://d1yei2z3i6k35z.cloudfront.net/10816672/6a73871f4a1196.90181737_RAW-CONEDISP20PK.mp4" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
+            <button onclick="toggleMute()" class="absolute bottom-4 right-4 z-20 bg-black/60 backdrop-blur-md w-14 h-14 rounded-full flex items-center justify-center transition active:scale-90">
+                <i id="mute-icon" data-lucide="volume-x" class="w-7 h-7 text-white"></i>
+            </button>
         </div>
         <div class="bg-brand-card/50 border border-white/5 rounded-[2rem] p-6"><h3 class="text-lg font-semibold mb-3">About this item</h3><p id="product-desc" class="text-white/70 leading-relaxed text-sm">RAW&#x27;s classic pre-rolled cones in the everyday 1 1/4 size — natural, slow-burning, and ready to fill. Twenty cones to a pack, so you&#x27;re set for a while. The trusted name in unrefined papers.</p></div>
         <div class="grid grid-cols-2 gap-4">
@@ -70,6 +72,16 @@
           if(desc){var el=document.getElementById('product-desc'); if(el)el.textContent=desc;}
         }).catch(function(){});
     })();
-  </script>
+  
+        function toggleMute() {
+            const video = document.getElementById('product-video');
+            const icon = document.getElementById('mute-icon');
+            if (!video || !icon) return;
+            video.muted = !video.muted;
+            icon.setAttribute('data-lucide', video.muted ? 'volume-x' : 'volume-2');
+            lucide.createIcons();
+        }
+
+    </script>
 </body>
 </html>
