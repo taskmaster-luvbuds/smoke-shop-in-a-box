@@ -14,9 +14,11 @@ h1{margin:0 0 8px;font-size:17px}.sub{color:var(--mut);font-size:12px}
 .chip.on{border-color:var(--acc);color:var(--fg);background:#1a2338}
 .chip.big{color:var(--warn)}
 .chip.big.on{border-color:var(--warn);background:#2a2310}
-.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
 .controls input,.controls select{background:var(--card);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:13px}
 .controls input[type=search]{flex:1;min-width:180px}
+.controls .hide-done{display:flex;align-items:center;gap:8px;color:var(--mut);font-size:13px;user-select:none;white-space:nowrap;cursor:pointer;padding:6px 10px;background:var(--card);border:1px solid var(--line);border-radius:8px}
+.controls .hide-done input{width:16px;height:16px;accent-color:var(--ok);cursor:pointer}
 .b.host-box{color:#8fe3a8;border-color:#2a5a3a}.b.host-shop{color:#8ab4ff;border-color:#2a3a5a}.b.host-none{color:var(--mut)}
 main{padding:16px 20px;max-width:1100px;margin:0 auto}
 .row{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px}
@@ -51,7 +53,7 @@ main{padding:16px 20px;max-width:1100px;margin:0 auto}
 .hidden{display:none}
 </style></head><body>
 <header>
-  <h1>Skeleton Video Factory <span class="sub">box.shopluvbuds.com &middot; 207 products &middot; SKU order &middot; built 2026-08-07 14:26 UTC</span></h1>
+  <h1>Skeleton Video Factory <span class="sub">box.shopluvbuds.com &middot; 207 products &middot; SKU order &middot; built 2026-08-07 14:29 UTC</span></h1>
   <div class="bar"><i id="pctbar"></i></div>
   <div class="stats">
     <span id="pct"></span>
@@ -78,6 +80,9 @@ main{padding:16px 20px;max-width:1100px;margin:0 auto}
       <option value="needscopy">needs copy</option>
       <option value="all">all products</option>
     </select>
+    <label class="hide-done" title="Hide greyed-out rows that already have a video">
+      <input type="checkbox" id="hideDone"> hide done
+    </label>
   </div>
 </header>
 <main><div class="row" id="r-ASH_FACET4">
@@ -3393,6 +3398,9 @@ const madeDurable = p => !!p.video_made;         // status.video=done in product
 const madeHere = p => madeDurable(p) || load(p.sku); // rendered (manifest) OR operator tick
 const done = p => onSite(p) || madeHere(p);      // has a video, one way or the other
 const hostOf = p => p.host || 'none';            // box | shop | none
+const HIDE_DONE_K = 'luvfactory:hideDone';
+const hideDoneOn = () => localStorage.getItem(HIDE_DONE_K)==='1';
+const setHideDone = v => localStorage.setItem(HIDE_DONE_K, v?'1':'0');
 
 function setFilter(f){
   const sel=document.getElementById('filter');
@@ -3403,24 +3411,29 @@ function setFilter(f){
   render();
 }
 
-function matches(p, f, q){
+function matches(p, f, q, hideDone){
   const hay=(p.name+' '+p.sku+' '+p.script+' '+(p.host||'')).toLowerCase();
   if(q && !hay.includes(q)) return false;
-  if(f==='tomake')        return p.ready && !done(p);
-  if(f==='made')          return madeHere(p) && !onSite(p);
-  if(f==='onsite')        return onSite(p);
-  if(f==='hasimage')      return !!p.img && p.ready && !done(p);
-  if(f==='hasimageany')   return !!p.img;
-  if(f==='needscopy')     return !p.ready;
-  if(f==='hostbox')       return hostOf(p)==='box';
-  if(f==='hostshop')      return hostOf(p)==='shop';
-  if(f==='hostnone')      return hostOf(p)==='none';
-  return true; // all
+  let ok = true;
+  if(f==='tomake')        ok = p.ready && !done(p);
+  else if(f==='made')     ok = madeHere(p) && !onSite(p);
+  else if(f==='onsite')   ok = onSite(p);
+  else if(f==='hasimage') ok = !!p.img && p.ready && !done(p);
+  else if(f==='hasimageany') ok = !!p.img;
+  else if(f==='needscopy') ok = !p.ready;
+  else if(f==='hostbox')  ok = hostOf(p)==='box';
+  else if(f==='hostshop') ok = hostOf(p)==='shop';
+  else if(f==='hostnone') ok = hostOf(p)==='none';
+  // hide greyed-out done rows inside whatever filter is active
+  if(ok && hideDone && done(p)) ok = false;
+  return ok;
 }
 
 function render(){
   const q=(document.getElementById('q').value||'').toLowerCase();
   const f=document.getElementById('filter').value;
+  const hideEl=document.getElementById('hideDone');
+  const hideDone=!!(hideEl && hideEl.checked);
   let shown=0, toMake=0, madeN=0, onSiteN=0, ready=0, imgN=0, imgAny=0, boxN=0, shopN=0, noneN=0;
   for(const p of DATA){
     if(p.ready) ready++;
@@ -3434,7 +3447,7 @@ function render(){
     else noneN++;
     const row=document.getElementById('r-'+p.id);
     row.classList.toggle('made', madeHere(p) || onSite(p));
-    const ok=matches(p, f, q);
+    const ok=matches(p, f, q, hideDone);
     row.classList.toggle('hidden', !ok);
     if(ok) shown++;
   }
@@ -3461,6 +3474,11 @@ window.addEventListener('DOMContentLoaded',()=>{
   for(const p of DATA){
     const cb=document.getElementById('cb-'+p.id);
     if(cb && !cb.disabled) cb.checked = load(p.sku);
+  }
+  const hideCb=document.getElementById('hideDone');
+  if(hideCb){
+    hideCb.checked = hideDoneOn();
+    hideCb.addEventListener('change',()=>{ setHideDone(hideCb.checked); render(); });
   }
   document.getElementById('q').addEventListener('input',render);
   document.getElementById('filter').addEventListener('change',e=>setFilter(e.target.value));
