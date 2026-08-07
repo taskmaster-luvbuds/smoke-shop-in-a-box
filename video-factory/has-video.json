@@ -35,6 +35,7 @@
     "GROOVE-GND-RIPSTER",
     "GROOVE-SPARK",
     "HP-2.5P40G",
+    "HP-2.5P40G-SOLID",
     "HP-OGCHILL",
     "KA-WP-STEELCHILL13",
     "LOOK-BEAR-ASST-5PK",
@@ -130,7 +131,7 @@
   ],
   "source": "page product-video marker + videos-needed.html cross-check",
   "needs_list_size": 135,
-  "updated_at": "2026-08-07T14:20:46.625029+00:00",
+  "updated_at": "2026-08-07T14:24:52.618687+00:00",
   "aug5_wire_added": [
     "BT-GROOVE-BOLT-24PK",
     "SE-BT-GASTANKDISP",
@@ -217,5 +218,12 @@
     "from_page": "bt-v846d.html",
     "to_page": "bt-v852d.html",
     "note": "filename stem BT-V846D.mp4 is actually for BT-V852D"
+  },
+  "hp25_solid_replace": {
+    "sku": "HP-2.5P40G-SOLID",
+    "page": "hp-2-5p40g-solid.html",
+    "old": "https://d1yei2z3i6k35z.cloudfront.net/10816672/69fa3daeeadf26.15803603_tealglasspipe.mp4",
+    "new": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a74f4246ff302.85605379_HP-2.5P40G.mp4",
+    "note": "filename stem HP-2.5P40G.mp4 belongs on HP-2.5P40G-SOLID page"
   }
 }
