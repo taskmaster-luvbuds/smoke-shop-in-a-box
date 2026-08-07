@@ -1,7 +1,7 @@
 {
   "project": "LuvBuds Skeleton Video Factory",
   "site": "box.shopluvbuds.com",
-  "generated_at": "2026-08-07T14:26:53.635567+00:00",
+  "generated_at": "2026-08-07T14:38:39.564625+00:00",
   "character_style": "A friendly stylized 3D-animated skeleton character (the LuvBuds mascot), cartoon smoke-shop vibe, warm studio lighting, clean neutral backdrop, vertical 9:16 framing, consistent character design across every clip",
   "motion_spec": "the skeleton gestures naturally and its mouth moves as if speaking the script; slow subtle camera push-in; no scene cuts; the product stays centered and readable",
   "clip_seconds": 8,
@@ -11,7 +11,7 @@
     "needs_copy": 6,
     "in_catalog_and_scripted": 201,
     "scripted_not_in_catalog": 0,
-    "missing_video": 80,
+    "missing_video": 79,
     "gemini_base_images_available": 50
   },
   "gemini_image_pool": [
@@ -1386,8 +1386,8 @@
     {
       "sku": "GND-ZNC63",
       "name": "63mm Zinc 4-Piece Grinder",
-      "priority": true,
-      "has_video": false,
+      "priority": false,
+      "has_video": true,
       "in_catalog": true,
       "page_url": "https://box.shopluvbuds.com/gnd-znc63.html",
       "view_url": "https://box.shopluvbuds.com/gnd-znc63.html",
@@ -1407,7 +1407,7 @@
         "script": "ready",
         "image": "todo",
         "audio": "done",
-        "video": "todo",
+        "video": "done",
         "final": "todo"
       }
     },
