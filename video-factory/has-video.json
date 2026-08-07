@@ -14,6 +14,7 @@
     "BT-PENJAMINCARKEY-ASST",
     "BT-SMYLEINHALER-BLUE",
     "BT-V1180D",
+    "BT-V846D",
     "BT-V846D2",
     "BT-V850D",
     "BT-V852D",
@@ -131,7 +132,7 @@
   ],
   "source": "page product-video marker + videos-needed.html cross-check",
   "needs_list_size": 135,
-  "updated_at": "2026-08-07T14:24:52.618687+00:00",
+  "updated_at": "2026-08-07T14:26:53.300610+00:00",
   "aug5_wire_added": [
     "BT-GROOVE-BOLT-24PK",
     "SE-BT-GASTANKDISP",
@@ -225,5 +226,10 @@
     "old": "https://d1yei2z3i6k35z.cloudfront.net/10816672/69fa3daeeadf26.15803603_tealglasspipe.mp4",
     "new": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a74f4246ff302.85605379_HP-2.5P40G.mp4",
     "note": "filename stem HP-2.5P40G.mp4 belongs on HP-2.5P40G-SOLID page"
+  },
+  "bt_v846d_wire": {
+    "sku": "BT-V846D",
+    "page": "bt-v846d.html",
+    "url": "https://d1yei2z3i6k35z.cloudfront.net/10816672/69bd5951d83dc1.18477130_syndrv4.mp4"
   }
 }
