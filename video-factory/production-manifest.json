@@ -1,7 +1,7 @@
 {
   "project": "LuvBuds Skeleton Video Factory",
   "site": "box.shopluvbuds.com",
-  "generated_at": "2026-08-06T21:00:19.245758+00:00",
+  "generated_at": "2026-08-07T14:20:46.842278+00:00",
   "character_style": "A friendly stylized 3D-animated skeleton character (the LuvBuds mascot), cartoon smoke-shop vibe, warm studio lighting, clean neutral backdrop, vertical 9:16 framing, consistent character design across every clip",
   "motion_spec": "the skeleton gestures naturally and its mouth moves as if speaking the script; slow subtle camera push-in; no scene cuts; the product stays centered and readable",
   "clip_seconds": 8,
@@ -602,8 +602,8 @@
     {
       "sku": "BT-V846D",
       "name": "Pulsar SYNDR Dry Herb Vaporizer",
-      "priority": false,
-      "has_video": true,
+      "priority": true,
+      "has_video": false,
       "in_catalog": true,
       "page_url": "https://box.shopluvbuds.com/bt-v846d.html",
       "view_url": "https://box.shopluvbuds.com/bt-v846d.html",
@@ -686,8 +686,8 @@
     {
       "sku": "BT-V852D",
       "name": "Pulsar 510 DL 2.0 PRO Vape Bar, Mist Series",
-      "priority": true,
-      "has_video": false,
+      "priority": false,
+      "has_video": true,
       "in_catalog": true,
       "page_url": "https://box.shopluvbuds.com/bt-v852d.html",
       "view_url": "https://box.shopluvbuds.com/bt-v852d.html",
@@ -707,7 +707,7 @@
         "script": "ready",
         "image": "todo",
         "audio": "done",
-        "video": "todo",
+        "video": "done",
         "final": "todo"
       }
     },

@@ -14,9 +14,9 @@
     "BT-PENJAMINCARKEY-ASST",
     "BT-SMYLEINHALER-BLUE",
     "BT-V1180D",
-    "BT-V846D",
     "BT-V846D2",
     "BT-V850D",
+    "BT-V852D",
     "BT-V853D",
     "BT-V936D",
     "BT-V985D",
@@ -130,7 +130,7 @@
   ],
   "source": "page product-video marker + videos-needed.html cross-check",
   "needs_list_size": 135,
-  "updated_at": "2026-08-06T21:00:19.032858+00:00",
+  "updated_at": "2026-08-07T14:20:46.625029+00:00",
   "aug5_wire_added": [
     "BT-GROOVE-BOLT-24PK",
     "SE-BT-GASTANKDISP",
@@ -197,7 +197,6 @@
     "BT-350VV",
     "BT-COSMONAUT",
     "BT-V1180D",
-    "BT-V846D",
     "BT-V936D",
     "CCELL-M4BPRO-ASST",
     "CLIP-PROMO-HAZMAT",
@@ -210,6 +209,13 @@
     "MDBR-L",
     "NWTN-WP-DECOGP-ASST",
     "KA-WP-STEELCHILL13",
-    "LOOK-SHPROPLUS-ASST-6PK"
-  ]
+    "LOOK-SHPROPLUS-ASST-6PK",
+    "BT-V852D"
+  ],
+  "v846d_to_v852d_remap": {
+    "url": "https://d1yei2z3i6k35z.cloudfront.net/10816672/6a74f42b769fb9.34802142_BT-V846D.mp4",
+    "from_page": "bt-v846d.html",
+    "to_page": "bt-v852d.html",
+    "note": "filename stem BT-V846D.mp4 is actually for BT-V852D"
+  }
 }
