@@ -840,7 +840,14 @@
       "checked_at": "2026-10-15",
       "sku_database_source": "LUVBUDS SKU DATABASE - IN STOCK.csv",
       "sku_database_line": 85,
-      "variant_note": "Archived product reference and photograph. This page does not indicate current availability."
+      "variant_note": "Archived product reference and photograph. This page does not indicate current availability.",
+      "card_sku_override": {
+        "sku": "SE-BT-380VV-BX-24PK",
+        "page": "se-bt-380vv-bx-24pk.html",
+        "instruction": "Operator requested card 12 SKU replacement; original photo and item reference retained.",
+        "date": "2026-10-15",
+        "replacement_database_item_number": "5581"
+      }
     },
     {
       "item_number": "806",
