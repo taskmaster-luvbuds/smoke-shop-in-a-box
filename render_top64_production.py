@@ -92,8 +92,6 @@ def make_pdf(items):
     c.setTitle('LuvBuds 64 Product Cards | 8-up Letter | Actual-size cutting sheets')
     c.setAuthor('LuvBuds')
     for start in range(0,len(items),8):
-        c.setFillColor(MUTE);c.setFont(BOLD,8);c.drawString(54,773,'LuvBuds / Product cards')
-        c.setFont(FONT,7);c.drawRightString(558,773,f'Cards {start+1:02d}-{min(start+8,len(items)):02d} | 100% print scale')
         for i,row in enumerate(items[start:start+8]):
             x=54+(i%2)*252;y=759-(i//2+1)*180
             paint_card(c,row,x,y)
@@ -102,7 +100,6 @@ def make_pdf(items):
             for y in (35,763):c.line(x,y-3,x,y+3)
         for y in (39,219,399,579,759):
             c.line(47,y,51,y);c.line(561,y,565,y)
-        c.setFillColor(MUTE);c.setFont(FONT,6);c.drawString(54,17,'Print at ACTUAL SIZE / 100%. Office cutting sheets. Print shop: use the individual Bleed PDF.')
         c.showPage()
     c.save()
 
