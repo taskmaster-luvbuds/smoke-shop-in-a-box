@@ -1,6 +1,6 @@
 sku,product_name,url,qr_png_relative
-BIC-MAXI-HAZMAT,"BIC - Lighter Maxi, 50 Pk, Retail Display",https://box.shopluvbuds.com/bic-maxi-hazmat.html,qr-codes/BIC-MAXI-HAZMAT.png
-BT-380VV,"LuvBuds - 380mAh Preheat Variable Voltage Battery & USB Charger (Flat Top), Assorted Colors",https://box.shopluvbuds.com/bt-380vv.html,qr-codes/BT-380VV.png
+BIC-MAXI-HAZMAT,BIC BIC Maxi Lighter,https://box.shopluvbuds.com/bic-maxi-hazmat.html,qr-codes/BIC-MAXI-HAZMAT.png
+BT-380VV,LuvBuds 380mAh Preheat Battery,https://box.shopluvbuds.com/bt-380vv.html,qr-codes/BT-380VV.png
 BT-GROOVE-BOLT-24PK,Groove Bolt 510,https://box.shopluvbuds.com/bt-groove-bolt-24pk.html,qr-codes/BT-GROOVE-BOLT-24PK.png
 BT-GROOVE-CARAPLUS,Yocan Groove Cara Plus,https://box.shopluvbuds.com/bt-groove-caraplus.html,qr-codes/BT-GROOVE-CARAPLUS.png
 BT-PENJAMINCARKEY-ASST,"SMYLE Labs - Penjamin Car Key Variable Voltage 510 Thread Battery, Assorted Colors",https://box.shopluvbuds.com/bt-penjamincarkey-asst.html,qr-codes/BT-PENJAMINCARKEY-ASST.png
@@ -9,7 +9,7 @@ BUNDLE-PCLDISPFULL,POS Display (100 Pipes + 100 Chillums),https://box.shopluvbud
 CB-GLOB-TRAVEL,Glob Mops Travel Pack,https://box.shopluvbuds.com/cb-glob-travel.html,qr-codes/CB-GLOB-TRAVEL.png
 CLE-RANDYBLK12,Randy’s Black Label,https://box.shopluvbuds.com/cle-randyblk12.html,qr-codes/CLE-RANDYBLK12.png
 FL SB5-HAZMAT,Special Blue Butane,https://box.shopluvbuds.com/fl-sb5-hazmat.html,qr-codes/FL_SB5-HAZMAT.png
-GND-ZNC50,"LuvBuds - 50mm Zinc 4 pc. Grinder, Assorted Colors May Vary",https://box.shopluvbuds.com/gnd-znc50.html,qr-codes/GND-ZNC50.png
+GND-ZNC50,LuvBuds 50mm 4-Piece Zinc Grinder,https://box.shopluvbuds.com/gnd-znc50.html,qr-codes/GND-ZNC50.png
 GROOVE-GND-RIPSTER,Yocan Ripster Grinder,https://box.shopluvbuds.com/groove-gnd-ripster.html,qr-codes/GROOVE-GND-RIPSTER.png
 GROOVE-SPARK,Groove Spark Torch,https://box.shopluvbuds.com/groove-spark.html,qr-codes/GROOVE-SPARK.png
 HP-OGCHILL,OG Chillum 100pc Display,https://box.shopluvbuds.com/hp-ogchill.html,qr-codes/HP-OGCHILL.png
@@ -26,7 +26,7 @@ OOZ-1187,"Ooze - Slim Twist Pen 2.0 Battery 510 Thread + USB Charger, Assorted C
 SE-BT-380VV-BLK,SirEEL 380 Variable Voltage,https://box.shopluvbuds.com/se-bt-380vv-blk.html,qr-codes/SE-BT-380VV-BLK.png
 SE-BT-DOPPLEGANGER,SirEEL Doppelganger,https://box.shopluvbuds.com/se-bt-doppleganger.html,qr-codes/SE-BT-DOPPLEGANGER.png
 SE-BT-EV-THERMO-10PK,"SirEEL - 10pk Hover EV 650mAh Variable Voltage Battery, Assorted Thermo Colors May Vary",https://box.shopluvbuds.com/se-bt-ev-thermo-10pk.html,qr-codes/SE-BT-EV-THERMO-10PK.png
-SE-BT-GASTANKDISP,SirEEL Gas Tank Thermals,https://box.shopluvbuds.com/se-bt-gastankdisp.html,qr-codes/SE-BT-GASTANKDISP.png
+SE-BT-GASTANKDISP,SirEEL Gas Tank 510 Battery,https://box.shopluvbuds.com/se-bt-gastankdisp.html,qr-codes/SE-BT-GASTANKDISP.png
 SE-BT-IRONLUNG5P-SOLID,"SirEEL - 5pc Iron Lung 650mAh Dual Mode Variable Voltage Dab and Forced Air Battery, Solid Color Series",https://box.shopluvbuds.com/se-bt-ironlung5p-solid.html,qr-codes/SE-BT-IRONLUNG5P-SOLID.png
 SE-BT-IRONLUNG5P-THERMO,SirEEL Iron Lung,https://box.shopluvbuds.com/se-bt-ironlung5p-thermo.html,qr-codes/SE-BT-IRONLUNG5P-THERMO.png
 SE-CC-SPINSHROOM-BX-12PK,Mushroom Spinner Carb Cap,https://box.shopluvbuds.com/se-cc-spinshroom-bx-12pk.html,qr-codes/SE-CC-SPINSHROOM-BX-12PK.png
@@ -167,3 +167,8 @@ LOOK-DRAGONEGG-RD,Lookah Dragon Egg Rig — Red,https://box.shopluvbuds.com/look
 GRAV-PBCM.13,GRAV Coffee Mug Pocket Bubbler,https://box.shopluvbuds.com/grav-pbcm.13.html,qr-codes/GRAV-PBCM.13.png
 GRAV-PBS.7,GRAV 3-inch Pocket Bubbler — Green,https://box.shopluvbuds.com/grav-pbs.7.html,qr-codes/GRAV-PBS.7.png
 WP-WNRBENT6,"LuvBuds - 6"" Wrap & Rake Bent Neck Hanger Bong/Rig, Assorted Colors",https://box.shopluvbuds.com/wp-wnrbent6.html,qr-codes/WP-WNRBENT6.png
+SE-GND-ZNC50-6PK,SirEEL 50mm 4-Piece Zinc Grinder,https://box.shopluvbuds.com/se-gnd-znc50-6pk.html,qr-codes/SE-GND-ZNC50-6PK.png
+RAW-CONEKS1400,RAW Classic King Size Bulk Cones,https://box.shopluvbuds.com/raw-coneks1400.html,qr-codes/RAW-CONEKS1400.png
+PFC-PEAKPRO2-DAYBREAK,Puffco Peak Pro 2 — Daybreak,https://box.shopluvbuds.com/pfc-peakpro2-daybreak.html,qr-codes/PFC-PEAKPRO2-DAYBREAK.png
+RAW-BLKCONE3PK,RAW RAW Black King Size Cones,https://box.shopluvbuds.com/raw-blkcone3pk.html,qr-codes/RAW-BLKCONE3PK.png
+VP-TRPPEN2-BLACK,Boundless Terp Pen 2 — Black,https://box.shopluvbuds.com/vp-trppen2-black.html,qr-codes/VP-TRPPEN2-BLACK.png
