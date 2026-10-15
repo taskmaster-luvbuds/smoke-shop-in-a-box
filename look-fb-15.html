@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lookah FIREBEE 650mAh Battery | Smoke Shop in a Box</title>
+  <meta name="description" content="650mAh 510-thread vape pen battery; assorted colors.">
+  <link rel="canonical" href="https://box.shopluvbuds.com/look-fb-15.html">
+  <link rel="stylesheet" href="assets/top64-product.css">
+</head>
+<body>
+  <header><div class="bar"><span class="brand"><span aria-hidden="true">▧</span> Smoke Shop in a Box</span><button type="button" id="share" aria-label="Share product information">↗</button></div></header>
+  <main>
+    <figure class="hero"><img src="assets/products/top64/look-fb-15.jpg" alt="Lookah FIREBEE 650mAh Battery" width="750" height="750"></figure>
+    <div class="heading"><p class="eyebrow">LuvBuds · Product information</p><h1>Lookah FIREBEE 650mAh Battery</h1><p class="sku">LOOK-FB-15</p></div>
+    <section class="about" aria-labelledby="about"><h2 id="about">About this item</h2><p>650mAh 510-thread vape pen battery; assorted colors.</p></section>
+    <section aria-label="Product details"><dl><div><dt>Brand</dt><dd>Lookah</dd></div><div><dt>Category</dt><dd>Electronics</dd></div><div><dt>SKU</dt><dd>LOOK-FB-15</dd></div></dl></section>
+    <p class="note">Assorted colors may vary. Photograph shows the product configuration supplied by the manufacturer.</p>
+  </main>
+  <footer>LuvBuds product reference</footer>
+  <script>
+  document.getElementById('share').addEventListener('click', async () => {
+    const button = document.getElementById('share');
+    try {
+      if (navigator.share) await navigator.share({title:document.title,url:location.href});
+      else {await navigator.clipboard.writeText(location.href);button.textContent='Copied';}
+    } catch (error) {if(error.name!=='AbortError') button.textContent='Copy URL';}
+  });
+  </script>
+</body>
+</html>
