@@ -844,9 +844,13 @@
       "card_sku_override": {
         "sku": "SE-BT-380VV-BX-24PK",
         "page": "se-bt-380vv-bx-24pk.html",
-        "instruction": "Operator requested card 12 SKU replacement; original photo and item reference retained.",
-        "date": "2026-10-15",
-        "replacement_database_item_number": "5581"
+        "instruction": "Operator requested card 12 SKU and QR replacement on 2026-10-15, then supplied the replacement photograph on 2026-10-16; original source item reference retained.",
+        "date": "2026-10-16",
+        "replacement_database_item_number": "5581",
+        "image_asset": "images/SE-BT-380VV-BX-24PK.png?v=c49462d46e4d",
+        "image_source_filename": "LUVBUDS-SIREEL-SE-BT-380VV-BX-24PK-E-Battery__27732.webp",
+        "image_source_sha256": "c49462d46e4d7958e8abd6f21a7644192ec06b3c50dc5ff34f704149bf1950b0",
+        "image_dimensions": "1024x1024"
       }
     },
     {
